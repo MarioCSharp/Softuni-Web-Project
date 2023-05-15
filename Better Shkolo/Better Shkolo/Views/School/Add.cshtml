@@ -1,0 +1,39 @@
+﻿@using Better_Shkolo.Models.School;
+@model SchoolCreateModel
+<h3 class="text-center">@ViewData["Title"]</h3>
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <section>
+            <form id="account" method="post">
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DirectorId"></label>
+                    <select asp-for="DirectorId" class="form-control">
+                        @foreach (var user in Model.AvailableUsers)
+                        {
+                            <option value="@user.Id">@user.FirstName @user.LastName - @user.Email</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

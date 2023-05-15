@@ -1,5 +1,7 @@
 using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
+using Better_Shkolo.Services.AccountService;
+using Better_Shkolo.Services.SchoolService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,11 +20,23 @@ namespace Better_Shkolo
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
-
+                options.SignIn.RequireConfirmedAccount = false;
             })
               .AddRoles<IdentityRole>()
               .AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddControllers(
+                options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+            });
+
+            builder.Services.AddTransient<IAccountService, AccountService>();
+            builder.Services.AddTransient<ISchoolService, SchoolService>();
 
             var app = builder.Build();
 
@@ -43,6 +57,8 @@ namespace Better_Shkolo
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.Initialize();
 
             app.MapControllerRoute(
                 name: "default",

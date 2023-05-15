@@ -22,190 +22,187 @@ namespace Better_Shkolo.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //User
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Marks)
-                .WithOne(m => m.User)
-                .HasForeignKey(m => m.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Absences>(entity =>
+            {
+                entity.HasOne(a => a.Subject)
+                    .WithMany()
+                    .HasForeignKey(a => a.SubjectId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Аbsences)
-                .WithOne(a => a.User)
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(a => a.Teacher)
+                    .WithMany()
+                    .HasForeignKey(a => a.TeacherId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Reviews)
-                .WithOne(r => r.User)
-                .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(a => a.Student)
+                    .WithMany(s => s.Absences)
+                    .HasForeignKey(a => a.StudentId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.School)
-                .WithMany()
-                .HasForeignKey(u => u.SchoolId);
+                entity.HasOne(a => a.School)
+                    .WithMany()
+                    .HasForeignKey(a => a.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Grade)
-                .WithMany()
-                .HasForeignKey(u => u.GradeId);
+            // Grade
+            modelBuilder.Entity<Grade>(entity =>
+            {
+                entity.HasOne(g => g.Teacher)
+                    .WithMany()
+                    .HasForeignKey(g => g.TeacherId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.GradeTeacher)
-                .WithMany()
-                .HasForeignKey(u => u.GradeTeacherId);
+                entity.HasOne(g => g.School)
+                    .WithMany(s => s.Grades)
+                    .HasForeignKey(g => g.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            //Grade
+            // Mark
+            modelBuilder.Entity<Mark>(entity =>
+            {
+                entity.HasOne(m => m.Subject)
+                    .WithMany()
+                    .HasForeignKey(m => m.SubjectId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Grade>()
-                .HasOne(g => g.Teacher)
-                .WithMany()
-                .HasForeignKey(g => g.TeacherId);
+                entity.HasOne(m => m.Teacher)
+                    .WithMany()
+                    .HasForeignKey(m => m.TeacherId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Grade>()
-                .HasOne(g => g.School)
-                .WithMany()
-                .HasForeignKey(g => g.SchoolId);
+                entity.HasOne(m => m.Student)
+                    .WithMany(s => s.Marks)
+                    .HasForeignKey(m => m.StudentId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            //Mark
+                entity.HasOne(m => m.School)
+                    .WithMany()
+                    .HasForeignKey(m => m.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<Mark>()
-                .HasOne(m => m.Subject)
-                .WithMany()
-                .HasForeignKey(m => m.SubjectId);
+            // Review
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.HasOne(r => r.Subject)
+                    .WithMany()
+                    .HasForeignKey(r => r.SubjectId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Mark>()
-                .HasOne(m => m.Teacher)
-                .WithMany()
-                .HasForeignKey(m => m.TeacherId);
+                entity.HasOne(r => r.Teacher)
+                    .WithMany()
+                    .HasForeignKey(r => r.TeacherId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Mark>()
-                .HasOne(m => m.User)
-                .WithMany(u => u.Marks)
-                .HasForeignKey(m => m.UserId);
+                entity.HasOne(r => r.Student)
+                    .WithMany(s => s.Reviews)
+                    .HasForeignKey(r => r.StudentId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Mark>()
-                .HasOne(m => m.School)
-                .WithMany()
-                .HasForeignKey(m => m.SchoolId);
+                entity.HasOne(r => r.School)
+                    .WithMany()
+                    .HasForeignKey(r => r.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            //Review
+            // School
+            modelBuilder.Entity<School>(entity =>
+            {
+                entity.HasOne(s => s.Director)
+                    .WithMany()
+                    .HasForeignKey(s => s.DirectorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.Subject)
-                .WithMany()
-                .HasForeignKey(r => r.SubjectId);
+            // Student
+            modelBuilder.Entity<Student>(entity =>
+            {
+                entity.HasOne(s => s.User)
+                    .WithOne()
+                    .HasForeignKey<Student>(s => s.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.Teacher)
-                .WithMany()
-                .HasForeignKey(r => r.TeacherId);
+                entity.HasOne(s => s.School)
+                    .WithMany(school => school.Students)
+                    .HasForeignKey(s => s.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.User)
-                .WithMany(u => u.Reviews)
-                .HasForeignKey(r => r.UserId);
+                entity.HasOne(s => s.Grade)
+                    .WithMany(g => g.Students)
+                    .HasForeignKey(s => s.GradeId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.School)
-                .WithMany()
-                .HasForeignKey(r => r.SchoolId);
+                entity.HasOne(s => s.GradeTeacher)
+                    .WithMany()
+                    .HasForeignKey(s => s.GradeTeacherId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            //School
+            // Teacher
+            modelBuilder.Entity<Teacher>(entity =>
+            {
+                entity.HasOne(t => t.Subject)
+                    .WithMany()
+                    .HasForeignKey(t => t.SubjectId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<School>()
-                .HasMany(s => s.Grades)
-                .WithOne(g => g.School)
-                .HasForeignKey(g => g.SchoolId);
+                entity.HasOne(t => t.School)
+                    .WithMany(s => s.Teachers)
+                    .HasForeignKey(t => t.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<School>()
-                .HasMany(s => s.Teachers)
-                .WithOne(t => t.School)
-                .HasForeignKey(t => t.SchoolId);
+                entity.HasOne(t => t.User)
+                    .WithOne()
+                    .HasForeignKey<Teacher>(t => t.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<School>()
-                .HasMany(s => s.Users)
-                .WithOne(u => u.School)
-                .HasForeignKey(u => u.SchoolId);
+            // Subject
+            modelBuilder.Entity<Subject>(entity =>
+            {
+                entity.HasOne(s => s.Teacher)
+                    .WithMany()
+                    .HasForeignKey(s => s.TeacherId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            //Subject
+                entity.HasOne(s => s.School)
+                    .WithMany()
+                    .HasForeignKey(s => s.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Subject>()
-                .HasOne(s => s.Teacher)
-                .WithMany()
-                .HasForeignKey(s => s.TeacherId);
+                entity.HasOne(s => s.Grade)
+                    .WithMany()
+                    .HasForeignKey(s => s.GradeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<Subject>()
-                .HasOne(s => s.School)
-                .WithMany()
-                .HasForeignKey(s => s.SchoolId);
+            // Test
+            modelBuilder.Entity<Test>(entity =>
+            {
+                entity.HasOne(t => t.Subject)
+                    .WithMany()
+                    .HasForeignKey(t => t.SubjectId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Subject>()
-                .HasOne(s => s.Grade)
-                .WithMany()
-                .HasForeignKey(s => s.GradeId);
+                entity.HasOne(t => t.Teacher)
+                    .WithMany()
+                    .HasForeignKey(t => t.TeacherId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            //Teacher
+                entity.HasOne(t => t.Grade)
+                    .WithMany()
+                    .HasForeignKey(t => t.GradeId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Teacher>()
-                .HasOne(t => t.Subject)
-                .WithMany()
-                .HasForeignKey(t => t.SubjectId);
+                entity.HasOne(t => t.School)
+                    .WithMany()
+                    .HasForeignKey(t => t.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<Teacher>()
-                .HasOne(t => t.School)
-                .WithMany()
-                .HasForeignKey(t => t.SchoolId);
 
-            modelBuilder.Entity<Teacher>()
-                .HasOne(t => t.User)
-                .WithOne(u => u.GradeTeacher)
-                .HasForeignKey<Teacher>(t => t.UserId);
-
-            //Test
-
-            modelBuilder.Entity<Test>()
-                .HasOne(t => t.Subject)
-                .WithMany()
-                .HasForeignKey(t => t.SubjectId);
-
-            modelBuilder.Entity<Test>()
-                .HasOne(t => t.Teacher)
-                .WithMany()
-                .HasForeignKey(t => t.TeacherId);
-
-            modelBuilder.Entity<Test>()
-                .HasOne(t => t.Grade)
-                .WithMany()
-                .HasForeignKey(t => t.GradeId);
-
-            modelBuilder.Entity<Test>()
-                .HasOne(t => t.School)
-                .WithMany()
-                .HasForeignKey(t => t.SchoolId);
-
-            //Аbsence
-
-            modelBuilder.Entity<Absences>()
-                .HasOne(a => a.Subject)
-                .WithMany()
-                .HasForeignKey(a => a.SubjectId);
-
-            modelBuilder.Entity<Absences>()
-                .HasOne(a => a.Teacher)
-                .WithMany()
-                .HasForeignKey(a => a.TeacherId);
-
-            modelBuilder.Entity<Absences>()
-                .HasOne(a => a.User)
-                .WithMany()
-                .HasForeignKey(a => a.UserId);
-
-            modelBuilder.Entity<Absences>()
-                .HasOne(a => a.School)
-                .WithMany()
-                .HasForeignKey(a => a.SchoolId);
             base.OnModelCreating(modelBuilder);
         }
     }
