@@ -7,6 +7,9 @@
         <p class="list-group-item list-group-item-action">@school.Name - @school.City
             <a asp-controller="School" asp-action="Delete" asp-route-id="@school.Id" class="btn btn-danger">Delete</a>
             <a asp-controller="School" asp-action="Edit" asp-route-id="@school.Id" class="btn btn-secondary">Edit</a>
+            <a asp-controller="Teacher" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add teacher</a>
+            <a asp-controller="Subject" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add subject</a>
+            <a asp-controller="Grade" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add grade</a>
         </p>
     }
 </div>

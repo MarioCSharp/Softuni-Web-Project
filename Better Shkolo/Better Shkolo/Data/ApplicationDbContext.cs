@@ -143,11 +143,6 @@ namespace Better_Shkolo.Data
             // Teacher
             modelBuilder.Entity<Teacher>(entity =>
             {
-                entity.HasOne(t => t.Subject)
-                    .WithMany()
-                    .HasForeignKey(t => t.SubjectId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
                 entity.HasOne(t => t.School)
                     .WithMany(s => s.Teachers)
                     .HasForeignKey(t => t.SchoolId)

@@ -1,7 +1,9 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Account;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Better_Shkolo.Services.AccountService
 {
@@ -9,11 +11,15 @@ namespace Better_Shkolo.Services.AccountService
     {
         private ApplicationDbContext context;
         private UserManager<User> userManager;
+        private readonly IHttpContextAccessor httpContext;
         public AccountService(ApplicationDbContext context,
-                              UserManager<User> userManager)
+                              UserManager<User> userManager,
+                              IHttpContextAccessor httpContext)
         {
             this.context = context;
             this.userManager = userManager;
+            this.httpContext = httpContext;
+
         }
         public async Task<List<UserDisplayModel>> GetAllAvailabeUsers()
         {
@@ -37,6 +43,11 @@ namespace Better_Shkolo.Services.AccountService
             }
 
             return result;
+        }
+
+        public string GetUserId()
+        {
+            return httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

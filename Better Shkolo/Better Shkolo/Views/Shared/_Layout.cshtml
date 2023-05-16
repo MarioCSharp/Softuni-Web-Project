@@ -19,13 +19,21 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="School" asp-action="Add">Add shcool</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="School" asp-action="View">View shcool</a>
-                        </li>
+                        </li>*@
+
+
                     </ul>
+
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a class="nav-link text-dark" asp-controller="Admin" asp-action="Menu">Menu</a>
+                    }
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
