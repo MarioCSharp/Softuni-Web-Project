@@ -48,5 +48,10 @@ namespace Better_Shkolo.Services.GradeService
 
             return true;
         }
+
+        public Grade GetGrade(int id)
+        {
+            return context.Grades.FirstOrDefault(x => x.Id == id);
+        }
     }
 }

@@ -1,7 +1,12 @@
-﻿namespace Better_Shkolo.Models.Teacher
+﻿using Better_Shkolo.Models.Account;
+
+namespace Better_Shkolo.Models.Teacher
 {
     public class TeacherCreateModel
     {
-        public int Id { get; set; }
+        public string UserId { get; set; }
+        public int SchoolId { get; set; }
+
+        public List<UserDisplayModel> Users { get; set; }
     }
 }
