@@ -4,6 +4,7 @@ using Better_Shkolo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Better_Shkolo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230518135505_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +60,7 @@ namespace Better_Shkolo.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Absencess", (string)null);
+                    b.ToTable("Absencess");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Grade", b =>
@@ -91,7 +93,7 @@ namespace Better_Shkolo.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Grades", (string)null);
+                    b.ToTable("Grades");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Mark", b =>
@@ -130,7 +132,7 @@ namespace Better_Shkolo.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Marks", (string)null);
+                    b.ToTable("Marks");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Review", b =>
@@ -171,7 +173,7 @@ namespace Better_Shkolo.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.School", b =>
@@ -200,7 +202,7 @@ namespace Better_Shkolo.Data.Migrations
 
                     b.HasIndex("DirectorId");
 
-                    b.ToTable("Schools", (string)null);
+                    b.ToTable("Schools");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Student", b =>
@@ -240,7 +242,7 @@ namespace Better_Shkolo.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Subject", b =>
@@ -273,7 +275,7 @@ namespace Better_Shkolo.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Subjects", (string)null);
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Teacher", b =>
@@ -298,7 +300,7 @@ namespace Better_Shkolo.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Test", b =>
@@ -337,7 +339,7 @@ namespace Better_Shkolo.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Tests", (string)null);
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.User", b =>

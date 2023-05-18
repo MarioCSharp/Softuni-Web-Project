@@ -10,6 +10,7 @@
             <a asp-controller="Teacher" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add teacher</a>
             <a asp-controller="Subject" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add subject</a>
             <a asp-controller="Grade" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add grade</a>
+            <a asp-controller="Grade" asp-action="View" asp-route-id="@school.Id" class="btn btn-secondary">View grades</a>
         </p>
     }
 </div>

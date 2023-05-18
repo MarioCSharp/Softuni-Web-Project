@@ -32,8 +32,16 @@ namespace Better_Shkolo.Controllers
             var model = new GradeCreateModel()
             {
                 SchoolId = id,
-                Teachers = teacherService.GetAllTeacherInSchool(id, accountService.GetUserId())
+                Teachers = teacherService.GetAllTeacherInSchool(id)
             };
+
+            foreach (var item in model.Teachers.ToArray())
+            {
+                if (context.Grades.Any(x => x.TeacherId == item.Id))
+                {
+                    model.Teachers.Remove(item);
+                }
+            }
 
             return View(model);
         }
@@ -43,7 +51,7 @@ namespace Better_Shkolo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Teachers = teacherService.GetAllTeacherInSchool(model.SchoolId, accountService.GetUserId());
+                model.Teachers = teacherService.GetAllTeacherInSchool(model.SchoolId);
                 return View(model);
             }
 
@@ -85,7 +93,8 @@ namespace Better_Shkolo.Controllers
             {
                 GradeName = grade.GradeName,
                 GradeSpecialty = grade.GradeSpecialty,
-                TeacherId = grade.TeacherId
+                TeacherId = grade.TeacherId,
+                Teachers = teacherService.GetAllTeacherInSchool(grade.SchoolId)
             };
 
             return View(model);
@@ -107,6 +116,17 @@ namespace Better_Shkolo.Controllers
             context.SaveChanges();
 
             return RedirectToAction(nameof(View));
+        }
+
+        [HttpGet]
+        public IActionResult View(int id)
+        {
+            var model = new GradeViewModel()
+            {
+                Grades = gradeService.GetGradesBySchoolId(id),
+            };
+
+            return View(model);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Better_Shkolo.Data
                 entity.HasOne(a => a.Subject)
                     .WithMany()
                     .HasForeignKey(a => a.SubjectId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(a => a.Teacher)
                     .WithMany()
@@ -37,12 +37,12 @@ namespace Better_Shkolo.Data
                 entity.HasOne(a => a.Student)
                     .WithMany(s => s.Absences)
                     .HasForeignKey(a => a.StudentId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(a => a.School)
                     .WithMany()
                     .HasForeignKey(a => a.SchoolId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Grade
@@ -51,12 +51,12 @@ namespace Better_Shkolo.Data
                 entity.HasOne(g => g.Teacher)
                     .WithMany()
                     .HasForeignKey(g => g.TeacherId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(g => g.School)
                     .WithMany(s => s.Grades)
                     .HasForeignKey(g => g.SchoolId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Mark
@@ -70,17 +70,17 @@ namespace Better_Shkolo.Data
                 entity.HasOne(m => m.Teacher)
                     .WithMany()
                     .HasForeignKey(m => m.TeacherId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(m => m.Student)
                     .WithMany(s => s.Marks)
                     .HasForeignKey(m => m.StudentId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(m => m.School)
                     .WithMany()
                     .HasForeignKey(m => m.SchoolId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Review
@@ -94,17 +94,17 @@ namespace Better_Shkolo.Data
                 entity.HasOne(r => r.Teacher)
                     .WithMany()
                     .HasForeignKey(r => r.TeacherId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(r => r.Student)
                     .WithMany(s => s.Reviews)
                     .HasForeignKey(r => r.StudentId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(r => r.School)
                     .WithMany()
                     .HasForeignKey(r => r.SchoolId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // School
@@ -113,7 +113,7 @@ namespace Better_Shkolo.Data
                 entity.HasOne(s => s.Director)
                     .WithMany()
                     .HasForeignKey(s => s.DirectorId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Student

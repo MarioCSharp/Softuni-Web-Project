@@ -43,7 +43,13 @@ namespace Better_Shkolo.Services.GradeService
                 return false;
             }
 
+            foreach (var subject in context.Subjects.Where(x => x.GradeId == grade.Id).ToArray())
+            {
+                context.Subjects.Remove(subject);
+            }
+
             context.Grades.Remove(grade);
+
             context.SaveChanges();
 
             return true;
@@ -52,6 +58,16 @@ namespace Better_Shkolo.Services.GradeService
         public Grade GetGrade(int id)
         {
             return context.Grades.FirstOrDefault(x => x.Id == id);
+        }
+
+        public List<GradeDisplayModel> GetGradesBySchoolId(int schoolId)
+        {
+            return context.Grades.Where(x => x.SchoolId == schoolId)
+                .Select(x => new GradeDisplayModel()
+                {
+                    Id = x.Id,
+                    GradeName = x.GradeName
+                }).ToList();
         }
     }
 }

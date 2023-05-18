@@ -43,7 +43,7 @@ namespace Better_Shkolo.Controllers
                 return View(model);
             }
 
-            var result = teacherService.Create(model);
+            var result = teacherService.Create(model).Result;
 
             if (result)
             {
