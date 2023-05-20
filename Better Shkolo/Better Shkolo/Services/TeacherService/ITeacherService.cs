@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Models.Teacher;
+﻿using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Teacher;
 
 namespace Better_Shkolo.Services.TeacherService
 {
@@ -6,6 +7,7 @@ namespace Better_Shkolo.Services.TeacherService
     {
         List<TeacherDisplayModel> GetAllTeacherInSchool(int schoolId);
         Task<bool> Create(TeacherCreateModel model);
-        bool DeleteTeacher(int id);
+        Task<bool> DeleteTeacher(int id);
+        Teacher GetTeacher(int id);
     }
 }

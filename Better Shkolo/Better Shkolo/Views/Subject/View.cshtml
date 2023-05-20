@@ -1,0 +1,14 @@
+﻿@using Better_Shkolo.Models.Subject;
+@model SubjectViewModel
+
+<div class="list-group">
+    @foreach (var subject in Model.Subjects)
+    {
+        <p class="list-group-item list-group-item-action">
+            @subject.Name
+            <a asp-controller="Subject" asp-action="Delete" asp-route-id="@subject.Id" class="btn btn-danger">Delete</a>
+            <a asp-controller="Subject" asp-action="Edit" asp-route-id="@subject.Id" class="btn btn-danger">Edit</a>
+        </p>
+    }
+</div>
+

@@ -6,11 +6,13 @@
     {
         <p class="list-group-item list-group-item-action">@school.Name - @school.City
             <a asp-controller="School" asp-action="Delete" asp-route-id="@school.Id" class="btn btn-danger">Delete</a>
-            <a asp-controller="School" asp-action="Edit" asp-route-id="@school.Id" class="btn btn-secondary">Edit</a>
-            <a asp-controller="Teacher" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add teacher</a>
-            <a asp-controller="Subject" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add subject</a>
-            <a asp-controller="Grade" asp-action="Create" asp-route-id="@school.Id" class="btn btn-secondary">Add grade</a>
-            <a asp-controller="Grade" asp-action="View" asp-route-id="@school.Id" class="btn btn-secondary">View grades</a>
+            <a asp-controller="School" asp-action="Edit" asp-route-id="@school.Id" class="btn btn-primary">Edit</a>
+            <a asp-controller="Teacher" asp-action="Create" asp-route-id="@school.Id" class="btn btn-primary">Add teacher</a>
+            <a asp-controller="Teacher" asp-action="View" asp-route-id="@school.Id" class="btn btn-primary">View teachers</a>
+            <a asp-controller="Subject" asp-action="Create" asp-route-id="@school.Id" class="btn btn-primary">Add subject</a>
+            <a asp-controller="Subject" asp-action="View" asp-route-id="@school.Id" class="btn btn-primary">View subjects</a>
+            <a asp-controller="Grade" asp-action="Create" asp-route-id="@school.Id" class="btn btn-primary">Add grade</a>
+            <a asp-controller="Grade" asp-action="View" asp-route-id="@school.Id" class="btn btn-primary">View grades</a>
         </p>
     }
 </div>

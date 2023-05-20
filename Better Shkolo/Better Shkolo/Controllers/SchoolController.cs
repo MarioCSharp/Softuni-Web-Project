@@ -78,7 +78,7 @@ namespace Better_Shkolo.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var result = schoolService.DeleteSchool(id);
+            var result = schoolService.DeleteSchool(id).Result;
 
             if (!result)
             {

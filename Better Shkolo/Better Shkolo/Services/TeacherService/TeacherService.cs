@@ -43,7 +43,7 @@ namespace Better_Shkolo.Services.TeacherService
             return countNow + 1 == context.Teachers.Count();
         }
 
-        public bool DeleteTeacher(int id)
+        public async Task<bool> DeleteTeacher(int id)
         {
             var count = context.Teachers.Count();
             var teacher = context.Teachers.FirstOrDefault(x => x.Id == id);
@@ -54,14 +54,17 @@ namespace Better_Shkolo.Services.TeacherService
             }
 
             context.Teachers.Remove(teacher);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+
+            await userManager
+                .RemoveFromRoleAsync(context.Users.FirstOrDefault(x => x.Id == teacher.UserId), "Teacher");
 
             return count - 1 == context.Teachers.Count();
         }
 
         public List<TeacherDisplayModel> GetAllTeacherInSchool(int schoolId)
         {
-            return context.Teachers.Where(x => x.SchoolId == schoolId)
+            var result = context.Teachers.Where(x => x.SchoolId == schoolId)
                 .Select(x => new TeacherDisplayModel
                 {
                     Id = x.Id,
@@ -70,6 +73,13 @@ namespace Better_Shkolo.Services.TeacherService
                     Email = context.Users.FirstOrDefault(y => y.Id == x.UserId).Email,
                     SchoolId = schoolId
                 }).ToList();
+
+            return result;
+        }
+
+        public Teacher GetTeacher(int id)
+        {
+            return context.Teachers.FirstOrDefault(x => x.Id == id);
         }
     }
 }

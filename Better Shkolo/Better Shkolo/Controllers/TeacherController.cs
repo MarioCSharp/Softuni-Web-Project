@@ -1,10 +1,15 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Models.Grade;
+using Better_Shkolo.Models.Subject;
 using Better_Shkolo.Models.Teacher;
 using Better_Shkolo.Services.AccountService;
+using Better_Shkolo.Services.GradeService;
+using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Better_Shkolo.Controllers
 {
@@ -13,13 +18,19 @@ namespace Better_Shkolo.Controllers
     {
         private IAccountService accountService;
         private ITeacherService teacherService;
+        private ISubjectService subjectService;
+        private IGradeService gradeService;
         private ApplicationDbContext context;
         public TeacherController(IAccountService accountService,
                                  ITeacherService teacherService,
+                                 IGradeService gradeService,
+                                 ISubjectService subjectService,
                                  ApplicationDbContext context)
         {
             this.accountService = accountService;
             this.teacherService = teacherService;
+            this.gradeService = gradeService;
+            this.subjectService = subjectService;
             this.context = context;
         }
         [HttpGet]
@@ -57,7 +68,35 @@ namespace Better_Shkolo.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var result = teacherService.DeleteTeacher(id);
+            var teacher = teacherService.GetTeacher(id);
+            var grade = gradeService.GetGradeByTeacherId(teacher.Id);
+            var subjects = subjectService.GetSubjectsByTeacherId(teacher.Id);
+
+            if (subjects.Count > 0)
+            {
+                return RedirectToAction("ToEdit", "Subject", new { id = teacher.Id });
+            }
+
+            var model = new GradeDeleteModel()
+            {
+                GradeName = grade.GradeName,
+                GradeSpecialty = grade.GradeSpecialty,
+                SchoolId = grade.SchoolId,
+                Teachers = teacherService.GetAllTeacherInSchool(teacher.SchoolId).Where(x => x.Id != teacher.Id).ToList(),
+                OldTeacherId = teacher.Id
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(GradeDeleteModel model)
+        {
+            var grade = gradeService.GetGradeByTeacherId(model.OldTeacherId);
+
+            grade.TeacherId = model.TeacherId;
+            await context.SaveChangesAsync();
+
+            var result = teacherService.DeleteTeacher(model.OldTeacherId).Result;
 
             if (!result)
             {
@@ -65,6 +104,17 @@ namespace Better_Shkolo.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult View(int id)
+        {
+            var model = new TeacherViewModel()
+            {
+                Teachers = teacherService.GetAllTeacherInSchool(id)
+            };
+
+            return View(model);
         }
     }
 }

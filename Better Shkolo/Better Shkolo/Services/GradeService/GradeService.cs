@@ -60,6 +60,11 @@ namespace Better_Shkolo.Services.GradeService
             return context.Grades.FirstOrDefault(x => x.Id == id);
         }
 
+        public Grade GetGradeByTeacherId(int teacherId)
+        {
+            return context.Grades.FirstOrDefault(x => x.TeacherId == teacherId);
+        }
+
         public List<GradeDisplayModel> GetGradesBySchoolId(int schoolId)
         {
             return context.Grades.Where(x => x.SchoolId == schoolId)

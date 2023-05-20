@@ -9,5 +9,6 @@ namespace Better_Shkolo.Services.GradeService
         bool DeleteGrade(int id);
         Grade GetGrade(int id);
         List<GradeDisplayModel> GetGradesBySchoolId(int schoolId);
+        Grade GetGradeByTeacherId(int teacherId);
     }
 }

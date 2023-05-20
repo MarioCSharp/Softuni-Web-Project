@@ -73,7 +73,7 @@ namespace Better_Shkolo.Controllers
 
             if (user != null)
             {
-                var result = await signInManager.PasswordSignInAsync(user, loginModel.Password, false, false);
+                var result = await signInManager.PasswordSignInAsync(user, loginModel.Password, true, false);
 
                 if (result.Succeeded)
                 {

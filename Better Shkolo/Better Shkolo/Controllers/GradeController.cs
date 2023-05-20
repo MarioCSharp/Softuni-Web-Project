@@ -76,7 +76,7 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(View));
         }
 
         [HttpGet]

@@ -19,18 +19,18 @@ namespace Better_Shkolo.Services.SchoolService
         {
             var countBefore = context.Schools.Count();
 
-            context.Schools.Add(school);
-            context.SaveChanges();
+            await context.Schools.AddAsync(school);
+            await context.SaveChangesAsync();
 
             await userManager.AddToRoleAsync(context.Users.First(x => x.Id == school.DirectorId), "Director");
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return countBefore + 1 == context.Schools.Count();
         }
 
-        public bool DeleteSchool(int id)
+        public async Task<bool> DeleteSchool(int id)
         {
-            var school = context.Schools.Find(id);
+            var school = await context.Schools.FindAsync(id);
 
             if (school == null)
             {
@@ -38,7 +38,7 @@ namespace Better_Shkolo.Services.SchoolService
             }
 
             context.Schools.Remove(school);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return true;
         }
