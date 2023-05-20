@@ -13,6 +13,8 @@
             <a asp-controller="Subject" asp-action="View" asp-route-id="@school.Id" class="btn btn-primary">View subjects</a>
             <a asp-controller="Grade" asp-action="Create" asp-route-id="@school.Id" class="btn btn-primary">Add grade</a>
             <a asp-controller="Grade" asp-action="View" asp-route-id="@school.Id" class="btn btn-primary">View grades</a>
+            <a asp-controller="Student" asp-action="Add" asp-route-id="@school.Id" class="btn btn-primary">Add student</a>
+            <a asp-controller="Student" asp-action="View" asp-route-id="@school.Id" class="btn btn-primary">View students</a>
         </p>
     }
 </div>

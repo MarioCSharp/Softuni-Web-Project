@@ -55,14 +55,14 @@ namespace Better_Shkolo.Services.GradeService
             return true;
         }
 
-        public Grade GetGrade(int id)
+        public async Task<Grade> GetGrade(int id)
         {
-            return context.Grades.FirstOrDefault(x => x.Id == id);
+            return await context.Grades.FindAsync(id);
         }
 
-        public Grade GetGradeByTeacherId(int teacherId)
+        public async Task<Grade> GetGradeByTeacherId(int teacherId)
         {
-            return context.Grades.FirstOrDefault(x => x.TeacherId == teacherId);
+            return await context.Grades.FindAsync(teacherId);
         }
 
         public List<GradeDisplayModel> GetGradesBySchoolId(int schoolId)

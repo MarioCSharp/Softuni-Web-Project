@@ -80,9 +80,9 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var grade = gradeService.GetGrade(id);
+            var grade = await gradeService.GetGrade(id);
 
             if (grade == null)
             {
@@ -100,14 +100,14 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Edit(GradeCreateModel model, int id)
+        public async Task<IActionResult> Edit(GradeCreateModel model, int id)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var school = gradeService.GetGrade(id);
+            var school = await gradeService.GetGrade(id);
 
             school.GradeName = model.GradeName;
             school.GradeSpecialty = model.GradeSpecialty;

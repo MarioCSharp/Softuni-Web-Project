@@ -7,8 +7,8 @@ namespace Better_Shkolo.Services.GradeService
     {
         Task<bool> Create(GradeCreateModel model);
         bool DeleteGrade(int id);
-        Grade GetGrade(int id);
+        Task<Grade> GetGrade(int id);
         List<GradeDisplayModel> GetGradesBySchoolId(int schoolId);
-        Grade GetGradeByTeacherId(int teacherId);
+        Task<Grade> GetGradeByTeacherId(int teacherId);
     }
 }

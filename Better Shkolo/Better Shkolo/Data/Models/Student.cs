@@ -17,6 +17,8 @@ namespace Better_Shkolo.Data.Models
         [Required]
         public int GradeTeacherId { get; set; }
         public Teacher GradeTeacher { get; set; }
+        public int? ParentId { get; set; }
+        public Parent Parent { get; set; }
         public List<Mark> Marks { get; set; }
         public List<Absences> Absences { get; set; }
         public List<Review> Reviews { get; set; }

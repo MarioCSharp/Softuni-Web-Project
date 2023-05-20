@@ -4,6 +4,7 @@ using Better_Shkolo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Better_Shkolo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230520071614_parentAdded")]
+    partial class parentAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,7 +157,7 @@ namespace Better_Shkolo.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Parents");
+                    b.ToTable("Parent");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Review", b =>
@@ -242,7 +244,7 @@ namespace Better_Shkolo.Data.Migrations
                     b.Property<int>("GradeTeacherId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParentId")
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
                     b.Property<int>("SchoolId")
@@ -270,7 +272,7 @@ namespace Better_Shkolo.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Students");
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("Better_Shkolo.Data.Models.Subject", b =>
@@ -753,7 +755,8 @@ namespace Better_Shkolo.Data.Migrations
                     b.HasOne("Better_Shkolo.Data.Models.Parent", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Better_Shkolo.Data.Models.School", "School")
                         .WithMany("Students")

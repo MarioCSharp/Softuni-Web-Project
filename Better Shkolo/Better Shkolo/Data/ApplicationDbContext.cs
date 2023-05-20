@@ -15,6 +15,8 @@ namespace Better_Shkolo.Data
         public DbSet<Mark> Marks { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<School> Schools { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Parent> Parents { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Test> Tests { get; set; }
@@ -22,6 +24,7 @@ namespace Better_Shkolo.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Absence
             modelBuilder.Entity<Absences>(entity =>
             {
                 entity.HasOne(a => a.Subject)
@@ -138,6 +141,11 @@ namespace Better_Shkolo.Data
                     .WithMany()
                     .HasForeignKey(s => s.GradeTeacherId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(s => s.Parent)
+                    .WithMany()
+                    .HasForeignKey(s => s.ParentId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Teacher
@@ -197,6 +205,20 @@ namespace Better_Shkolo.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
+            //Parent
+
+            modelBuilder.Entity<Parent>(entity =>
+            {
+                entity.HasOne(p => p.User)
+                    .WithOne()
+                    .HasForeignKey<Parent>(p => p.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(p => p.Student)
+                    .WithMany()
+                    .HasForeignKey(p => p.StudentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

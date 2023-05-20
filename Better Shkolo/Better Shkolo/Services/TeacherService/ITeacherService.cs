@@ -8,6 +8,6 @@ namespace Better_Shkolo.Services.TeacherService
         List<TeacherDisplayModel> GetAllTeacherInSchool(int schoolId);
         Task<bool> Create(TeacherCreateModel model);
         Task<bool> DeleteTeacher(int id);
-        Teacher GetTeacher(int id);
+        Task<Teacher> GetTeacher(int id);
     }
 }

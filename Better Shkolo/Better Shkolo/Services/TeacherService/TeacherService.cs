@@ -77,9 +77,9 @@ namespace Better_Shkolo.Services.TeacherService
             return result;
         }
 
-        public Teacher GetTeacher(int id)
+        public async Task<Teacher> GetTeacher(int id)
         {
-            return context.Teachers.FirstOrDefault(x => x.Id == id);
+            return await context.Teachers.FindAsync(id);
         }
     }
 }

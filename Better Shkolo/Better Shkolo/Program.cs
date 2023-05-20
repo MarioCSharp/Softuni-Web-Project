@@ -3,6 +3,7 @@ using Better_Shkolo.Data.Models;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
 using Better_Shkolo.Services.SchoolService;
+using Better_Shkolo.Services.StudentService;
 using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +44,7 @@ namespace Better_Shkolo
             builder.Services.AddTransient<IGradeService, GradeService>();
             builder.Services.AddTransient<ITeacherService, TeacherService>();
             builder.Services.AddTransient<ISubjectService, SubjectService>();
+            builder.Services.AddTransient<IStudentService, StudentService>();
 
             var app = builder.Build();
 

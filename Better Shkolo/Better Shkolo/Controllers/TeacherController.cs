@@ -66,10 +66,10 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var teacher = teacherService.GetTeacher(id);
-            var grade = gradeService.GetGradeByTeacherId(teacher.Id);
+            var teacher = await teacherService.GetTeacher(id);
+            var grade = await gradeService.GetGradeByTeacherId(teacher.Id);
             var subjects = subjectService.GetSubjectsByTeacherId(teacher.Id);
 
             if (subjects.Count > 0)
@@ -91,7 +91,7 @@ namespace Better_Shkolo.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(GradeDeleteModel model)
         {
-            var grade = gradeService.GetGradeByTeacherId(model.OldTeacherId);
+            var grade = await gradeService.GetGradeByTeacherId(model.OldTeacherId);
 
             grade.TeacherId = model.TeacherId;
             await context.SaveChangesAsync();

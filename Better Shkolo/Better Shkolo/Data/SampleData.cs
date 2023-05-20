@@ -28,6 +28,12 @@ namespace Better_Shkolo.Data
             Task
                 .Run(async () =>
                 {
+                    if (!await roleManager.RoleExistsAsync("Parent"))
+                    {
+                        var parent = new IdentityRole("Parent");
+
+                        await roleManager.CreateAsync(parent);
+                    }
                     if (await roleManager.RoleExistsAsync("Administrator"))
                     {
                         return;
