@@ -14,7 +14,7 @@ namespace Better_Shkolo.Services.SubjectService
         }
         public async Task<bool> Create(SubjectCreateModel model)
         {
-            var count = context.Subjects.Count();
+            var count = await context.Subjects.CountAsync();
 
             var subject = new Subject()
             {
@@ -27,7 +27,7 @@ namespace Better_Shkolo.Services.SubjectService
             await context.Subjects.AddAsync(subject);
             await context.SaveChangesAsync();
 
-            return count + 1 == context.Subjects.Count();
+            return count + 1 == await context.Subjects.CountAsync();
         }
 
         public async Task<bool> DeleteSubject(int id)
@@ -47,30 +47,30 @@ namespace Better_Shkolo.Services.SubjectService
             return count - 1 == await context.Subjects.CountAsync();
         }
 
-        public Subject GetSubject(int id)
+        public async Task<Subject> GetSubject(int id)
         {
-            return context.Subjects.FirstOrDefault(x => x.Id == id);
+            return await context.Subjects.FindAsync(id);
         }
 
-        public List<SubjectDisplayModel> GetSubjectsBySchoolId(int Id)
+        public async Task<List<SubjectDisplayModel>> GetSubjectsBySchoolId(int Id)
         {
-            return context.Subjects.Where(x => x.SchoolId == Id).Select(x => new SubjectDisplayModel
+            return await context.Subjects.Where(x => x.SchoolId == Id).Select(x => new SubjectDisplayModel
             {
                 Id = x.Id,
                 TeacherId = x.TeacherId,
                 Name = x.Name,
-            }).ToList();
+            }).ToListAsync();
         }
 
-        public List<SubjectDisplayModel> GetSubjectsByTeacherId(int id)
+        public async Task<List<SubjectDisplayModel>> GetSubjectsByTeacherId(int id)
         {
-            var result = context.Subjects.Where(x => x.TeacherId == id)
+            var result = await context.Subjects.Where(x => x.TeacherId == id)
                     .Select(x => new SubjectDisplayModel()
                     {
                         Id = x.Id,
                         Name = x.Name,
                         TeacherId = x.TeacherId
-                    }).ToList();
+                    }).ToListAsync();
 
             return result;
         }

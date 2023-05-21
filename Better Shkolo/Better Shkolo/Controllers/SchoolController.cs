@@ -24,21 +24,21 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             var model = new SchoolCreateModel()
             {
-                AvailableUsers = accountService.GetAllAvailabeUsers().Result
+                AvailableUsers = await accountService.GetAllAvailabeUsers()
             };
 
             return View(model);
         }
         [HttpPost]
-        public IActionResult Add(SchoolCreateModel model) 
+        public async Task<IActionResult> Add(SchoolCreateModel model) 
         {
             if (!ModelState.IsValid)
             {
-                model.AvailableUsers = accountService.GetAllAvailabeUsers().Result;
+                model.AvailableUsers = await accountService.GetAllAvailabeUsers();
 
                 return View(model);
             }
@@ -50,23 +50,23 @@ namespace Better_Shkolo.Controllers
                 DirectorId = model.DirectorId
             };
 
-            var result = schoolService.AddSchool(school).Result;
+            var result = await schoolService.AddSchool(school);
 
             if (result)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            model.AvailableUsers = accountService.GetAllAvailabeUsers().Result;
+            model.AvailableUsers = await accountService.GetAllAvailabeUsers();
 
             ModelState.AddModelError("", "Someting went wrong!");
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult View()
+        public async Task<IActionResult> View()
         {
-            var allSchools = schoolService.GetAllSchools();
+            var allSchools = await schoolService.GetAllSchools();
 
             var model = new SchoolDisplayModel()
             {
@@ -76,9 +76,9 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = schoolService.DeleteSchool(id).Result;
+            var result = await schoolService.DeleteSchool(id);
 
             if (!result)
             {
@@ -89,9 +89,9 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var school = schoolService.GetSchool(id);
+            var school = await schoolService.GetSchool(id);
 
             if (school == null)
             {
@@ -109,14 +109,14 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Edit(SchoolCreateModel model, int id)
+        public async Task<IActionResult> Edit(SchoolCreateModel model, int id)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var school = schoolService.GetSchool(id);
+            var school = await schoolService.GetSchool(id);
 
             school.Name = model.Name;
             school.City = model.City;

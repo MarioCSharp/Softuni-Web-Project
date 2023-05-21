@@ -2,6 +2,7 @@
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Teacher;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.TeacherService
 {
@@ -18,7 +19,7 @@ namespace Better_Shkolo.Services.TeacherService
 
         public async Task<bool> Create(TeacherCreateModel model)
         {
-            var countNow = context.Teachers.Count();
+            var countNow = await context.Teachers.CountAsync();
 
             var teacher = new Teacher()
             {
@@ -29,7 +30,7 @@ namespace Better_Shkolo.Services.TeacherService
             await context.Teachers.AddAsync(teacher);
             await context.SaveChangesAsync();
 
-            var user = context.Users.FirstOrDefault(x => x.Id == model.UserId);
+            var user = await context.Users.FindAsync(model.UserId);
 
             if (user != null)
             {
@@ -40,13 +41,13 @@ namespace Better_Shkolo.Services.TeacherService
                 return false;
             }
 
-            return countNow + 1 == context.Teachers.Count();
+            return countNow + 1 == await context.Teachers.CountAsync();
         }
 
         public async Task<bool> DeleteTeacher(int id)
         {
-            var count = context.Teachers.Count();
-            var teacher = context.Teachers.FirstOrDefault(x => x.Id == id);
+            var count = await context.Teachers.CountAsync();
+            var teacher = await context.Teachers.FindAsync(id);
 
             if (teacher is null)
             {
@@ -59,12 +60,12 @@ namespace Better_Shkolo.Services.TeacherService
             await userManager
                 .RemoveFromRoleAsync(context.Users.FirstOrDefault(x => x.Id == teacher.UserId), "Teacher");
 
-            return count - 1 == context.Teachers.Count();
+            return count - 1 == await context.Teachers.CountAsync();
         }
 
-        public List<TeacherDisplayModel> GetAllTeacherInSchool(int schoolId)
+        public async Task<List<TeacherDisplayModel>> GetAllTeacherInSchool(int schoolId)
         {
-            var result = context.Teachers.Where(x => x.SchoolId == schoolId)
+            var result = await context.Teachers.Where(x => x.SchoolId == schoolId)
                 .Select(x => new TeacherDisplayModel
                 {
                     Id = x.Id,
@@ -72,7 +73,7 @@ namespace Better_Shkolo.Services.TeacherService
                     LastName = context.Users.FirstOrDefault(y => y.Id == x.UserId).LastName,
                     Email = context.Users.FirstOrDefault(y => y.Id == x.UserId).Email,
                     SchoolId = schoolId
-                }).ToList();
+                }).ToListAsync();
 
             return result;
         }

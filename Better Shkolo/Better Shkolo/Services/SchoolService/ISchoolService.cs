@@ -7,7 +7,7 @@ namespace Better_Shkolo.Services.SchoolService
     {
         Task<bool> AddSchool(School school);
         Task<bool> DeleteSchool(int id);
-        School GetSchool(int id);
-        List<SchoolViewModel> GetAllSchools();
+        Task<School> GetSchool(int id);
+        Task<List<SchoolViewModel>> GetAllSchools();
     }
 }

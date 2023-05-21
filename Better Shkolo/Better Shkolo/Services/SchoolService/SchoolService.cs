@@ -2,6 +2,7 @@
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.School;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.SchoolService
 {
@@ -22,10 +23,10 @@ namespace Better_Shkolo.Services.SchoolService
             await context.Schools.AddAsync(school);
             await context.SaveChangesAsync();
 
-            await userManager.AddToRoleAsync(context.Users.First(x => x.Id == school.DirectorId), "Director");
+            await userManager.AddToRoleAsync(await context.Users.FindAsync(school.DirectorId), "Director");
             await context.SaveChangesAsync();
 
-            return countBefore + 1 == context.Schools.Count();
+            return countBefore + 1 == await context.Schools.CountAsync();
         }
 
         public async Task<bool> DeleteSchool(int id)
@@ -43,19 +44,19 @@ namespace Better_Shkolo.Services.SchoolService
             return true;
         }
 
-        public List<SchoolViewModel> GetAllSchools()
+        public async Task<List<SchoolViewModel>> GetAllSchools()
         {
-            return context.Schools.Select(x => new SchoolViewModel
-            {
+            return await context.Schools.Select(x => new SchoolViewModel 
+            { 
                 Id = x.Id,
                 Name = x.Name,
-                City = x.City,
-            }).ToList();
+                City = x.City 
+            }).ToListAsync();
         }
 
-        public School GetSchool(int id)
+        public async Task<School> GetSchool(int id)
         {
-            var school = context.Schools.FirstOrDefault(x => x.Id == id);
+            var school = await context.Schools.FindAsync(id);
 
             return school;
         }

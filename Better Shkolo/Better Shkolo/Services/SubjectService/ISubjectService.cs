@@ -6,9 +6,9 @@ namespace Better_Shkolo.Services.SubjectService
     public interface ISubjectService
     {
         Task<bool> Create(SubjectCreateModel model);
-        List<SubjectDisplayModel> GetSubjectsByTeacherId(int id);
-        List<SubjectDisplayModel> GetSubjectsBySchoolId(int Id);
-        Subject GetSubject(int id);
+        Task<List<SubjectDisplayModel>> GetSubjectsByTeacherId(int id);
+        Task<List<SubjectDisplayModel>> GetSubjectsBySchoolId(int Id);
+        Task<Subject> GetSubject(int id);
         Task<bool> DeleteSubject(int id);
     }
 }

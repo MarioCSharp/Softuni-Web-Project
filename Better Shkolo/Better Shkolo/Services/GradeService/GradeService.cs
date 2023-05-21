@@ -1,6 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Grade;
+using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.GradeService
 {
@@ -13,7 +14,7 @@ namespace Better_Shkolo.Services.GradeService
         }
         public async Task<bool> Create(GradeCreateModel model)
         {
-            var count = context.Grades.Count();
+            var count = await context.Grades.CountAsync();
 
             var grade = new Grade()
             {
@@ -26,7 +27,7 @@ namespace Better_Shkolo.Services.GradeService
             await context.Grades.AddAsync(grade);
             await context.SaveChangesAsync();
 
-            if (count + 1 == context.Grades.Count())
+            if (count + 1 == await context.Grades.CountAsync())
             {
                 return true;
             }
@@ -34,9 +35,9 @@ namespace Better_Shkolo.Services.GradeService
             return false;
         }
 
-        public bool DeleteGrade(int id)
+        public async Task<bool> DeleteGrade(int id)
         {
-            var grade = context.Grades.Find(id);
+            var grade = await context.Grades.FindAsync(id);
 
             if (grade == null)
             {
@@ -50,7 +51,7 @@ namespace Better_Shkolo.Services.GradeService
 
             context.Grades.Remove(grade);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return true;
         }
@@ -65,14 +66,14 @@ namespace Better_Shkolo.Services.GradeService
             return await context.Grades.FindAsync(teacherId);
         }
 
-        public List<GradeDisplayModel> GetGradesBySchoolId(int schoolId)
+        public async Task<List<GradeDisplayModel>> GetGradesBySchoolId(int schoolId)
         {
-            return context.Grades.Where(x => x.SchoolId == schoolId)
+            return await context.Grades.Where(x => x.SchoolId == schoolId)
                 .Select(x => new GradeDisplayModel()
                 {
                     Id = x.Id,
                     GradeName = x.GradeName
-                }).ToList();
+                }).ToListAsync();
         }
     }
 }

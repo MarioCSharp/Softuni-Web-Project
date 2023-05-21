@@ -28,30 +28,30 @@ namespace Better_Shkolo.Controllers
             this.context = context;
         }
         [HttpGet]
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
             var model = new SubjectCreateModel()
             {
                 SchoolId = id,
-                TeachersInSchool = teacherService.GetAllTeacherInSchool(id),
-                GradesInSchool = gradeService.GetGradesBySchoolId(id)
+                TeachersInSchool = await teacherService.GetAllTeacherInSchool(id),
+                GradesInSchool = await gradeService.GetGradesBySchoolId(id)
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Create(SubjectCreateModel model)
+        public async Task<IActionResult> Create(SubjectCreateModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.TeachersInSchool = teacherService.GetAllTeacherInSchool(model.SchoolId);
-                model.GradesInSchool = gradeService.GetGradesBySchoolId(model.SchoolId);
+                model.TeachersInSchool = await teacherService.GetAllTeacherInSchool(model.SchoolId);
+                model.GradesInSchool = await gradeService.GetGradesBySchoolId(model.SchoolId);
 
                 return View(model);
             }
 
-            var result = subjectService.Create(model).Result;
+            var result = await subjectService.Create(model);
 
             if (result)
             {
@@ -62,20 +62,20 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        public IActionResult View(int id)
+        public async Task<IActionResult> View(int id)
         {
             var model = new SubjectViewModel()
             {
-                Subjects = subjectService.GetSubjectsBySchoolId(id),
+                Subjects = await subjectService.GetSubjectsBySchoolId(id),
             };
 
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult ToEdit(int id)
+        public async Task<IActionResult> ToEdit(int id)
         {
-            var subjects = subjectService.GetSubjectsByTeacherId(id);
+            var subjects = await subjectService.GetSubjectsByTeacherId(id);
 
             var model = new SubjectViewModel()
             {
@@ -85,9 +85,9 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var subject = subjectService.GetSubject(id);
+            var subject = await subjectService.GetSubject(id);
 
             if (subject == null)
             {
@@ -100,8 +100,8 @@ namespace Better_Shkolo.Controllers
                 TeacherId = subject.TeacherId,
                 SchoolId = subject.SchoolId,
                 GradeId = subject.GradeId,
-                TeachersInSchool = teacherService.GetAllTeacherInSchool(subject.SchoolId),
-                GradesInSchool = gradeService.GetGradesBySchoolId(subject.SchoolId)
+                TeachersInSchool = await teacherService.GetAllTeacherInSchool(subject.SchoolId),
+                GradesInSchool = await gradeService.GetGradesBySchoolId(subject.SchoolId)
             };
 
             return View(model);
@@ -114,7 +114,7 @@ namespace Better_Shkolo.Controllers
                 return View(model);
             }
 
-            var subject = subjectService.GetSubject(id);
+            var subject = await subjectService.GetSubject(id);
 
             subject.Name = model.Name;
             subject.SchoolId = model.SchoolId;

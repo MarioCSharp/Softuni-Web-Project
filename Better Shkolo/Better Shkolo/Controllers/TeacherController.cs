@@ -1,6 +1,5 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Subject;
 using Better_Shkolo.Models.Teacher;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
@@ -8,8 +7,6 @@ using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Text;
 
 namespace Better_Shkolo.Controllers
 {
@@ -70,7 +67,7 @@ namespace Better_Shkolo.Controllers
         {
             var teacher = await teacherService.GetTeacher(id);
             var grade = await gradeService.GetGradeByTeacherId(teacher.Id);
-            var subjects = subjectService.GetSubjectsByTeacherId(teacher.Id);
+            var subjects = await subjectService.GetSubjectsByTeacherId(teacher.Id);
 
             if (subjects.Count > 0)
             {
@@ -82,9 +79,11 @@ namespace Better_Shkolo.Controllers
                 GradeName = grade.GradeName,
                 GradeSpecialty = grade.GradeSpecialty,
                 SchoolId = grade.SchoolId,
-                Teachers = teacherService.GetAllTeacherInSchool(teacher.SchoolId).Where(x => x.Id != teacher.Id).ToList(),
+                Teachers = await teacherService.GetAllTeacherInSchool(teacher.SchoolId),
                 OldTeacherId = teacher.Id
             };
+
+            model.Teachers = model.Teachers.Where(x => x.Id != teacher.Id).ToList();
 
             return View(model);
         }
@@ -96,7 +95,7 @@ namespace Better_Shkolo.Controllers
             grade.TeacherId = model.TeacherId;
             await context.SaveChangesAsync();
 
-            var result = teacherService.DeleteTeacher(model.OldTeacherId).Result;
+            var result = await teacherService.DeleteTeacher(model.OldTeacherId);
 
             if (!result)
             {
@@ -107,11 +106,11 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult View(int id)
+        public async Task<IActionResult> View(int id)
         {
             var model = new TeacherViewModel()
             {
-                Teachers = teacherService.GetAllTeacherInSchool(id)
+                Teachers = await teacherService.GetAllTeacherInSchool(id)
             };
 
             return View(model);

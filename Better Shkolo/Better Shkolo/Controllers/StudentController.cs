@@ -23,13 +23,13 @@ namespace Better_Shkolo.Controllers
             this.gradeService = gradeService;
         }
         [HttpGet]
-        public IActionResult Add(int id)
+        public async Task<IActionResult> Add(int id)
         {
             var model = new StudentCreateModel()
             {
                 SchoolId = id,
-                Users = accountService.GetAllAvailabeUsers().Result,
-                Grades = gradeService.GetGradesBySchoolId(id),
+                Users = await accountService.GetAllAvailabeUsers(),
+                Grades = await gradeService.GetGradesBySchoolId(id),
             };
 
             return View(model);
@@ -40,7 +40,7 @@ namespace Better_Shkolo.Controllers
             if (!ModelState.IsValid)
             {
                 model.Users = await accountService.GetAllAvailabeUsers();
-                model.Grades = gradeService.GetGradesBySchoolId(model.SchoolId);
+                model.Grades = await gradeService.GetGradesBySchoolId(model.SchoolId);
                 return View(model);
             }
 
@@ -52,17 +52,17 @@ namespace Better_Shkolo.Controllers
             }
 
             model.Users = await accountService.GetAllAvailabeUsers();
-            model.Grades = gradeService.GetGradesBySchoolId(model.SchoolId);
+            model.Grades = await gradeService.GetGradesBySchoolId(model.SchoolId);
 
             ModelState.AddModelError("", "Something went wrong!");
             return View(model);
         }
         [HttpGet]
-        public IActionResult View(int id)
+        public async Task<IActionResult> View(int id)
         {
             var model = new StudentViewModel()
             {
-                Students = studentService.GetStudentsInSchool(id)
+                Students = await studentService.GetStudentsInSchool(id)
             };
 
             return View(model);
@@ -107,7 +107,7 @@ namespace Better_Shkolo.Controllers
                 UserId = student.UserId,
                 GradeId = student.GradeId,
                 SchoolId = student.SchoolId,
-                Grades = gradeService.GetGradesBySchoolId(student.SchoolId),
+                Grades = await gradeService.GetGradesBySchoolId(student.SchoolId),
             };
 
             return View(model);

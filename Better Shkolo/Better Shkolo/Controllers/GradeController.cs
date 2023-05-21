@@ -27,12 +27,12 @@ namespace Better_Shkolo.Controllers
             this.context = context;
         }
         [HttpGet]
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
             var model = new GradeCreateModel()
             {
                 SchoolId = id,
-                Teachers = teacherService.GetAllTeacherInSchool(id)
+                Teachers = await teacherService.GetAllTeacherInSchool(id)
             };
 
             foreach (var item in model.Teachers.ToArray())
@@ -47,15 +47,15 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(GradeCreateModel model)
+        public async Task<IActionResult> Create(GradeCreateModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Teachers = teacherService.GetAllTeacherInSchool(model.SchoolId);
+                model.Teachers = await teacherService.GetAllTeacherInSchool(model.SchoolId);
                 return View(model);
             }
 
-            var result = gradeService.Create(model).Result;
+            var result = await gradeService.Create(model);
 
             if (result)
             {
@@ -67,9 +67,9 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = gradeService.DeleteGrade(id);
+            var result = await gradeService.DeleteGrade(id);
 
             if (!result)
             {
@@ -94,7 +94,7 @@ namespace Better_Shkolo.Controllers
                 GradeName = grade.GradeName,
                 GradeSpecialty = grade.GradeSpecialty,
                 TeacherId = grade.TeacherId,
-                Teachers = teacherService.GetAllTeacherInSchool(grade.SchoolId)
+                Teachers = await teacherService.GetAllTeacherInSchool(grade.SchoolId)
             };
 
             return View(model);
@@ -119,11 +119,11 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        public IActionResult View(int id)
+        public async Task<IActionResult> View(int id)
         {
             var model = new GradeViewModel()
             {
-                Grades = gradeService.GetGradesBySchoolId(id),
+                Grades = await gradeService.GetGradesBySchoolId(id),
             };
 
             return View(model);
