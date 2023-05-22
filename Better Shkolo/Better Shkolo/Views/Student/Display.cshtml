@@ -1,0 +1,14 @@
+﻿@using Better_Shkolo.Models.Student;
+@model StudentViewModel
+
+<div class="list-group">
+    @foreach (var student in Model.Students)
+    {
+        <p class="list-group-item list-group-item-action">
+            @student.FirstName @student.LastName - @student.Email
+            <a asp-controller="Absences" asp-action="Add" asp-route-id="@student.Id" asp-route-subjecId="@Model.SubjectId" class="btn btn-danger">Add absence</a>
+            <a asp-controller="Mark" asp-action="Add" asp-route-id="@student.Id" class="btn btn-danger">Add mark</a>
+            <a asp-controller="Review" asp-action="Add" asp-route-id="@student.Id" class="btn btn-danger">Add review</a>
+        </p>
+    }
+</div>

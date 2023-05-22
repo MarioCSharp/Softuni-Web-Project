@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize(Roles = "Administrator,Director")]
+    [Authorize(Policy = "CanAccessTeachers")]
     public class TeacherController : Controller
     {
         private IAccountService accountService;

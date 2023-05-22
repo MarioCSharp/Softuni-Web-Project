@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Policy = "CanAccessAdminMenu")]
     public class AdminController : Controller
     {
         public IActionResult Menu()

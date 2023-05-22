@@ -1,0 +1,10 @@
+﻿@using Better_Shkolo.Models.Absence;
+@model AbsencesAddModel
+
+<form method="post">
+    <h3>Are you sure you want to add an absences to @Model.FirstName @Model.LastName - @Model.Email ?</h3>
+    <input asp-for="SubjectId" type="hidden"/>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+</form>

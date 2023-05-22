@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Absence;
 using Better_Shkolo.Models.Parent;
 using Better_Shkolo.Models.Student;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,7 @@ namespace Better_Shkolo.Services.StudentService
         public StudentService(ApplicationDbContext context,
                               UserManager<User> userManager)
         {
-            this.context = context;    
+            this.context = context;
             this.userManager = userManager;
         }
         public async Task<bool> Add(StudentCreateModel model)
@@ -109,15 +110,47 @@ namespace Better_Shkolo.Services.StudentService
             return await context.Students.FindAsync(id);
         }
 
-        public async Task<List<StudentDisplayModel>> GetStudentsInSchool(int id)
+        public async Task<AbsencesAddModel> GetStudentModel(int id)
+        {
+            var student = await context.Students.FindAsync(id);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == student.UserId);
+
+            var model = new AbsencesAddModel();
+            
+            model.Id = id;
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.Email = user.Email;
+            model.SchoolId = student.SchoolId;
+
+            return model;
+        }
+
+        public async Task<List<StudentDisplayModel>> GetStudentsInSchool(int id) //TODO: make async
         {
             return await context.Students.Where(x => x.SchoolId == id)
                 .Select(x => new StudentDisplayModel
                 {
                     Id = x.Id,
-                    FirstName =  context.Users.FirstOrDefault(y => y.Id == x.UserId).FirstName,
-                    LastName =  context.Users.FirstOrDefault(y => y.Id == x.UserId).LastName,
-                    Email =  context.Users.FirstOrDefault(y => y.Id == x.UserId).Email,
+                    FirstName = context.Users.FirstOrDefault(y => y.Id == x.UserId).FirstName,
+                    LastName = context.Users.FirstOrDefault(y => y.Id == x.UserId).LastName,
+                    Email = context.Users.FirstOrDefault(y => y.Id == x.UserId).Email,
+                    SchoolId = x.SchoolId,
+                    SchoolName = context.Schools.FirstOrDefault(y => y.Id == x.SchoolId).Name,
+                }).ToListAsync();
+        }
+
+        public async Task<List<StudentDisplayModel>> GetStudentsInSubject(int id)
+        {
+            var subject = await context.Subjects.FindAsync(id);
+
+            return await context.Students.Where(x => x.GradeId == subject.GradeId)
+                .Select(x => new StudentDisplayModel()
+                {
+                    Id = x.Id,
+                    FirstName = context.Users.FirstOrDefault(y => y.Id == x.UserId).FirstName,
+                    LastName = context.Users.FirstOrDefault(y => y.Id == x.UserId).LastName,
+                    Email = context.Users.FirstOrDefault(y => y.Id == x.UserId).Email,
                     SchoolId = x.SchoolId,
                     SchoolName = context.Schools.FirstOrDefault(y => y.Id == x.SchoolId).Name,
                 }).ToListAsync();

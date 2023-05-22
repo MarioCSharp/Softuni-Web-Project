@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Better_Shkolo.Data.Models
@@ -9,8 +8,7 @@ namespace Better_Shkolo.Data.Models
         public int Id { get; set; }
         [Required]
         public DateTime AddedOn { get; set; }
-        [Required]
-        public DateTime ExcusedOn { get; set; }
+        public DateTime? ExcusedOn { get; set; }
         [Required]
         public int SubjectId { get; set; }
         public Subject Subject { get; set; }

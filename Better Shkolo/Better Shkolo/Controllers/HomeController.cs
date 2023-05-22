@@ -11,7 +11,6 @@ namespace Better_Shkolo.Controllers
         {
         }
 
-        [Authorize(Roles = "Administrator")]
         public IActionResult Index()
         {
             return View();

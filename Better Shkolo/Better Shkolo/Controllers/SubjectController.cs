@@ -1,12 +1,9 @@
 ﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.School;
 using Better_Shkolo.Models.Subject;
-using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.SchoolService;
 using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
@@ -28,6 +25,7 @@ namespace Better_Shkolo.Controllers
             this.context = context;
         }
         [HttpGet]
+        [Authorize(Policy = "CanEditDeleteAndCreateSubjects")]
         public async Task<IActionResult> Create(int id)
         {
             var model = new SubjectCreateModel()
@@ -41,6 +39,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "CanEditDeleteAndCreateSubjects")]
         public async Task<IActionResult> Create(SubjectCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -62,6 +61,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
+        [Authorize(Policy = "CanViewSubjects")]
         public async Task<IActionResult> View(int id)
         {
             var model = new SubjectViewModel()
@@ -71,8 +71,20 @@ namespace Better_Shkolo.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        [Authorize(Roles = "Teacher")]
+        public async Task<IActionResult> Manage()
+        {
+            var model = new SubjectViewModel()
+            {
+                Subjects = await subjectService.GetSubjectsByUser(),
+            };
+
+            return View(model);
+        }
 
         [HttpGet]
+        [Authorize(Policy = "CanEditDeleteAndCreateSubjects")]
         public async Task<IActionResult> ToEdit(int id)
         {
             var subjects = await subjectService.GetSubjectsByTeacherId(id);
@@ -85,6 +97,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "CanEditDeleteAndCreateSubjects")]
         public async Task<IActionResult> Edit(int id)
         {
             var subject = await subjectService.GetSubject(id);
@@ -107,6 +120,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "CanEditDeleteAndCreateSubjects")]
         public async Task<IActionResult> Edit(SubjectCreateModel model, int id)
         {
             if (!ModelState.IsValid)
@@ -127,6 +141,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "CanEditDeleteAndCreateSubjects")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = subjectService.DeleteSubject(id).Result;

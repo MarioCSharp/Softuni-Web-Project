@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Policy = "CanAccessSchools")]
     public class SchoolController : Controller
     {
         private IAccountService accountService;

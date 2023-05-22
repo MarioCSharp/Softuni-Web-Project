@@ -1,6 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Subject;
+using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.SubjectService
@@ -8,9 +9,12 @@ namespace Better_Shkolo.Services.SubjectService
     public class SubjectService : ISubjectService
     {
         private ApplicationDbContext context;
-        public SubjectService(ApplicationDbContext context)
+        private IAccountService accountService;
+        public SubjectService(ApplicationDbContext context,
+                              IAccountService accountService)
         {
             this.context = context;
+            this.accountService = accountService;
         }
         public async Task<bool> Create(SubjectCreateModel model)
         {
@@ -73,6 +77,21 @@ namespace Better_Shkolo.Services.SubjectService
                     }).ToListAsync();
 
             return result;
+        }
+
+        public async Task<List<SubjectDisplayModel>> GetSubjectsByUser()
+        {
+            var userId = accountService.GetUserId();
+
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            return await context.Subjects.Where(x => x.TeacherId == teacher.Id)
+                .Select(x => new SubjectDisplayModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    TeacherId = teacher.Id
+                }).ToListAsync() ;
         }
     }
 }

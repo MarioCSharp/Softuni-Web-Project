@@ -1,5 +1,6 @@
 using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
+using Better_Shkolo.Services.AbsenceService;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
 using Better_Shkolo.Services.SchoolService;
@@ -34,6 +35,44 @@ namespace Better_Shkolo
             builder.Services.AddControllers(
                 options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanViewSubjects", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Teacher") || context.User.IsInRole("Student")
+                || context.User.IsInRole("Parent") || context.User.IsInRole("Administrator")
+                || context.User.IsInRole("Director")));
+
+                options.AddPolicy("CanEditDeleteAndCreateSubjects", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanAccessTeachers", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanAccessStudents", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanAccessSchools", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanEditDeleteAndCreateGrades", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanViewGrades", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")
+                || context.User.IsInRole("Teacher")));
+
+                options.AddPolicy("CanAccessAdminMenu", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Administrator")));
+            });
+
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
@@ -44,6 +83,7 @@ namespace Better_Shkolo
             builder.Services.AddTransient<IGradeService, GradeService>();
             builder.Services.AddTransient<ITeacherService, TeacherService>();
             builder.Services.AddTransient<ISubjectService, SubjectService>();
+            builder.Services.AddTransient<IAbsenceService, AbsencesService>();
             builder.Services.AddTransient<IStudentService, StudentService>();
 
             var app = builder.Build();

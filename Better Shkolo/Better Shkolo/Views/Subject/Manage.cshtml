@@ -6,11 +6,6 @@
     {
         <p class="list-group-item list-group-item-action">
             @subject.Name
-            @if(User.IsInRole("Administrator") || User.IsInRole("Director"))
-            {
-                <a asp-controller="Subject" asp-action="Delete" asp-route-id="@subject.Id" class="btn btn-danger">Delete</a>
-                <a asp-controller="Subject" asp-action="Edit" asp-route-id="@subject.Id" class="btn btn-danger">Edit</a>
-            }
 
             <a asp-controller="Student" asp-action="Display" asp-route-id="@subject.Id" class="btn btn-danger">Students</a>
         </p>
