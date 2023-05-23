@@ -1,6 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Teacher;
+using Better_Shkolo.Services.AccountService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +11,15 @@ namespace Better_Shkolo.Services.TeacherService
     {
         private ApplicationDbContext context;
         private UserManager<User> userManager;
+        private IAccountService accountService;
         public TeacherService(ApplicationDbContext context,
-                              UserManager<User> userManager)
+                              UserManager<User> userManager,
+                              IAccountService accountService)
         {
             this.context = context;
             this.userManager = userManager;
+            this.accountService = accountService;
+
         }
 
         public async Task<bool> Create(TeacherCreateModel model)
@@ -81,6 +86,11 @@ namespace Better_Shkolo.Services.TeacherService
         public async Task<Teacher> GetTeacher(int id)
         {
             return await context.Teachers.FindAsync(id);
+        }
+
+        public async Task<Teacher> GetTeacher()
+        {
+            return await context.Teachers.FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
         }
     }
 }

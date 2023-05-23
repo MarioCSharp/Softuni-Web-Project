@@ -2,6 +2,7 @@
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Services.AccountService;
+using Better_Shkolo.Services.TeacherService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.MarkService
@@ -10,15 +11,18 @@ namespace Better_Shkolo.Services.MarkService
     {
         private ApplicationDbContext context;
         private IAccountService accountService;
+        private ITeacherService teacherService;
         public MarkService(ApplicationDbContext context,
-                           IAccountService accountService)
+                           IAccountService accountService,
+                           ITeacherService teacherService)
         {
             this.context = context;
             this.accountService = accountService;
+            this.teacherService = teacherService;
         }
         public async Task<bool> Add(MarkAddModel model, int subjectId)
         {
-            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
+            var teacher = await teacherService.GetTeacher();
 
             if (teacher == null)
             {
