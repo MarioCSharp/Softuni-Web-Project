@@ -1,17 +1,17 @@
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Services.AbsenceService;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.SchoolService;
-using Better_Shkolo.Services.StudentService;
-using Better_Shkolo.Services.SubjectService;
-using Better_Shkolo.Services.TeacherService;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
 namespace Better_Shkolo
 {
+    using Better_Shkolo.Data;
+    using Better_Shkolo.Data.Models;
+    using Better_Shkolo.Services.AbsenceService;
+    using Better_Shkolo.Services.AccountService;
+    using Better_Shkolo.Services.GradeService;
+    using Better_Shkolo.Services.MarkService;
+    using Better_Shkolo.Services.SchoolService;
+    using Better_Shkolo.Services.StudentService;
+    using Better_Shkolo.Services.SubjectService;
+    using Better_Shkolo.Services.TeacherService;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     public class Program
     {
         public static void Main(string[] args)
@@ -85,6 +85,7 @@ namespace Better_Shkolo
             builder.Services.AddTransient<ISubjectService, SubjectService>();
             builder.Services.AddTransient<IAbsenceService, AbsencesService>();
             builder.Services.AddTransient<IStudentService, StudentService>();
+            builder.Services.AddTransient<IMarkService, MarkService>();
 
             var app = builder.Build();
 

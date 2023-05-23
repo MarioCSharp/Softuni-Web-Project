@@ -16,11 +16,11 @@ namespace Better_Shkolo.Controllers
             this.absenceService = absenceService;
         }
         [HttpGet]
-        public async Task<IActionResult> Add(int id, int subjecId)
+        public async Task<IActionResult> Add(int id, int subjectId)
         {
             var model = await studentService.GetStudentModel(id);
 
-            model.SubjectId = subjecId;
+            model.SubjectId = subjectId;
 
             return View(model);
         }
