@@ -11,6 +11,7 @@ namespace Better_Shkolo
     using Better_Shkolo.Services.StudentService;
     using Better_Shkolo.Services.SubjectService;
     using Better_Shkolo.Services.TeacherService;
+    using Better_Shkolo.Services.TestService;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     public class Program
@@ -87,6 +88,7 @@ namespace Better_Shkolo
             builder.Services.AddTransient<IAbsenceService, AbsencesService>();
             builder.Services.AddTransient<IStudentService, StudentService>();
             builder.Services.AddTransient<IMarkService, MarkService>();
+            builder.Services.AddTransient<ITestService, TestService>();
             builder.Services.AddTransient<IReviewService, ReviewService>();
 
             var app = builder.Build();

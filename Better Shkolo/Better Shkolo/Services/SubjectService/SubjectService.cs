@@ -51,6 +51,54 @@ namespace Better_Shkolo.Services.SubjectService
             return count - 1 == await context.Subjects.CountAsync();
         }
 
+        public async Task<bool> Edit(SubjectCreateModel model, int id)
+        {
+            var subject = await GetSubject(id);
+
+            if (subject is null)
+            {
+                return false;
+            }
+
+            var marks = await context.Marks.Where(x => x.TeacherId == subject.TeacherId).ToListAsync();
+            var reviews = await context.Reviews.Where(x => x.TeacherId == subject.TeacherId).ToListAsync();
+            var absenceses = await context.Absencess.Where(x => x.TeacherId == subject.TeacherId).ToListAsync();
+            var tests = await context.Tests.Where(x => x.TeacherId == subject.TeacherId).ToListAsync();
+
+            foreach (var mark in marks)
+            {
+                mark.TeacherId = model.TeacherId;
+                await context.SaveChangesAsync();
+            }
+
+            foreach (var review in reviews)
+            {
+                review.TeacherId = model.TeacherId;
+                await context.SaveChangesAsync();
+            }
+
+            foreach (var absences in absenceses)
+            {
+                absences.TeacherId = model.TeacherId;
+                await context.SaveChangesAsync();
+            }
+
+            foreach (var test in tests)
+            {
+                test.TeacherId = model.TeacherId;
+                await context.SaveChangesAsync();
+            }
+
+            subject.Name = model.Name;
+            subject.SchoolId = model.SchoolId;
+            subject.TeacherId = model.TeacherId;
+            subject.GradeId = model.GradeId;
+
+            await context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<Subject> GetSubject(int id)
         {
             return await context.Subjects.FindAsync(id);

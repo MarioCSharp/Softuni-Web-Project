@@ -63,7 +63,7 @@ namespace Better_Shkolo.Services.GradeService
 
         public async Task<Grade> GetGradeByTeacherId(int teacherId)
         {
-            return await context.Grades.FindAsync(teacherId);
+            return await context.Grades.FirstOrDefaultAsync(x => x.TeacherId == teacherId);
         }
 
         public async Task<List<GradeDisplayModel>> GetGradesBySchoolId(int schoolId)

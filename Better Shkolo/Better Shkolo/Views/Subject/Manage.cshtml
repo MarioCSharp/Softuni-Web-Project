@@ -8,6 +8,8 @@
             @subject.Name
 
             <a asp-controller="Student" asp-action="Display" asp-route-id="@subject.Id" class="btn btn-danger">Students</a>
+            <a asp-controller="Test" asp-action="Add" asp-route-id="@subject.Id" class="btn btn-danger">Add test</a>
+
         </p>
     }
 </div>

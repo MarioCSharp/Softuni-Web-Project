@@ -5,6 +5,7 @@ using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Controllers
 {
@@ -93,6 +94,7 @@ namespace Better_Shkolo.Controllers
             {
                 Subjects = subjects
             };
+
             return View(model);
         }
 
@@ -106,7 +108,7 @@ namespace Better_Shkolo.Controllers
             {
                 return BadRequest();
             }
-
+            
             var model = new SubjectCreateModel()
             {
                 Name = subject.Name,
@@ -128,14 +130,12 @@ namespace Better_Shkolo.Controllers
                 return View(model);
             }
 
-            var subject = await subjectService.GetSubject(id);
+            var res = await subjectService.Edit(model, id);
 
-            subject.Name = model.Name;
-            subject.SchoolId = model.SchoolId;
-            subject.TeacherId = model.TeacherId;
-            subject.GradeId = model.GradeId;
-
-            await context.SaveChangesAsync();
+            if (!res)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction(nameof(View));
         }

@@ -11,5 +11,7 @@ namespace Better_Shkolo.Services.SubjectService
         Task<Subject> GetSubject(int id);
         Task<bool> DeleteSubject(int id);
         Task<List<SubjectDisplayModel>> GetSubjectsByUser();
+
+        Task<bool> Edit(SubjectCreateModel model, int id);
     }
 }
