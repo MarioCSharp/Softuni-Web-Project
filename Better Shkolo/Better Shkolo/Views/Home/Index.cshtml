@@ -3,6 +3,24 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (User.IsInRole("Student"))
+    {
+        <h1 id="success"></h1>
+        <h1 id="absenceses"></h1>
+        <h1 id="reviews"></h1>
+        <h1 id="tests"></h1>
+    }
 </div>
+
+@section Scripts {
+    <script>
+        $.get('/api/statistics', (data) => {
+            $('#success').text(data.success + "  Success");
+            $('#absenceses').text(data.absenceses + "  Absenceses");
+            $('#reviews').text(data.reviews + "  Reviews");
+            $('#tests').text(data.tests + "  Tests");
+
+            console.log(data.Success);
+        });
+    </script>
+}

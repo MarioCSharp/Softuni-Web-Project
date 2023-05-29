@@ -1,0 +1,34 @@
+﻿using Better_Shkolo.Data;
+using Better_Shkolo.Models.Api;
+using Microsoft.EntityFrameworkCore;
+
+namespace Better_Shkolo.Services.StatisticsService
+{
+    public class StatisticsService : IStatisticsService
+    {
+        private ApplicationDbContext context;
+        public StatisticsService(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
+        public async Task<StatisticsDisplayModel> GetStatistics(string userId)
+        {
+            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            var marks = await context.Marks.Where(x => x.StudentId == student.Id).AverageAsync(x => x.Value);
+            var absenceses = await context.Absencess.CountAsync(x => x.StudentId == student.Id);
+            var reviews = await context.Reviews.CountAsync(x => x.StudentId == student.Id);
+            var tests = await context.Tests.CountAsync(x => x.GradeId == student.GradeId);
+
+            var model = new StatisticsDisplayModel()
+            {
+                Success = marks,
+                Tests = tests,
+                Absenceses = absenceses,
+                Reviews = reviews
+            };
+
+            return model;
+        }
+    }
+}

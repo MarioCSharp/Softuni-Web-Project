@@ -8,6 +8,7 @@ namespace Better_Shkolo
     using Better_Shkolo.Services.MarkService;
     using Better_Shkolo.Services.ReviewService;
     using Better_Shkolo.Services.SchoolService;
+    using Better_Shkolo.Services.StatisticsService;
     using Better_Shkolo.Services.StudentService;
     using Better_Shkolo.Services.SubjectService;
     using Better_Shkolo.Services.TeacherService;
@@ -90,6 +91,7 @@ namespace Better_Shkolo
             builder.Services.AddTransient<IMarkService, MarkService>();
             builder.Services.AddTransient<ITestService, TestService>();
             builder.Services.AddTransient<IReviewService, ReviewService>();
+            builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
             var app = builder.Build();
 
