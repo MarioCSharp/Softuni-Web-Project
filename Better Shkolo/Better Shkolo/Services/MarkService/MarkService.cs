@@ -50,5 +50,50 @@ namespace Better_Shkolo.Services.MarkService
 
             return count + 1 == await context.Marks.CountAsync();
         }
+
+        public async Task<List<MarkDisplayModel>> GetMarks()
+        {
+            var userId = accountService.GetUserId();
+
+            var model = new List<MarkDisplayModel>();
+
+            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            var studentId = student.Id;
+
+            var marks = await context.Marks.Where(x => x.StudentId == studentId).ToListAsync();
+
+            foreach (var mark in marks)
+            {
+                var subjectId = mark.SubjectId;
+
+                if (!model.Any(x => x.SubjectId == subjectId))
+                {
+                    var subject = await context.Subjects.FindAsync(subjectId);
+
+                    model.Add(new MarkDisplayModel()
+                    {
+                        SubjectId = subjectId,
+                        SubjectName = subject.Name,
+                        Marks = new List<MarkViewModel>()
+                    });
+
+                    
+                }
+
+                var teacher = await context.Teachers.FindAsync(mark.TeacherId);
+                var teacherUser = await context.Users.FindAsync(teacher.UserId);
+
+                model.FirstOrDefault(x => x.SubjectId == subjectId).Marks.Add(new MarkViewModel()
+                {
+                    Id = mark.Id,
+                    Value = mark.Value,
+                    TeacherId = teacher.Id,
+                    TeacherName = teacherUser.FirstName + " " + teacherUser.LastName,
+                });
+            }
+
+            return model;
+        }
     }
 }

@@ -5,20 +5,44 @@
 <div class="text-center">
     @if (User.IsInRole("Student"))
     {
-        <h1 id="success"></h1>
-        <h1 id="absenceses"></h1>
-        <h1 id="reviews"></h1>
-        <h1 id="tests"></h1>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="success"></h5>
+                <p class="card-text">Avarage success</p>
+                <a asp-action="View" asp-controller="Mark" class="btn btn-primary">View</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="absenceses"></h5>
+                <p class="card-text">Absenceses</p>
+                <a asp-action="View" asp-controller="Absences" class="btn btn-primary">View</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="reviews"></h5>
+                <p class="card-text">Reviews</p>
+                <a asp-action="View" asp-controller="Review" class="btn btn-primary">View</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="tests"></h5>
+                <p class="card-text">Tests</p>
+                <a asp-action="View" asp-controller="Test" class="btn btn-primary">View</a>
+            </div>
+        </div>
     }
 </div>
 
 @section Scripts {
     <script>
         $.get('/api/statistics', (data) => {
-            $('#success').text(data.success + "  Success");
-            $('#absenceses').text(data.absenceses + "  Absenceses");
-            $('#reviews').text(data.reviews + "  Reviews");
-            $('#tests').text(data.tests + "  Tests");
+            $('#success').text(data.success);
+            $('#absenceses').text(data.absenceses);
+            $('#reviews').text(data.reviews);
+            $('#tests').text(data.tests);
 
             console.log(data.Success);
         });

@@ -1,9 +1,11 @@
 ﻿using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Services.MarkService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
+    [Authorize]
     public class MarkController : Controller
     {
         private IMarkService markService;
@@ -38,6 +40,14 @@ namespace Better_Shkolo.Controllers
             }
 
             ModelState.AddModelError("", "Something went wrong!");
+            return View(model);
+        }
+        [HttpGet]
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> View()
+        {
+            var model = await markService.GetMarks();
+
             return View(model);
         }
     }
