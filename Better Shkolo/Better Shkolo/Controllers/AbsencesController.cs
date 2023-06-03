@@ -36,5 +36,12 @@ namespace Better_Shkolo.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
+        public async Task<IActionResult> View()
+        {
+            var model = await absenceService.GetAbsenceses();
+
+            return View(model);
+        }
     }
 }
