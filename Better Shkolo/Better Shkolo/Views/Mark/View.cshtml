@@ -5,10 +5,10 @@
     @foreach (var mark in Model)
     {
         <p class="list-group-item list-group-item-action">
-            @mark.SubjectName
+            @mark.SubjectName |
             @foreach (var item in mark.Marks)
             {
-                <span>@item.Value</span>
+                <span>@item.Value |</span>
                 <span>@item.TeacherName</span>
             }
         </p>

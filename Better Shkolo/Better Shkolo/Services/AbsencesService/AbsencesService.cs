@@ -51,7 +51,23 @@ namespace Better_Shkolo.Services.AbsenceService
 
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
 
-            var studentId = student.Id;
+            var studentId = 0;
+
+            if (student == null)
+            {
+                var parent = await context.Parents.FirstOrDefaultAsync(x => x.UserId == userId);
+
+                studentId = parent.StudentId;
+            }
+            else
+            {
+                studentId = student.Id;
+            }
+
+            if (studentId == 0)
+            {
+                return null;
+            }
 
             var absenceses = await context.Absencess.Where(x => x.StudentId == studentId).ToListAsync();
 

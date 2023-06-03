@@ -1,0 +1,11 @@
+﻿@using Better_Shkolo.Models.Review;
+@model IEnumerable<ReviewDisplayModel>
+
+<div class="list-group">
+    @foreach (var review in Model)
+    {
+        <p class="list-group-item list-group-item-action">
+            @review.SubjectName | @review.Reviews.Count <a asp-action="Display" asp-controller="Review" asp-route-subjectId="@review.SubjectId" class="btn btn-primary">View</a>
+        </p>
+    }
+</div>

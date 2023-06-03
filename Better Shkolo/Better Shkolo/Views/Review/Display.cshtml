@@ -1,0 +1,11 @@
+﻿@using Better_Shkolo.Models.Review;
+@model IEnumerable<ReviewViewModel>
+
+<div class="list-group">
+    @foreach (var review in Model)
+    {
+        <p class="list-group-item list-group-item-action">
+            @review.Description | @review.AddedOn
+        </p>
+    }
+</div>

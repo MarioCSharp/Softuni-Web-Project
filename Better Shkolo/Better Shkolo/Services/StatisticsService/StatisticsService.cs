@@ -15,6 +15,17 @@ namespace Better_Shkolo.Services.StatisticsService
         {
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
 
+            if (student == null)
+            {
+                var parent = await context.Parents.FirstOrDefaultAsync(x => x.UserId == userId);
+                student = await context.Students.FirstOrDefaultAsync(x => x.ParentId == parent.Id);
+            }
+
+            if (student == null)
+            {
+                return null; 
+            }
+
             var marks = await context.Marks.Where(x => x.StudentId == student.Id).AverageAsync(x => x.Value);
             var absenceses = await context.Absencess.CountAsync(x => x.StudentId == student.Id);
             var reviews = await context.Reviews.CountAsync(x => x.StudentId == student.Id);

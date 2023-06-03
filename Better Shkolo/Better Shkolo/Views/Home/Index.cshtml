@@ -3,7 +3,7 @@
 }
 
 <div class="text-center">
-    @if (User.IsInRole("Student"))
+    @if (User.IsInRole("Student") || User.IsInRole("Parent"))
     {
         <div class="card" style="width: 18rem;">
             <div class="card-body">

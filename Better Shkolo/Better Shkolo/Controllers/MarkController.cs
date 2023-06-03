@@ -43,7 +43,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Roles = "Student")]
+        [Authorize(Roles = "Student,Parent")]
         public async Task<IActionResult> View()
         {
             var model = await markService.GetMarks();

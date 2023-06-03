@@ -1,6 +1,7 @@
 ﻿using Better_Shkolo.Models.Absence;
 using Better_Shkolo.Services.AbsenceService;
 using Better_Shkolo.Services.StudentService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
@@ -37,6 +38,7 @@ namespace Better_Shkolo.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
+        [Authorize(Roles = "Student,Parent")]
         public async Task<IActionResult> View()
         {
             var model = await absenceService.GetAbsenceses();
