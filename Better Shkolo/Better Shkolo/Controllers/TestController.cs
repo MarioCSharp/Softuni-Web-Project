@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Models.Test;
 using Better_Shkolo.Services.TestService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
@@ -37,6 +38,14 @@ namespace Better_Shkolo.Controllers
             }
 
             ModelState.AddModelError("", "Something went wrong!");
+            return View(model);
+        }
+        [HttpGet]
+        [Authorize(Roles = "Student,Parent")]
+        public async Task<IActionResult> View()
+        {
+            var model = await testService.GetTests();
+
             return View(model);
         }
     }

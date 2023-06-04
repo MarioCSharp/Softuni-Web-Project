@@ -14,6 +14,7 @@ namespace Better_Shkolo.Models.School
         [StringLength(Constants.School.CityMaxLength, MinimumLength = Constants.School.CityMinLength)]
         public string City { get; set; }
         [Required]
+        [Display(Name = "Director")]
         public string DirectorId { get; set; }
 
         public List<UserDisplayModel> AvailableUsers { get; set; } = null!;

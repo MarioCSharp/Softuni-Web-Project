@@ -44,10 +44,22 @@ namespace Better_Shkolo.Services.GradeService
                 return false;
             }
 
-            foreach (var subject in context.Subjects.Where(x => x.GradeId == grade.Id).ToArray())
+            foreach (var parent in context.Parents.ToArray())
             {
-                context.Subjects.Remove(subject);
+                var student = await context.Students.FindAsync(parent.StudentId);
+
+                if (student.GradeId != grade.Id)
+                {
+                    continue;
+                }
+
+                context.Parents.Remove(parent);
+                await context.SaveChangesAsync();
             }
+
+            context.Subjects.RemoveRange(context.Subjects.Where(x => x.GradeId == grade.Id).ToArray());
+            context.Students.RemoveRange(context.Students.Where(x => x.GradeId == grade.Id).ToArray());
+            
 
             context.Grades.Remove(grade);
 

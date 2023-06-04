@@ -144,7 +144,7 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "CanEditDeleteAndCreateSubjects")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = subjectService.DeleteSubject(id).Result;
+            var result = await subjectService.DeleteSubject(id);
 
             if (!result)
             {

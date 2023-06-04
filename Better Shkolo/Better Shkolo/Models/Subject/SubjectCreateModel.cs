@@ -11,10 +11,12 @@ namespace Better_Shkolo.Models.Subject
         [StringLength(Constants.Subject.NameMaxLength, MinimumLength = Constants.Subject.NameMinLength)]
         public string Name { get; set; }
         [Required]
+        [Display(Name = "Teacher")]
         public int TeacherId { get; set; }
         [Required]
         public int SchoolId { get; set; }
         [Required]
+        [Display(Name = "Grade")]
         public int GradeId { get; set; }
 
         public List<TeacherDisplayModel> TeachersInSchool { get; set; }
