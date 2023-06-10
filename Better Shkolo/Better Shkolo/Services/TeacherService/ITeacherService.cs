@@ -7,7 +7,7 @@ namespace Better_Shkolo.Services.TeacherService
     {
         Task<List<TeacherDisplayModel>> GetAllTeacherInSchool(int schoolId);
         Task<bool> Create(TeacherCreateModel model);
-        Task<bool> DeleteTeacher(int id);
+        Task<bool> DeleteTeacher(int id, int newTeacherId);
         Task<Teacher> GetTeacher(int id);
         Task<Teacher> GetTeacher();
     }

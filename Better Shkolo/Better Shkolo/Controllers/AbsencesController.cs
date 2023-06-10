@@ -17,6 +17,7 @@ namespace Better_Shkolo.Controllers
             this.absenceService = absenceService;
         }
         [HttpGet]
+        [Authorize(Policy = "CanAddAbsenceses")]
         public async Task<IActionResult> Add(int id, int subjectId)
         {
             var model = await studentService.GetStudentModel(id);
@@ -26,6 +27,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "CanAddAbsenceses")]
         public async Task<IActionResult> Add(AbsencesAddModel model, int id)
         {
             var result = await absenceService.Add(model, id);
@@ -38,7 +40,7 @@ namespace Better_Shkolo.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        [Authorize(Roles = "Student,Parent")]
+        [Authorize(Policy = "CanViewAbsencesesForStudent")]
         public async Task<IActionResult> View()
         {
             var model = await absenceService.GetAbsenceses();

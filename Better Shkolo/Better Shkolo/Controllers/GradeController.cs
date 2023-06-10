@@ -26,7 +26,7 @@ namespace Better_Shkolo.Controllers
             this.context = context;
         }
         [HttpGet]
-        [Authorize(Policy = "CanEditDeleteAndCreateGrades")]
+        [Authorize(Policy = "CanAddGrades")]
         public async Task<IActionResult> Create(int id)
         {
             var model = new GradeCreateModel()
@@ -47,7 +47,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "CanEditDeleteAndCreateGrades")]
+        [Authorize(Policy = "CanAddGrades")]
         public async Task<IActionResult> Create(GradeCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanEditDeleteAndCreateGrades")]
+        [Authorize(Policy = "CanDeleteGrades")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await gradeService.DeleteGrade(id);
@@ -82,7 +82,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanEditDeleteAndCreateGrades")]
+        [Authorize(Policy = "CanEditGrades")]
         public async Task<IActionResult> Edit(int id)
         {
             var grade = await gradeService.GetGrade(id);
@@ -103,7 +103,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanEditDeleteAndCreateGrades")]
+        [Authorize(Policy = "CanEditGrades")]
         public async Task<IActionResult> Edit(GradeCreateModel model, int id)
         {
             if (!ModelState.IsValid)

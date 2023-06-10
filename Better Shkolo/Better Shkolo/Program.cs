@@ -40,21 +40,51 @@ namespace Better_Shkolo
 
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("CanViewSubjects", policy => policy
+                options.AddPolicy("CanAddAbsenceses", policy => policy
                 .RequireAssertion(context =>
-                context.User.IsInRole("Teacher") || context.User.IsInRole("Student")
-                || context.User.IsInRole("Parent") || context.User.IsInRole("Administrator")
-                || context.User.IsInRole("Director")));
+                context.User.IsInRole("Teacher")));
 
-                options.AddPolicy("CanEditDeleteAndCreateSubjects", policy => policy
+                options.AddPolicy("CanViewAbsencesesForStudent", policy => policy
                 .RequireAssertion(context =>
-                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+                context.User.IsInRole("Student") || context.User.IsInRole("Parent")));
 
-                options.AddPolicy("CanAccessTeachers", policy => policy
+                options.AddPolicy("CanAccessAdminMenu", policy => policy
                 .RequireAssertion(context =>
-                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+                context.User.IsInRole("Administrator")));
 
-                options.AddPolicy("CanAccessStudents", policy => policy
+                options.AddPolicy("CanAddGrades", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Administrator") || context.User.IsInRole("Director")));
+
+                options.AddPolicy("CanDeleteGrades", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Administrator") || context.User.IsInRole("Director")));
+
+                options.AddPolicy("CanEditGrades", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Administrator") || context.User.IsInRole("Director")));
+
+                options.AddPolicy("CanViewGrades", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Administrator") || context.User.IsInRole("Director")));
+
+                options.AddPolicy("CanAddMarks", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Teacher")));
+
+                options.AddPolicy("CanViewMarks", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Parent") || context.User.IsInRole("Student")));
+
+                options.AddPolicy("CanAddReviews", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Teacher")));
+
+                options.AddPolicy("CanViewReviews", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Parent") || context.User.IsInRole("Student")));
+
+                options.AddPolicy("CanEditSchools", policy => policy
                 .RequireAssertion(context =>
                 context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
 
@@ -62,18 +92,45 @@ namespace Better_Shkolo
                 .RequireAssertion(context =>
                 context.User.IsInRole("Administrator")));
 
-                options.AddPolicy("CanEditDeleteAndCreateGrades", policy => policy
+                options.AddPolicy("CanAccessStudents", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Administrator") || context.User.IsInRole("Director")));
+
+                options.AddPolicy("CanDisplayStudentsInSubject", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Teacher")));
+
+                options.AddPolicy("CanAddSubject", policy => policy
                 .RequireAssertion(context =>
                 context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
 
-                options.AddPolicy("CanViewGrades", policy => policy
+                options.AddPolicy("CanViewSubjects", policy => policy
                 .RequireAssertion(context =>
-                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")
-                || context.User.IsInRole("Teacher")));
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
 
-                options.AddPolicy("CanAccessAdminMenu", policy => policy
+                options.AddPolicy("CanManageSubjects", policy => policy
                 .RequireAssertion(context =>
-                context.User.IsInRole("Administrator")));
+                context.User.IsInRole("Teacher")));
+
+                options.AddPolicy("CanEditSubjects", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanDeleteSubjects", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanAccessTeachers", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Director") || context.User.IsInRole("Administrator")));
+
+                options.AddPolicy("CanAddTests", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Teacher")));
+
+                options.AddPolicy("CanViewTests", policy => policy
+                .RequireAssertion(context =>
+                context.User.IsInRole("Parent") || context.User.IsInRole("Student")));
             });
 
             builder.Services.ConfigureApplicationCookie(options =>

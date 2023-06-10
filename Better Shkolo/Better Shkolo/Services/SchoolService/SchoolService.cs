@@ -38,6 +38,16 @@ namespace Better_Shkolo.Services.SchoolService
                 return false;
             }
 
+            context.Absencess.RemoveRange(await context.Absencess.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Grades.RemoveRange(await context.Grades.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Marks.RemoveRange(await context.Marks.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Parents.RemoveRange(await context.Parents.Where(x => x.Student.Id == id).ToArrayAsync());
+            context.Reviews.RemoveRange(await context.Reviews.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Students.RemoveRange(await context.Students.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Subjects.RemoveRange(await context.Subjects.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Teachers.RemoveRange(await context.Teachers.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Tests.RemoveRange(await context.Tests.Where(x => x.SchoolId == id).ToArrayAsync());
+
             context.Schools.Remove(school);
             await context.SaveChangesAsync();
 

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize]
     public class MarkController : Controller
     {
         private IMarkService markService;
@@ -14,6 +13,7 @@ namespace Better_Shkolo.Controllers
             this.markService = markService;
         }
         [HttpGet]
+        [Authorize(Policy = "CanAddMarks")]
         public async Task<IActionResult> Add(int id, int subjectId)
         {
             var model = new MarkAddModel()
@@ -25,6 +25,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "CanAddMarks")]
         public async Task<IActionResult> Add(MarkAddModel model)
         {
             if (!ModelState.IsValid)
@@ -43,7 +44,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Roles = "Student,Parent")]
+        [Authorize(Policy = "CanViewMarks")]
         public async Task<IActionResult> View()
         {
             var model = await markService.GetMarks();

@@ -74,6 +74,18 @@ namespace Better_Shkolo.Controllers
                 return RedirectToAction("ToEdit", "Subject", new { id = teacher.Id });
             }
 
+            if (grade is null)
+            {
+                var result = await teacherService.DeleteTeacher(id, 0);
+
+                if (!result)
+                {
+                    return BadRequest();
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+
             var model = new GradeDeleteModel()
             {
                 GradeName = grade.GradeName,
@@ -95,7 +107,7 @@ namespace Better_Shkolo.Controllers
             grade.TeacherId = model.TeacherId;
             await context.SaveChangesAsync();
 
-            var result = await teacherService.DeleteTeacher(model.OldTeacherId);
+            var result = await teacherService.DeleteTeacher(model.OldTeacherId, model.TeacherId);
 
             if (!result)
             {

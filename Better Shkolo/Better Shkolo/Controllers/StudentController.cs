@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize(Policy = "CanAccessTeachers")]
+    [Authorize(Policy = "CanAccessStudents")]
     public class StudentController : Controller
     {
         private IStudentService studentService;
@@ -139,7 +139,7 @@ namespace Better_Shkolo.Controllers
             return BadRequest();
         }
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Policy = "CanDisplayStudentsInSubject")]
         public async Task<IActionResult> Display(int id)
         {
             var model = new StudentViewModel()

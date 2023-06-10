@@ -89,6 +89,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "CanEditSchools")]
         public async Task<IActionResult> Edit(int id)
         {
             var school = await schoolService.GetSchool(id);
@@ -109,6 +110,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "CanEditSchools")]
         public async Task<IActionResult> Edit(SchoolCreateModel model, int id)
         {
             if (!ModelState.IsValid)

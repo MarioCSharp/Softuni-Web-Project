@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize]
     public class ReviewController : Controller
     {
         private IReviewService reviewService;
@@ -14,6 +13,7 @@ namespace Better_Shkolo.Controllers
             this.reviewService = reviewService;
         }
         [HttpGet]
+        [Authorize(Policy = "CanAddReviews")]
         public IActionResult Add(int id, int subjectId)
         {
             var model = new ReviewAddModel()
@@ -26,6 +26,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "CanAddReviews")]
         public async Task<IActionResult> Add(ReviewAddModel model)
         {
             if (!ModelState.IsValid)
@@ -44,7 +45,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Roles = "Student,Parent")]
+        [Authorize(Policy = "CanViewReviews")]
         public async Task<IActionResult> View()
         {
             var model = await reviewService.GetReviews();
@@ -53,6 +54,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "CanViewReviews")]
         public async Task<IActionResult> Display(int subjectId)
         {
             var model = await reviewService.GetReviewsBySubjectId(subjectId);
