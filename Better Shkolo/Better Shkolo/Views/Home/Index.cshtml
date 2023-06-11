@@ -2,38 +2,97 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-">
     @if (User.IsInRole("Student") || User.IsInRole("Parent"))
-    {
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 id="success"></h5>
-                <p class="card-text">Avarage success</p>
-                <a asp-action="View" asp-controller="Mark" class="btn btn-primary">View</a>
-            </div>
+{
+    <style>
+        .card-success {
+            background-color: blue;
+            padding-right: 60px;
+        }
+
+        .card-absences {
+            background-color: red;
+                padding-right: 60px;
+        }
+
+        .card-review {
+            background-color: gold;
+                padding-right: 60px;
+        }
+
+        .card-tests {
+            background-color: purple;
+                padding-right: 60px;
+        }
+
+        .square-card {
+            height: 0;
+            padding-bottom: 50%;
+            position: relative;
+        }
+
+        .square-card .card-body {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-end;
+            padding: 10px;
+        }
+
+        .card-link {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <div class="d-flex justify-content-center">
+        <div class="col-6 col-md-3">
+            <a asp-action="View" asp-controller="Mark" class="card-link">
+                <div class="card card-success square-card">
+                    <div class="card-body">
+                        <h5 id="success" class="text-white text-right mb-0"></h5>
+                        <p class="card-text text-white text-right">Average success</p>
+                    </div>
+                </div>
+            </a>
         </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 id="absenceses"></h5>
-                <p class="card-text">Absenceses</p>
-                <a asp-action="View" asp-controller="Absences" class="btn btn-primary">View</a>
-            </div>
+        <div class="col-6 col-md-3">
+            <a asp-action="View" asp-controller="Absences" class="card-link">
+                <div class="card card-absences square-card">
+                    <div class="card-body">
+                        <h5 id="absenceses" class="text-white text-right mb-0"></h5>
+                        <p class="card-text text-white text-right">Absences</p>
+                    </div>
+                </div>
+            </a>
         </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 id="reviews"></h5>
-                <p class="card-text">Reviews</p>
-                <a asp-action="View" asp-controller="Review" class="btn btn-primary">View</a>
-            </div>
+        <div class="col-6 col-md-3">
+            <a asp-action="View" asp-controller="Review" class="card-link">
+                <div class="card card-review square-card">
+                    <div class="card-body">
+                        <h5 id="reviews" class="text-white text-right mb-0"></h5>
+                        <p class="card-text text-white text-right">Reviews</p>
+                    </div>
+                </div>
+            </a>
         </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 id="tests"></h5>
-                <p class="card-text">Tests</p>
-                <a asp-action="View" asp-controller="Test" class="btn btn-primary">View</a>
-            </div>
+        <div class="col-6 col-md-3">
+            <a asp-action="View" asp-controller="Test" class="card-link">
+                <div class="card card-tests square-card">
+                    <div class="card-body">
+                        <h5 id="tests" class="text-white text-right mb-0"></h5>
+                        <p class="card-text text-white text-right">Tests</p>
+                    </div>
+                </div>
+            </a>
         </div>
-    }
+    </div>
+}
 </div>
 
 @section Scripts {

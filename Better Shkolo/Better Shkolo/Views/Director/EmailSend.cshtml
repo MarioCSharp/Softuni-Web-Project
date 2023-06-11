@@ -1,0 +1,26 @@
+﻿@using Better_Shkolo.Models.Director;
+@model EmailSendModel
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <section>
+            <form id="account" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Subject"></label>
+                    <input asp-for="Subject" class="form-control" />
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Message"></label>
+                    <input asp-for="Message" class="form-control" />
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="@Model.SchoolId"/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

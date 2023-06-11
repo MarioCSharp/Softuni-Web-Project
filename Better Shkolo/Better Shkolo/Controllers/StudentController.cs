@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize(Policy = "CanAccessStudents")]
     public class StudentController : Controller
     {
         private IStudentService studentService;
@@ -23,6 +22,7 @@ namespace Better_Shkolo.Controllers
             this.gradeService = gradeService;
         }
         [HttpGet]
+        [Authorize(Policy = "CanAccessStudents")]
         public async Task<IActionResult> Add(int id)
         {
             var model = new StudentCreateModel()
@@ -35,6 +35,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "CanAccessStudents")]
         public async Task<IActionResult> Add(StudentCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -58,6 +59,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
+        [Authorize(Policy = "CanAccessStudents")]
         public async Task<IActionResult> View(int id)
         {
             var model = new StudentViewModel()
@@ -79,6 +81,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "CanAccessStudents")]
         public async Task<IActionResult> AsignParent(ParentCreateModel model, int id)
         {
             if (!ModelState.IsValid)
@@ -98,6 +101,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
+        [Authorize(Policy = "CanAccessStudents")]
         public async Task<IActionResult> Edit(int id)
         {
             var student = await studentService.GetStudent(id);
@@ -114,6 +118,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "CanAccessStudents")]
         public async Task<IActionResult> Edit(StudentCreateModel model, int id)
         {
             var result = await studentService.Edit(model, id);
@@ -127,6 +132,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
+        [Authorize(Policy = "CanAccessStudents")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await studentService.Delete(id);

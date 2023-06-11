@@ -39,6 +39,26 @@ namespace Better_Shkolo.Services.StatisticsService
                 Reviews = reviews
             };
 
+            if (marks == 0)
+            {
+                model.Success = 0.0;
+            }
+
+            if (absenceses == 0)
+            {
+                model.Absenceses = 0;
+            }
+
+            if (reviews == 0)
+            {
+                model.Reviews = 0;
+            }
+
+            if (tests == 0)
+            {
+                model.Tests = 0;
+            }
+
             return model;
         }
     }
