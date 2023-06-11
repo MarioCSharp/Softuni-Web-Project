@@ -19,11 +19,15 @@ namespace Better_Shkolo.Services.SchoolService
         public async Task<bool> AddSchool(School school)
         {
             var countBefore = context.Schools.Count();
+            var user = await context.Users.FindAsync(school.DirectorId);
 
             await context.Schools.AddAsync(school);
             await context.SaveChangesAsync();
 
-            await userManager.AddToRoleAsync(await context.Users.FindAsync(school.DirectorId), "Director");
+            await userManager.AddToRoleAsync(user, "Director");
+            await context.SaveChangesAsync();
+
+            await context.Directors.AddAsync(new Director() { SchoolId = school.Id, UserId = user.Id});
             await context.SaveChangesAsync();
 
             return countBefore + 1 == await context.Schools.CountAsync();

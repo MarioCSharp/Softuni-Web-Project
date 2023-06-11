@@ -53,11 +53,15 @@ namespace Better_Shkolo.Services.TeacherService
         {
             var count = await context.Teachers.CountAsync();
             var teacher = await context.Teachers.FindAsync(id);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == teacher.UserId);
 
             if (teacher is null)
             {
                 return false;
             }
+
+            await userManager
+                .RemoveFromRoleAsync(user, "Teacher");
 
             if (newTeacherId != 0)
             {
@@ -72,9 +76,6 @@ namespace Better_Shkolo.Services.TeacherService
 
             context.Teachers.Remove(teacher);
             await context.SaveChangesAsync();
-
-            await userManager
-                .RemoveFromRoleAsync(context.Users.FirstOrDefault(x => x.Id == teacher.UserId), "Teacher");
 
             return count - 1 == await context.Teachers.CountAsync();
         }

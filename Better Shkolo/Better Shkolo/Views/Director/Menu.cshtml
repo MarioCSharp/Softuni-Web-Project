@@ -1,0 +1,40 @@
+﻿@using Better_Shkolo.Models.School;
+@model SchoolViewModel
+
+<div class="text-center">
+    @if (User.IsInRole("Director"))
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="success"></h5>
+                <p class="card-text">Subjects</p>
+                <a asp-action="SubjectsView" asp-controller="Director" asp-route-id ="@Model.Id" class="btn btn-primary">View</a>
+                <a asp-action="SubjectAdd" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="absenceses"></h5>
+                <p class="card-text">Teachers</p>
+                <a asp-action="TeachersView" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-primary">View</a>
+                <a asp-action="TeacherAdd" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="reviews"></h5>
+                <p class="card-text">Grades</p>
+                <a asp-action="GradesView" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-primary">View</a>
+                <a asp-action="GradeAdd" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 id="tests"></h5>
+                <p class="card-text">Students</p>
+                <a asp-action="StudentsView" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-primary">View</a>
+                <a asp-action="StudentAdd" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+    }
+</div>

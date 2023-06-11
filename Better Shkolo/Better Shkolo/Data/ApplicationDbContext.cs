@@ -21,6 +21,7 @@ namespace Better_Shkolo.Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Absences> Absencess { get; set; }
+        public DbSet<Director> Directors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -217,6 +218,15 @@ namespace Better_Shkolo.Data
                 entity.HasOne(p => p.Student)
                     .WithMany()
                     .HasForeignKey(p => p.StudentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Director>(entity =>
+            {
+
+                entity.HasOne(p => p.School)
+                    .WithMany()
+                    .HasForeignKey(p => p.SchoolId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
