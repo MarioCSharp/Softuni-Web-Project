@@ -1,7 +1,6 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Account;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 

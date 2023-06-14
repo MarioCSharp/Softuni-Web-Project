@@ -5,7 +5,6 @@ namespace Better_Shkolo
     using Better_Shkolo.Services.AbsenceService;
     using Better_Shkolo.Services.AccountService;
     using Better_Shkolo.Services.DirectorService;
-    using Better_Shkolo.Services.EmailSender;
     using Better_Shkolo.Services.GradeService;
     using Better_Shkolo.Services.MarkService;
     using Better_Shkolo.Services.ReviewService;
@@ -156,7 +155,6 @@ namespace Better_Shkolo
             builder.Services.AddTransient<IDirectorService, DirectorService>();
             builder.Services.AddTransient<IReviewService, ReviewService>();
             builder.Services.AddTransient<IStatisticsService, StatisticsService>();
-            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
 

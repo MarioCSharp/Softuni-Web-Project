@@ -1,6 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Grade;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.GradeService
@@ -8,9 +9,12 @@ namespace Better_Shkolo.Services.GradeService
     public class GradeService : IGradeService
     {
         private ApplicationDbContext context;
-        public GradeService(ApplicationDbContext context)
+        private UserManager<User> userManager;  
+        public GradeService(ApplicationDbContext context,
+                            UserManager<User> userManager)
         {
             this.context = context;
+            this.userManager = userManager;
         }
         public async Task<bool> Create(GradeCreateModel model)
         {
@@ -55,10 +59,20 @@ namespace Better_Shkolo.Services.GradeService
 
                 context.Parents.Remove(parent);
                 await context.SaveChangesAsync();
+
+                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(parent.UserId), "Parent");
             }
 
-            context.Subjects.RemoveRange(context.Subjects.Where(x => x.GradeId == grade.Id).ToArray());
-            context.Students.RemoveRange(context.Students.Where(x => x.GradeId == grade.Id).ToArray());
+            var studentsToDelete = await context.Students.Where(x => x.GradeId == grade.Id).ToArrayAsync();
+
+            foreach (var student in studentsToDelete)
+            {
+                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(student.UserId), "Student");
+            }
+
+            context.Subjects.RemoveRange(await context.Subjects.Where(x => x.GradeId == grade.Id).ToArrayAsync());
+            context.Students.RemoveRange(studentsToDelete);
+            context.Tests.RemoveRange(await context.Tests.Where(x => x.GradeId == grade.Id).ToArrayAsync());
             
 
             context.Grades.Remove(grade);
