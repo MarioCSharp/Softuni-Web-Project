@@ -11,16 +11,19 @@ namespace Better_Shkolo.Data.Models
         public DateTime? ExcusedOn { get; set; }
         [Required]
         public int SubjectId { get; set; }
+        [ForeignKey(nameof(SubjectId))]
         public Subject Subject { get; set; }
         [Required]
         public int TeacherId { get; set; }
+        [ForeignKey(nameof(TeacherId))]
         public Teacher Teacher { get; set; }
         [Required]
-        [ForeignKey(nameof(Student))]
         public int StudentId { get; set; }
+        [ForeignKey(nameof(StudentId))]
         public Student Student { get; set; }
         [Required]
         public int SchoolId { get; set; }
+        [ForeignKey(nameof(SchoolId))]
         public School School { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Better_Shkolo.Data.Models
 {
@@ -13,6 +14,7 @@ namespace Better_Shkolo.Data.Models
         public string City { get; set; }
         [Required]
         public string DirectorId { get; set; }
+        [ForeignKey(nameof(DirectorId))]
         public User Director { get; set; }
         public List<Grade> Grades { get; set; }
         public List<Teacher> Teachers { get; set; }

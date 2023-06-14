@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Better_Shkolo.Data.Models
 {
@@ -12,15 +13,19 @@ namespace Better_Shkolo.Data.Models
         public DateTime AddedOn { get; set; }
         [Required]
         public int SubjectId { get; set; }
+        [ForeignKey(nameof(SubjectId))]
         public Subject Subject { get; set; }
         [Required]
         public int TeacherId { get; set; }
+        [ForeignKey(nameof(TeacherId))]
         public Teacher Teacher { get; set; }
         [Required]
         public int StudentId { get; set; }
+        [ForeignKey(nameof(StudentId))]
         public Student Student { get; set; }
         [Required]
         public int SchoolId { get; set; }
+        [ForeignKey(nameof(SchoolId))]
         public School School { get; set; }
     }
 }

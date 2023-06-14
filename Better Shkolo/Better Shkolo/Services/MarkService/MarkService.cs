@@ -39,7 +39,7 @@ namespace Better_Shkolo.Services.MarkService
             {
                 Value = model.Value,
                 AddedOn = DateTime.Now,
-                SubjectId = subjectId,
+                SubjectId = model.SubjectId,
                 TeacherId = teacherId,
                 StudentId = model.StudentId,
                 SchoolId = schoolId
