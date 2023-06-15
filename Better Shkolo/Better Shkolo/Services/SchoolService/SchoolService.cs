@@ -42,14 +42,40 @@ namespace Better_Shkolo.Services.SchoolService
                 return false;
             }
 
+            var directorUser = await context.Users.FindAsync(school.DirectorId);
+
+            await userManager.RemoveFromRoleAsync(directorUser, "Director");
+
+            context.Directors.Remove(await context.Directors.FirstOrDefaultAsync(x => x.UserId == school.DirectorId));
+            await context.SaveChangesAsync();
+            
+            var parents = await context.Parents.Where(x => x.Student.Id == id).ToArrayAsync();
+            var students = await context.Students.Where(x => x.SchoolId == id).ToArrayAsync();
+            var teachers = await context.Teachers.Where(x => x.SchoolId == id).ToArrayAsync();
+
+            foreach (var parent in parents)
+            {
+                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(parent.UserId), "Parent");
+            }
+
+            foreach (var student in students)
+            {
+                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(student.UserId), "Student");
+            }
+
+            foreach (var teacher in teachers)
+            {
+                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(teacher.UserId), "Teacher");
+            }
+
             context.Absencess.RemoveRange(await context.Absencess.Where(x => x.SchoolId == id).ToArrayAsync());
             context.Grades.RemoveRange(await context.Grades.Where(x => x.SchoolId == id).ToArrayAsync());
             context.Marks.RemoveRange(await context.Marks.Where(x => x.SchoolId == id).ToArrayAsync());
-            context.Parents.RemoveRange(await context.Parents.Where(x => x.Student.Id == id).ToArrayAsync());
+            context.Parents.RemoveRange(parents);
             context.Reviews.RemoveRange(await context.Reviews.Where(x => x.SchoolId == id).ToArrayAsync());
-            context.Students.RemoveRange(await context.Students.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Students.RemoveRange(students);
             context.Subjects.RemoveRange(await context.Subjects.Where(x => x.SchoolId == id).ToArrayAsync());
-            context.Teachers.RemoveRange(await context.Teachers.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Teachers.RemoveRange(teachers);
             context.Tests.RemoveRange(await context.Tests.Where(x => x.SchoolId == id).ToArrayAsync());
 
             context.Schools.Remove(school);

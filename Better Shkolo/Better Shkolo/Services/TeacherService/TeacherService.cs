@@ -85,9 +85,9 @@ namespace Better_Shkolo.Services.TeacherService
                 .Select(x => new TeacherDisplayModel
                 {
                     Id = x.Id,
-                    FirstName = context.Users.FirstOrDefault(y => y.Id == x.UserId).FirstName,
-                    LastName = context.Users.FirstOrDefault(y => y.Id == x.UserId).LastName,
-                    Email = context.Users.FirstOrDefault(y => y.Id == x.UserId).Email,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    Email = x.User.Email,
                     SchoolId = schoolId
                 }).ToListAsync();
 

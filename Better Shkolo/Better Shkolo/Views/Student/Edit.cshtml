@@ -3,24 +3,22 @@
 
 <h3 class="text-center">@ViewData["Title"]</h3>
 <div class="row">
-    <div class="col-md-4 offset-md-4">
-        <section>
-            <form id="account" method="post">
-                <div class="form-group">
-                    <label asp-for="GradeId"></label>
-                    <select asp-for="GradeId" class="form-control">
-                        @foreach (var grade in Model.Grades)
-                        {
-                            <option value="@grade.Id">@grade.GradeName</option>
-                        }
-                    </select>
-                </div>
-                <input type="hidden" asp-for="SchoolId" />
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </section>
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Add" method="post">
+            <div class="mb-3">
+                <label asp-for="GradeId"></label>
+                <select asp-for="GradeId" class="form-control">
+                    @foreach (var grade in Model.Grades)
+                    {
+                        <option value="@grade.Id">@grade.GradeName</option>
+                    }
+                </select>
+            </div>
+            <input type="hidden" asp-for="SchoolId" />
+            <div class="mb-3 text-center">
+                <input class="btn btn-primary" type="submit" />
+            </div>
+        </form>
     </div>
 </div>
 

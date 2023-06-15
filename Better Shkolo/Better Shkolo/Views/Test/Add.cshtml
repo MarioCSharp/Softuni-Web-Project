@@ -2,19 +2,22 @@
 @model TestAddModel
 
 <h3 class="text-center">@ViewData["Title"]</h3>
+
+
 <div class="row">
-    <div class="col-md-4 offset-md-4">
-        <section>
-            <form id="account" method="post">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Add" method="post">
+            <div class="mb-3">
                 <input class="form-control" asp-for="TestDate" />
-                <input type="hidden" asp-for="SubjectId" />
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-            </form>
-        </section>
+            </div>
+            <input type="hidden" asp-for="SubjectId" />
+            <div class="mb-3 text-center">
+                <input class="btn btn-primary" type="submit" />
+            </div>
+        </form>
     </div>
 </div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

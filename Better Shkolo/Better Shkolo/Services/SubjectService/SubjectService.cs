@@ -45,10 +45,10 @@ namespace Better_Shkolo.Services.SubjectService
 
             var count = await context.Subjects.CountAsync();
 
-            context.Absencess.RemoveRange(context.Absencess.Where(x => x.SubjectId == subject.Id).ToArray());
-            context.Marks.RemoveRange(context.Marks.Where(x => x.SubjectId == subject.Id).ToArray());
-            context.Reviews.RemoveRange(context.Reviews.Where(x => x.SubjectId == subject.Id).ToArray());
-            context.Tests.RemoveRange(context.Tests.Where(x => x.SubjectId == subject.Id).ToArray());
+            context.Absencess.RemoveRange(await context.Absencess.Where(x => x.SubjectId == subject.Id).ToArrayAsync());
+            context.Marks.RemoveRange(await context.Marks.Where(x => x.SubjectId == subject.Id).ToArrayAsync());
+            context.Reviews.RemoveRange(await context.Reviews.Where(x => x.SubjectId == subject.Id).ToArrayAsync());
+            context.Tests.RemoveRange(await context.Tests.Where(x => x.SubjectId == subject.Id).ToArrayAsync());
 
             context.Subjects.Remove(subject);
             await context.SaveChangesAsync();
