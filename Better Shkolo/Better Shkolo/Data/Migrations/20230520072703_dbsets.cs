@@ -188,7 +188,7 @@ namespace Better_Shkolo.Data.Migrations
                 column: "SchoolId",
                 principalTable: "Schools",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Students_Teachers_GradeTeacherId",

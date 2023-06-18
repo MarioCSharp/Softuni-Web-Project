@@ -156,6 +156,8 @@ namespace Better_Shkolo
             builder.Services.AddTransient<IReviewService, ReviewService>();
             builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
+            builder.Services.AddMemoryCache();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
