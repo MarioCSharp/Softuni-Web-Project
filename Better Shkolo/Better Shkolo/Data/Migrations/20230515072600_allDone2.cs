@@ -113,7 +113,7 @@ namespace Better_Shkolo.Data.Migrations
                         column: x => x.SchoolId,
                         principalTable: "Schools",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -508,7 +508,7 @@ namespace Better_Shkolo.Data.Migrations
                 column: "TeacherId",
                 principalTable: "Teachers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Student_Teachers_GradeTeacherId",
