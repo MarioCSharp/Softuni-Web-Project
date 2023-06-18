@@ -65,8 +65,8 @@ namespace Better_Shkolo.Services.StatisticsService
                     memoryCache.Set($"Student{current.Id}", avarage, cacheOptions);
                 }
 
-                memoryCache.Set($"GradePlaces{student.GradeId}", marksAvarageGrade.OrderBy(x => x.Value).ToList(), cacheOptions);
-                memoryCache.Set($"SchoolPlaces{student.SchoolId}", marksAvarageSchool.OrderBy(x => x.Value).ToList(), cacheOptions);
+                memoryCache.Set($"GradePlaces{student.GradeId}", marksAvarageGrade.OrderByDescending(x => x.Value).ToList(), cacheOptions);
+                memoryCache.Set($"SchoolPlaces{student.SchoolId}", marksAvarageSchool.OrderByDescending(x => x.Value).ToList(), cacheOptions);
             }
 
             var studentMarks = memoryCache.Get<double>($"Student{student.Id}");
@@ -126,6 +126,11 @@ namespace Better_Shkolo.Services.StatisticsService
         public int CompareTo(CustomKVP? other)
         {
             return this.Key == other.Key ? 1 : -1;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return ((CustomKVP)obj).Key == this.Key;
         }
     }
 }

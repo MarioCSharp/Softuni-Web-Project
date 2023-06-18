@@ -12,14 +12,11 @@ namespace Better_Shkolo.Controllers.Api
     {
         private IStatisticsService statisticsService;
         private IAccountService accountService;
-        private IMemoryCache memoryCache;
         public StatisticsApiController(IStatisticsService statisticsService,
-                                       IAccountService accountService,
-                                       IMemoryCache memoryCache)
+                                       IAccountService accountService)
         {
             this.statisticsService = statisticsService;
             this.accountService = accountService;
-            this.memoryCache = memoryCache;
         }
         [HttpGet]
         public async Task<StatisticsDisplayModel> GetStatistics()

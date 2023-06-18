@@ -4,95 +4,133 @@
 
 <div class="text-">
     @if (User.IsInRole("Student") || User.IsInRole("Parent"))
-{
-    <style>
-        .card-success {
-            background-color: blue;
-            padding-right: 60px;
-        }
-
-        .card-absences {
-            background-color: red;
+    {
+        <style>
+            .card-success {
+                background-color: blue;
                 padding-right: 60px;
-        }
+            }
 
-        .card-review {
-            background-color: gold;
+            .card-absences {
+                background-color: red;
                 padding-right: 60px;
-        }
+            }
 
-        .card-tests {
-            background-color: purple;
+            .card-review {
+                background-color: gold;
                 padding-right: 60px;
-        }
+            }
 
-        .square-card {
-            height: 0;
-            padding-bottom: 50%;
-            position: relative;
-        }
+            .card-tests {
+                background-color: purple;
+                padding-right: 60px;
+            }
 
-        .square-card .card-body {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-end;
-            padding: 10px;
-        }
+            .square-card {
+                height: 0;
+                padding-bottom: 50%;
+                position: relative;
+            }
 
-        .card-link {
-            margin-bottom: 20px;
-        }
-    </style>
+                .square-card .card-body {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-end;
+                    padding: 10px;
+                }
 
-    <div class="d-flex justify-content-center">
-        <div class="col-6 col-md-3">
-            <a asp-action="View" asp-controller="Mark" class="card-link">
-                <div class="card card-success square-card">
-                    <div class="card-body">
-                        <h5 id="success" class="text-white text-right mb-0"></h5>
-                        <p class="card-text text-white text-right">Average success</p>
+            .card-link {
+                margin-bottom: 20px;
+            }
+
+            .ranking-square {
+                width: 800px;
+                height: 400px;
+                border: 1px solid black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 150px auto;
+            }
+
+            .student-position {
+                text-align: center;
+            }
+
+            .position-row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .position-space {
+                width: 20px; /* Adjust the height as per your preference */
+            }
+
+                .student-position h1 {
+                    font-size: 24px;
+                }
+        </style>
+
+        <div class="d-flex justify-content-center">
+            <div class="col-6 col-md-3">
+                <a asp-action="View" asp-controller="Mark" class="card-link">
+                    <div class="card card-success square-card">
+                        <div class="card-body">
+                            <h5 id="success" class="text-white text-right mb-0"></h5>
+                            <p class="card-text text-white text-right">Average success</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6 col-md-3">
-            <a asp-action="View" asp-controller="Absences" class="card-link">
-                <div class="card card-absences square-card">
-                    <div class="card-body">
-                        <h5 id="absenceses" class="text-white text-right mb-0"></h5>
-                        <p class="card-text text-white text-right">Absences</p>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-action="View" asp-controller="Absences" class="card-link">
+                    <div class="card card-absences square-card">
+                        <div class="card-body">
+                            <h5 id="absenceses" class="text-white text-right mb-0"></h5>
+                            <p class="card-text text-white text-right">Absences</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6 col-md-3">
-            <a asp-action="View" asp-controller="Review" class="card-link">
-                <div class="card card-review square-card">
-                    <div class="card-body">
-                        <h5 id="reviews" class="text-white text-right mb-0"></h5>
-                        <p class="card-text text-white text-right">Reviews</p>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-action="View" asp-controller="Review" class="card-link">
+                    <div class="card card-review square-card">
+                        <div class="card-body">
+                            <h5 id="reviews" class="text-white text-right mb-0"></h5>
+                            <p class="card-text text-white text-right">Reviews</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6 col-md-3">
-            <a asp-action="View" asp-controller="Test" class="card-link">
-                <div class="card card-tests square-card">
-                    <div class="card-body">
-                        <h5 id="tests" class="text-white text-right mb-0"></h5>
-                        <p class="card-text text-white text-right">Tests</p>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-action="View" asp-controller="Test" class="card-link">
+                    <div class="card card-tests square-card">
+                        <div class="card-body">
+                            <h5 id="tests" class="text-white text-right mb-0"></h5>
+                            <p class="card-text text-white text-right">Tests</p>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
-}
+
+        <div class="ranking-square">
+            <div class="student-position">
+                <div class="position-row">
+                    <h1 id="position-success-grade"></h1>
+                    <div class="position-space"></div>
+                    <h1 id="position-success-school"></h1>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @section Scripts {
@@ -102,7 +140,8 @@
             $('#absenceses').text(data.absenceses);
             $('#reviews').text(data.reviews);
             $('#tests').text(data.tests);
-
+            $('#position-success-grade').text("Grade Position: " + data.placeInGrade);
+            $('#position-success-school').text("School Position: " + data.placeInSchool);
             console.log(data.Success);
         });
     </script>
