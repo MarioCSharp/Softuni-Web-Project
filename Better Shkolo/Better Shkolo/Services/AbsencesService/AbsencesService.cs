@@ -10,18 +10,18 @@ namespace Better_Shkolo.Services.AbsenceService
     public class AbsencesService : IAbsenceService
     {
         private ApplicationDbContext context;
-        private IAccountService accountService;
-        public AbsencesService(ApplicationDbContext context, IAccountService accountService)
+        public AbsencesService(ApplicationDbContext context)
         {
             this.context = context;
-            this.accountService = accountService;
         }
-        public async Task<bool> Add(AbsencesAddModel model, int id)
+        public async Task<bool> Add(AbsencesAddModel model)
         {
             var count = await context.Absencess.CountAsync();
             var subject = await context.Subjects.FindAsync(model.SubjectId);
+            var student = await context.Students.FindAsync(model.Id);
+            var school = await context.Schools.FindAsync(model.SchoolId);
 
-            if (subject is null)
+            if (subject is null || student is null || school is null)
             {
                 return false;
             }
@@ -31,9 +31,9 @@ namespace Better_Shkolo.Services.AbsenceService
             var absence = new Absences()
             {
                 AddedOn = DateTime.Now,
-                SubjectId = model.SubjectId,
+                SubjectId = subject.Id,
                 TeacherId = teacherId,
-                StudentId = model.Id,
+                StudentId = student.Id,
                 SchoolId = subject.SchoolId,
             };
 
@@ -43,10 +43,8 @@ namespace Better_Shkolo.Services.AbsenceService
             return count + 1 == await context.Absencess.CountAsync();
         }
 
-        public async Task<List<AbsencesesDisplayModel>> GetAbsenceses()
+        public async Task<List<AbsencesesDisplayModel>> GetAbsenceses(string userId)
         {
-            var userId = accountService.GetUserId();
-
             var model = new List<AbsencesesDisplayModel>();
 
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);

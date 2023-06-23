@@ -3,6 +3,7 @@ using Better_Shkolo.Services.AbsenceService;
 using Better_Shkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Better_Shkolo.Controllers
 {
@@ -30,7 +31,7 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "CanAddAbsenceses")]
         public async Task<IActionResult> Add(AbsencesAddModel model, int id)
         {
-            var result = await absenceService.Add(model, id);
+            var result = await absenceService.Add(model);
 
             if (!result)
             {
@@ -43,7 +44,7 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "CanViewAbsencesesForStudent")]
         public async Task<IActionResult> View()
         {
-            var model = await absenceService.GetAbsenceses();
+            var model = await absenceService.GetAbsenceses(User.FindFirstValue(ClaimTypes.Name));
 
             return View(model);
         }

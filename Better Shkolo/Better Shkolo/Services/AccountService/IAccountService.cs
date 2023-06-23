@@ -4,7 +4,7 @@ namespace Better_Shkolo.Services.AccountService
 {
     public interface IAccountService
     {
-         Task<List<UserDisplayModel>> GetAllAvailabeUsers();
-         string GetUserId();
+        Task<List<UserDisplayModel>> GetAllAvailabeUsers();
+        string GetUserId();
     }
 }
