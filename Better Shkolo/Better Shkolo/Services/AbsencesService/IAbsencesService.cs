@@ -2,7 +2,7 @@
 
 namespace Better_Shkolo.Services.AbsenceService
 {
-    public interface IAbsenceService
+    public interface IAbsencesService
     {
         Task<bool> Add(AbsencesAddModel model);
         Task<List<AbsencesesDisplayModel>> GetAbsenceses(string userId);

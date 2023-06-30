@@ -2,6 +2,7 @@
 using Better_Shkolo.Services.MarkService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Better_Shkolo.Controllers
 {
@@ -33,7 +34,7 @@ namespace Better_Shkolo.Controllers
                 return View(model);
             }
 
-            var result = await markService.Add(model, model.SubjectId);
+            var result = await markService.Add(model, model.SubjectId, User.FindFirstValue(ClaimTypes.Name));
 
             if (result)
             {
@@ -47,7 +48,7 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "CanViewMarks")]
         public async Task<IActionResult> View()
         {
-            var model = await markService.GetMarks();
+            var model = await markService.GetMarks(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             return View(model);
         }

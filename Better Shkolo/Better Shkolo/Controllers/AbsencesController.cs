@@ -10,9 +10,9 @@ namespace Better_Shkolo.Controllers
     public class AbsencesController : Controller
     {
         private IStudentService studentService;
-        private IAbsenceService absenceService;
+        private IAbsencesService absenceService;
         public AbsencesController(IStudentService studentService,
-                                 IAbsenceService absenceService)
+                                 IAbsencesService absenceService)
         {
             this.studentService = studentService;
             this.absenceService = absenceService;
@@ -29,7 +29,7 @@ namespace Better_Shkolo.Controllers
         }
         [HttpPost]
         [Authorize(Policy = "CanAddAbsenceses")]
-        public async Task<IActionResult> Add(AbsencesAddModel model, int id)
+        public async Task<IActionResult> Add(AbsencesAddModel model)
         {
             var result = await absenceService.Add(model);
 
@@ -44,7 +44,7 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "CanViewAbsencesesForStudent")]
         public async Task<IActionResult> View()
         {
-            var model = await absenceService.GetAbsenceses(User.FindFirstValue(ClaimTypes.Name));
+            var model = await absenceService.GetAbsenceses(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             return View(model);
         }

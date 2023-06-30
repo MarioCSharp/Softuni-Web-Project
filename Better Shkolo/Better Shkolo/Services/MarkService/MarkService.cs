@@ -10,21 +10,20 @@ namespace Better_Shkolo.Services.MarkService
     public class MarkService : IMarkService
     {
         private ApplicationDbContext context;
-        private IAccountService accountService;
         private ITeacherService teacherService;
         public MarkService(ApplicationDbContext context,
-                           IAccountService accountService,
                            ITeacherService teacherService)
         {
             this.context = context;
-            this.accountService = accountService;
             this.teacherService = teacherService;
         }
-        public async Task<bool> Add(MarkAddModel model, int subjectId)
+        public async Task<bool> Add(MarkAddModel model, int subjectId, string userId)
         {
-            var teacher = await teacherService.GetTeacher();
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == userId);
+            var subject = await context.Subjects.FindAsync(subjectId);
+            var student = await context.Students.FindAsync(model.StudentId);
 
-            if (teacher == null)
+            if (teacher == null || subject == null || student == null || model.Value < 2 || model.Value > 6)
             {
                 return false;
             }
@@ -51,10 +50,8 @@ namespace Better_Shkolo.Services.MarkService
             return count + 1 == await context.Marks.CountAsync();
         }
 
-        public async Task<List<MarkDisplayModel>> GetMarks()
+        public async Task<List<MarkDisplayModel>> GetMarks(string userId)
         {
-            var userId = accountService.GetUserId();
-
             var model = new List<MarkDisplayModel>();
 
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
@@ -93,8 +90,6 @@ namespace Better_Shkolo.Services.MarkService
                         SubjectName = subject.Name,
                         Marks = new List<MarkViewModel>()
                     });
-
-                    
                 }
 
                 var teacher = await context.Teachers.FindAsync(mark.TeacherId);

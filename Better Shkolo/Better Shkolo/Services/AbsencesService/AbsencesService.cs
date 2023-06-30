@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.AbsenceService
 {
-    public class AbsencesService : IAbsenceService
+    public class AbsencesService : IAbsencesService
     {
         private ApplicationDbContext context;
         public AbsencesService(ApplicationDbContext context)

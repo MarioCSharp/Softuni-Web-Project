@@ -18,6 +18,13 @@ namespace Better_Shkolo.Services.GradeService
         }
         public async Task<bool> Create(GradeCreateModel model)
         {
+            if (string.IsNullOrEmpty(model.GradeName) || string.IsNullOrEmpty(model.GradeSpecialty)
+                || !await context.Schools.AnyAsync(x => x.Id == model.SchoolId)
+                || !await context.Teachers.AnyAsync(x => x.Id == model.TeacherId))
+            {
+                return false;
+            }
+
             var count = await context.Grades.CountAsync();
 
             var grade = new Grade()

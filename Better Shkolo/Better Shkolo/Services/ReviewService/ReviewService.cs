@@ -27,8 +27,17 @@ namespace Better_Shkolo.Services.ReviewService
             var count = await context.Reviews.CountAsync();
 
             var teacher = await teacherService.GetTeacher();
+            var subject = await context.Subjects.FindAsync(model.SubjectId);
+            var student = await context.Students.FindAsync(model.StudentId);
 
             if (teacher is null)
+            {
+                return false;
+            }
+
+            var school = await context.Schools.FindAsync(teacher.SchoolId);
+
+            if (subject is null || student is null || school is null)
             {
                 return false;   
             }

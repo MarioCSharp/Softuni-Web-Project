@@ -42,14 +42,18 @@ namespace Better_Shkolo.Services.SchoolService
                 return false;
             }
 
+            var count = await context.Schools.CountAsync();
+
             var directorUser = await context.Users.FindAsync(school.DirectorId);
 
             await userManager.RemoveFromRoleAsync(directorUser, "Director");
 
-            context.Directors.Remove(await context.Directors.FirstOrDefaultAsync(x => x.UserId == school.DirectorId));
+            var d = await context.Directors.FirstOrDefaultAsync(x => x.UserId == school.DirectorId);
+
+            context.Directors.Remove(d);
             await context.SaveChangesAsync();
             
-            var parents = await context.Parents.Where(x => x.Student.Id == id).ToArrayAsync();
+            var parents = await context.Parents.Where(x => x.Student.SchoolId == id).ToArrayAsync();
             var students = await context.Students.Where(x => x.SchoolId == id).ToArrayAsync();
             var teachers = await context.Teachers.Where(x => x.SchoolId == id).ToArrayAsync();
 
@@ -81,7 +85,7 @@ namespace Better_Shkolo.Services.SchoolService
             context.Schools.Remove(school);
             await context.SaveChangesAsync();
 
-            return true;
+            return count - 1 == await context.Schools.CountAsync();
         }
 
         public async Task<List<SchoolViewModel>> GetAllSchools()

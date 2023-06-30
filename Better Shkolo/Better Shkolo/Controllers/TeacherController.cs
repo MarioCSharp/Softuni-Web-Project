@@ -31,11 +31,11 @@ namespace Better_Shkolo.Controllers
             this.context = context;
         }
         [HttpGet]
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
             var model = new TeacherCreateModel()
             {
-                Users = accountService.GetAllAvailabeUsers().Result,
+                Users = await accountService.GetAllAvailabeUsers(),
                 SchoolId = id
             };
 
@@ -43,11 +43,11 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(TeacherCreateModel model)
+        public async Task<IActionResult> Create(TeacherCreateModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Users = accountService.GetAllAvailabeUsers().Result;
+                model.Users = await accountService.GetAllAvailabeUsers();
                 return View(model);
             }
 

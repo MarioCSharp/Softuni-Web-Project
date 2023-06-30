@@ -126,7 +126,7 @@ namespace Better_Shkolo.Services.StudentService
             return model;
         }
 
-        public async Task<List<StudentDisplayModel>> GetStudentsInSchool(int id) //TODO: make async
+        public async Task<List<StudentDisplayModel>> GetStudentsInSchool(int id)
         {
             return await context.Students.Where(x => x.SchoolId == id)
                 .Select(x => new StudentDisplayModel
@@ -148,11 +148,11 @@ namespace Better_Shkolo.Services.StudentService
                 .Select(x => new StudentDisplayModel()
                 {
                     Id = x.Id,
-                    FirstName = context.Users.FirstOrDefault(y => y.Id == x.UserId).FirstName,
-                    LastName = context.Users.FirstOrDefault(y => y.Id == x.UserId).LastName,
-                    Email = context.Users.FirstOrDefault(y => y.Id == x.UserId).Email,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    Email = x.User.Email,
                     SchoolId = x.SchoolId,
-                    SchoolName = context.Schools.FirstOrDefault(y => y.Id == x.SchoolId).Name,
+                    SchoolName = x.School.Name,
                 }).ToListAsync();
         }
     }

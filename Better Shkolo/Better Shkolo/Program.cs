@@ -2,18 +2,8 @@ namespace Better_Shkolo
 {
     using Better_Shkolo.Data;
     using Better_Shkolo.Data.Models;
-    using Better_Shkolo.Services.AbsenceService;
+    using Better_Shkolo.Extensions;
     using Better_Shkolo.Services.AccountService;
-    using Better_Shkolo.Services.DirectorService;
-    using Better_Shkolo.Services.GradeService;
-    using Better_Shkolo.Services.MarkService;
-    using Better_Shkolo.Services.ReviewService;
-    using Better_Shkolo.Services.SchoolService;
-    using Better_Shkolo.Services.StatisticsService;
-    using Better_Shkolo.Services.StudentService;
-    using Better_Shkolo.Services.SubjectService;
-    using Better_Shkolo.Services.TeacherService;
-    using Better_Shkolo.Services.TestService;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     public class Program
@@ -143,18 +133,7 @@ namespace Better_Shkolo
                 options.LoginPath = "/Account/Login";
             });
 
-            builder.Services.AddTransient<IAccountService, AccountService>();
-            builder.Services.AddTransient<ISchoolService, SchoolService>();
-            builder.Services.AddTransient<IGradeService, GradeService>();
-            builder.Services.AddTransient<ITeacherService, TeacherService>();
-            builder.Services.AddTransient<ISubjectService, SubjectService>();
-            builder.Services.AddTransient<IAbsenceService, AbsencesService>();
-            builder.Services.AddTransient<IStudentService, StudentService>();
-            builder.Services.AddTransient<IMarkService, MarkService>();
-            builder.Services.AddTransient<ITestService, TestService>();
-            builder.Services.AddTransient<IDirectorService, DirectorService>();
-            builder.Services.AddTransient<IReviewService, ReviewService>();
-            builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+            builder.Services.AddApplicationServices(typeof(IAccountService));
 
             builder.Services.AddMemoryCache();
 
