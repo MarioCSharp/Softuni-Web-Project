@@ -18,6 +18,13 @@ namespace Better_Shkolo.Services.SubjectService
         }
         public async Task<bool> Create(SubjectCreateModel model)
         {
+            if (!await context.Grades.AnyAsync(x => x.Id == model.GradeId)
+                || !await context.Schools.AnyAsync(x => x.Id == model.SchoolId)
+                || !await context.Teachers.AnyAsync(x => x.Id == model.TeacherId))
+            {
+                return false;
+            }
+
             var count = await context.Subjects.CountAsync();
 
             var subject = new Subject()
