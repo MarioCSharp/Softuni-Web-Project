@@ -34,7 +34,7 @@ namespace Better_Shkolo.Controllers
                 return View(model);
             }
 
-            var result = await markService.Add(model, model.SubjectId, User.FindFirstValue(ClaimTypes.Name));
+            var result = await markService.Add(model, model.SubjectId, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             if (result)
             {

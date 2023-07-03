@@ -20,6 +20,17 @@ namespace Better_Shkolo.Services.StudentService
         }
         public async Task<bool> Add(StudentCreateModel model)
         {
+            var studentUser = await context.Users.FindAsync(model.UserId);
+            var school = await context.Schools.FindAsync(model.SchoolId);
+            var grade = await context.Grades.FindAsync(model.GradeId);
+            var gradeTeacher = await context.Grades.FindAsync(model.GradeId);
+            var teacher = await context.Teachers.FindAsync(gradeTeacher.TeacherId);
+
+            if (studentUser is null || school is null || grade is null || teacher is null)
+            {
+                return false;
+            }
+
             var count = await context.Students.CountAsync();
 
             var student = new Student()
@@ -27,7 +38,7 @@ namespace Better_Shkolo.Services.StudentService
                 UserId = model.UserId,
                 SchoolId = model.SchoolId,
                 GradeId = model.GradeId,
-                GradeTeacherId = context.Grades.Find(model.GradeId).TeacherId,
+                GradeTeacherId = gradeTeacher.TeacherId,
             };
 
             await context.Students.AddAsync(student);
@@ -40,6 +51,13 @@ namespace Better_Shkolo.Services.StudentService
 
         public async Task<bool> AsignParent(ParentCreateModel model, int id)
         {
+            var student = await context.Students.FindAsync(id);
+
+            if (student is null)
+            {
+                return false;
+            }
+
             var count = await context.Parents.CountAsync();
 
             var parent = new Parent()
@@ -55,7 +73,6 @@ namespace Better_Shkolo.Services.StudentService
 
             await userManager.AddToRoleAsync(user, "Parent");
 
-            var student = await context.Students.FindAsync(id);
             student.ParentId = parent.Id;
             await context.SaveChangesAsync();
 
@@ -67,6 +84,12 @@ namespace Better_Shkolo.Services.StudentService
             var count = await context.Students.CountAsync();
 
             var student = await context.Students.FindAsync(id);
+
+            if (student is null)
+            {
+                return false;
+            }
+
             var studentUser = await context.Users.FindAsync(student.UserId);
 
             var parents = await context.Parents.Where(x => x.StudentId == id).ToListAsync();
@@ -116,7 +139,7 @@ namespace Better_Shkolo.Services.StudentService
             var user = await context.Users.FirstOrDefaultAsync(x => x.Id == student.UserId);
 
             var model = new AbsencesAddModel();
-            
+
             model.Id = id;
             model.FirstName = user.FirstName;
             model.LastName = user.LastName;
