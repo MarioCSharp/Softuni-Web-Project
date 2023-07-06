@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Models.School;
 using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +10,13 @@ namespace Better_Shkolo.Services.DirectorService
     {
         private ApplicationDbContext context;
         private IAccountService accountService;
-
+        private IMapper mapper;
         public DirectorService(ApplicationDbContext context,
-                               IAccountService accountService)
+                               IAccountService accountService,
+                               IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
             this.accountService = accountService;
         }
 
@@ -25,12 +28,7 @@ namespace Better_Shkolo.Services.DirectorService
 
             var school = await context.Schools.FindAsync(director?.SchoolId);
 
-            var model = new SchoolViewModel()
-            {
-                Id = school.Id,
-                Name = school.Name,
-                City = school.City,
-            };
+            var model = mapper.Map<SchoolViewModel>(school);
 
             return model;
         }

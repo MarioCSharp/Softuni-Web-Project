@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Models.Subject;
 using Better_Shkolo.Services.GradeService;
 using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Controllers
 {
@@ -15,15 +15,18 @@ namespace Better_Shkolo.Controllers
         private IGradeService gradeService;
         private ISubjectService subjectService;
         private ApplicationDbContext context;
+        private IMapper mapper;
         public SubjectController(ITeacherService teacherService,
                                  IGradeService gradeService,
                                  ISubjectService subjectService,
-                                 ApplicationDbContext context)
+                                 ApplicationDbContext context,
+                                 IMapper mapper)
         {
             this.teacherService = teacherService;
             this.gradeService = gradeService;
             this.subjectService = subjectService;
             this.context = context;
+            this.mapper = mapper;
         }
         [HttpGet]
         [Authorize(Policy = "CanAddSubject")]
@@ -109,15 +112,10 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
             
-            var model = new SubjectCreateModel()
-            {
-                Name = subject.Name,
-                TeacherId = subject.TeacherId,
-                SchoolId = subject.SchoolId,
-                GradeId = subject.GradeId,
-                TeachersInSchool = await teacherService.GetAllTeacherInSchool(subject.SchoolId),
-                GradesInSchool = await gradeService.GetGradesBySchoolId(subject.SchoolId)
-            };
+            var model = mapper.Map<SubjectCreateModel>(subject);
+
+            model.TeachersInSchool = await teacherService.GetAllTeacherInSchool(subject.SchoolId);
+            model.GradesInSchool = await gradeService.GetGradesBySchoolId(subject.SchoolId);
 
             return View(model);
         }

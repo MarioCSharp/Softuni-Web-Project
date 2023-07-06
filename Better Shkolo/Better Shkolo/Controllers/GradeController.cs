@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Data;
+using AutoMapper;
 
 namespace Better_Shkolo.Controllers
 {
@@ -14,16 +15,18 @@ namespace Better_Shkolo.Controllers
         private IGradeService gradeService;
         private IAccountService accountService;
         private ApplicationDbContext context;
-
+        public IMapper mapper;
         public GradeController(ITeacherService teacherService,
                                IGradeService gradeService,
                                IAccountService accountService,
-                               ApplicationDbContext context)
+                               ApplicationDbContext context,
+                               IMapper mapper)
         {
             this.teacherService = teacherService;
             this.gradeService = gradeService;
             this.accountService = accountService;
             this.context = context;
+            this.mapper = mapper;
         }
         [HttpGet]
         [Authorize(Policy = "CanAddGrades")]
@@ -92,13 +95,9 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            var model = new GradeCreateModel()
-            {
-                GradeName = grade.GradeName,
-                GradeSpecialty = grade.GradeSpecialty,
-                TeacherId = grade.TeacherId,
-                Teachers = await teacherService.GetAllTeacherInSchool(grade.SchoolId)
-            };
+            var model = mapper.Map<GradeCreateModel>(grade);
+
+            model.Teachers = await teacherService.GetAllTeacherInSchool(grade.SchoolId);
 
             return View(model);
         }
@@ -111,11 +110,11 @@ namespace Better_Shkolo.Controllers
                 return View(model);
             }
 
-            var school = await gradeService.GetGrade(id);
+            var grade = await gradeService.GetGrade(id);
 
-            school.GradeName = model.GradeName;
-            school.GradeSpecialty = model.GradeSpecialty;
-            school.TeacherId = model.TeacherId;
+            grade.GradeName = model.GradeName;
+            grade.GradeSpecialty = model.GradeSpecialty;
+            grade.TeacherId = model.TeacherId;
 
             context.SaveChanges();
 

@@ -1,8 +1,7 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.TeacherService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.MarkService
@@ -10,12 +9,11 @@ namespace Better_Shkolo.Services.MarkService
     public class MarkService : IMarkService
     {
         private ApplicationDbContext context;
-        private ITeacherService teacherService;
-        public MarkService(ApplicationDbContext context,
-                           ITeacherService teacherService)
+        private IMapper mapper;
+        public MarkService(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
-            this.teacherService = teacherService;
+            this.mapper = mapper;
         }
         public async Task<bool> Add(MarkAddModel model, int subjectId, string userId)
         {
@@ -28,26 +26,19 @@ namespace Better_Shkolo.Services.MarkService
                 return false;
             }
 
-            var count = await context.Marks.CountAsync();
-
             var teacherId = teacher.Id;
 
             var schoolId = teacher.SchoolId;
 
-            var mark = new Mark()
-            {
-                Value = model.Value,
-                AddedOn = DateTime.Now,
-                SubjectId = model.SubjectId,
-                TeacherId = teacherId,
-                StudentId = model.StudentId,
-                SchoolId = schoolId
-            };
+            var mark = mapper.Map<Mark>(model);
+            mark.AddedOn = DateTime.Now;
+            mark.TeacherId = teacherId;
+            mark.SchoolId = schoolId;
 
             await context.Marks.AddAsync(mark);
             await context.SaveChangesAsync();
 
-            return count + 1 == await context.Marks.CountAsync();
+            return await context.Marks.ContainsAsync(mark);
         }
 
         public async Task<List<MarkDisplayModel>> GetMarks(string userId)

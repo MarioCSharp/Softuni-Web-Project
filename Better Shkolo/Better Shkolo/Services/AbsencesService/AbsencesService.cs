@@ -16,7 +16,6 @@ namespace Better_Shkolo.Services.AbsenceService
         }
         public async Task<bool> Add(AbsencesAddModel model)
         {
-            var count = await context.Absencess.CountAsync();
             var subject = await context.Subjects.FindAsync(model.SubjectId);
             var student = await context.Students.FindAsync(model.Id);
             var school = await context.Schools.FindAsync(model.SchoolId);
@@ -40,7 +39,7 @@ namespace Better_Shkolo.Services.AbsenceService
             await context.Absencess.AddAsync(absence);
             await context.SaveChangesAsync();
 
-            return count + 1 == await context.Absencess.CountAsync();
+            return await context.Absencess.ContainsAsync(absence);
         }
 
         public async Task<List<AbsencesesDisplayModel>> GetAbsenceses(string userId)

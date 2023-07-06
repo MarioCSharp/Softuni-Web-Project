@@ -5,6 +5,7 @@ namespace Better_Shkolo
     using Better_Shkolo.Extensions;
     using Better_Shkolo.Services.AccountService;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     public class Program
     {
@@ -24,10 +25,11 @@ namespace Better_Shkolo
               .AddRoles<IdentityRole>()
               .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddControllersWithViews();
-
-            builder.Services.AddControllers(
-                options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+            });
 
             builder.Services.AddAuthorization(options =>
             {
@@ -136,6 +138,7 @@ namespace Better_Shkolo
             builder.Services.AddApplicationServices(typeof(IAccountService));
 
             builder.Services.AddMemoryCache();
+            builder.Services.AddAutoMapper(typeof(Program));
 
             var app = builder.Build();
 
@@ -156,6 +159,8 @@ namespace Better_Shkolo
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseStatusCodePages();
 
             app.Initialize();
 

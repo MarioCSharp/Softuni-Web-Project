@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Models.Test;
 using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
@@ -11,14 +11,15 @@ namespace Better_Shkolo.Services.TestService
     {
         private ApplicationDbContext context;
         private IAccountService accountService;
-        public TestService(ApplicationDbContext context, IAccountService accountService)
+        private IMapper mapper;
+        public TestService(ApplicationDbContext context, IAccountService accountService, IMapper mapper)
         {
             this.context = context;
             this.accountService = accountService;
+            this.mapper = mapper;
         }
         public async Task<bool> Add(TestAddModel model)
         {
-            var count = await context.Tests.CountAsync();
             var subject = await context.Subjects.FindAsync(model.SubjectId);
 
             if (subject is null)
@@ -26,20 +27,14 @@ namespace Better_Shkolo.Services.TestService
                 return false;
             }
 
-            var test = new Test()
-            {
-                AddedOn = DateTime.Now,
-                TestDate = model.TestDate,
-                SubjectId = subject.Id,
-                TeacherId = subject.TeacherId,
-                GradeId = subject.GradeId,
-                SchoolId = subject.SchoolId,
-            };
+            var test = mapper.Map<Test>(subject);
+            test.AddedOn = DateTime.Now;
+            test.TestDate = model.TestDate;
 
             await context.Tests.AddAsync(test);
             await context.SaveChangesAsync();
 
-            return count + 1 == await context.Tests.CountAsync();
+            return await context.Tests.ContainsAsync(test);
         }
 
         public async Task<List<TestDisplayModel>> GetTests()

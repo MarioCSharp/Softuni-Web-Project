@@ -1,5 +1,4 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Services.DirectorService;
+﻿using Better_Shkolo.Services.DirectorService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,13 +8,10 @@ namespace Better_Shkolo.Controllers
     public class DirectorController : Controller
     {
         private IDirectorService directorService;
-        private ApplicationDbContext context;
 
-        public DirectorController(IDirectorService directorService,
-                                  ApplicationDbContext context)
+        public DirectorController(IDirectorService directorService)
         {
             this.directorService = directorService;
-            this.context = context;
         }
 
         public async Task<IActionResult> Menu()

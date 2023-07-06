@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.School;
 using Better_Shkolo.Services.AccountService;
@@ -14,13 +15,16 @@ namespace Better_Shkolo.Controllers
         private IAccountService accountService;
         private ISchoolService schoolService;
         private ApplicationDbContext context;
+        private IMapper mapper;
         public SchoolController(IAccountService accountService
                                 , ISchoolService schoolService
-                                , ApplicationDbContext context)
+                                , ApplicationDbContext context
+                                , IMapper mapper)
         {
             this.accountService = accountService;
             this.schoolService = schoolService;
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -34,7 +38,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Add(SchoolCreateModel model) 
+        public async Task<IActionResult> Add(SchoolCreateModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -99,13 +103,9 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            var model = new SchoolCreateModel()
-            {
-                Name = school.Name,
-                City = school.City,
-                DirectorId = school.DirectorId,
-                AvailableUsers = accountService.GetAllAvailabeUsers().Result
-            };
+            var model = mapper.Map<SchoolCreateModel>(school);
+
+            model.AvailableUsers = await accountService.GetAllAvailabeUsers();
 
             return View(model);
         }
@@ -124,7 +124,7 @@ namespace Better_Shkolo.Controllers
             school.City = model.City;
             school.DirectorId = model.DirectorId;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return RedirectToAction(nameof(View));
         }

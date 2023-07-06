@@ -11,7 +11,7 @@ namespace Better_Shkolo.Test.Services
         {
             using var data = DatabaseMock.Instance;
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new GradeCreateModel()
             {
@@ -29,7 +29,7 @@ namespace Better_Shkolo.Test.Services
         {
             using var data = DatabaseMock.Instance;
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new GradeCreateModel()
             {
@@ -56,7 +56,7 @@ namespace Better_Shkolo.Test.Services
 
             await data.SaveChangesAsync();
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new GradeCreateModel()
             {
@@ -84,7 +84,7 @@ namespace Better_Shkolo.Test.Services
 
             await data.SaveChangesAsync();
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new GradeCreateModel()
             {
@@ -119,7 +119,7 @@ namespace Better_Shkolo.Test.Services
 
             await data.SaveChangesAsync();
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new GradeCreateModel()
             {
@@ -137,7 +137,7 @@ namespace Better_Shkolo.Test.Services
         {
             using var data = DatabaseMock.Instance;
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.DeleteGrade(31);
 
@@ -149,7 +149,7 @@ namespace Better_Shkolo.Test.Services
         {
             using var data = DatabaseMock.Instance;
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.GetGrade(31);
 
@@ -183,7 +183,7 @@ namespace Better_Shkolo.Test.Services
             await data.Grades.AddAsync(grade);
             await data.SaveChangesAsync();
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.GetGrade(23);
 
@@ -214,7 +214,7 @@ namespace Better_Shkolo.Test.Services
                 SchoolId = 2
             };
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.GetGradeByTeacherId(31);
 
@@ -267,7 +267,7 @@ namespace Better_Shkolo.Test.Services
             await data.SaveChangesAsync();
 
 
-            var service = new GradeService(data, null);
+            var service = new GradeService(data, null, MapperMock.MappingData());
 
             var result = await service.GetGradesBySchoolId(2);
 

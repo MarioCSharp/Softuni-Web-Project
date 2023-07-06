@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Teacher;
 using Better_Shkolo.Services.AccountService;
@@ -18,17 +19,20 @@ namespace Better_Shkolo.Controllers
         private ISubjectService subjectService;
         private IGradeService gradeService;
         private ApplicationDbContext context;
+        private IMapper mapper;
         public TeacherController(IAccountService accountService,
                                  ITeacherService teacherService,
                                  IGradeService gradeService,
                                  ISubjectService subjectService,
-                                 ApplicationDbContext context)
+                                 ApplicationDbContext context,
+                                 IMapper mapper)
         {
             this.accountService = accountService;
             this.teacherService = teacherService;
             this.gradeService = gradeService;
             this.subjectService = subjectService;
             this.context = context;
+            this.mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> Create(int id)
@@ -86,16 +90,11 @@ namespace Better_Shkolo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var model = new GradeDeleteModel()
-            {
-                GradeName = grade.GradeName,
-                GradeSpecialty = grade.GradeSpecialty,
-                SchoolId = grade.SchoolId,
-                Teachers = await teacherService.GetAllTeacherInSchool(teacher.SchoolId),
-                OldTeacherId = teacher.Id
-            };
+            var model = mapper.Map<GradeDeleteModel>(grade);
 
+            model.Teachers = await teacherService.GetAllTeacherInSchool(teacher.SchoolId);
             model.Teachers = model.Teachers.Where(x => x.Id != teacher.Id).ToList();
+            model.OldTeacherId = teacher.Id;
 
             return View(model);
         }

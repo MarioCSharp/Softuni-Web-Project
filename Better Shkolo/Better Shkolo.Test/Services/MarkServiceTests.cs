@@ -1,7 +1,6 @@
 ﻿using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Services.MarkService;
 using Better_Shkolo.Test.Mocks;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Better_Shkolo.Test.Services
 {
@@ -32,7 +31,7 @@ namespace Better_Shkolo.Test.Services
             });
             await context.SaveChangesAsync();
 
-            var service = new MarkService(context, TeacherServiceMock.Instance);
+            var service = new MarkService(context, MapperMock.MappingData());
 
             var result = await service.Add(new MarkAddModel()
             {
@@ -67,7 +66,7 @@ namespace Better_Shkolo.Test.Services
             });
             await context.SaveChangesAsync();
 
-            var service = new MarkService(context, TeacherServiceMock.Instance);
+            var service = new MarkService(context, MapperMock.MappingData());
 
             var result = await service.Add(new MarkAddModel()
             {
@@ -101,7 +100,7 @@ namespace Better_Shkolo.Test.Services
             });
             await context.SaveChangesAsync();
 
-            var service = new MarkService(context, TeacherServiceMock.Instance);
+            var service = new MarkService(context, MapperMock.MappingData());
 
             var result = await service.Add(new MarkAddModel()
             {
@@ -146,7 +145,7 @@ namespace Better_Shkolo.Test.Services
             });
             await context.SaveChangesAsync();
 
-            var service = new MarkService(context, TeacherServiceMock.Instance);
+            var service = new MarkService(context, MapperMock.MappingData());
 
             var result = await service.Add(new MarkAddModel()
             {
@@ -191,7 +190,7 @@ namespace Better_Shkolo.Test.Services
             });
             await context.SaveChangesAsync();
 
-            var service = new MarkService(context, TeacherServiceMock.Instance);
+            var service = new MarkService(context, MapperMock.MappingData());
 
             var result = await service.Add(new MarkAddModel()
             {

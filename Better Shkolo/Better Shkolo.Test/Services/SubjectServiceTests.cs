@@ -38,7 +38,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new SubjectService(data, null);
+            var service = new SubjectService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new SubjectCreateModel()
             {
@@ -74,7 +74,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new SubjectService(data, null);
+            var service = new SubjectService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new SubjectCreateModel()
             {
@@ -111,7 +111,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new SubjectService(data, null);
+            var service = new SubjectService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new SubjectCreateModel()
             {
@@ -146,7 +146,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new SubjectService(data, null);
+            var service = new SubjectService(data, null, MapperMock.MappingData());
 
             var result = await service.Create(new SubjectCreateModel()
             {
@@ -191,7 +191,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new SubjectService(data, null);
+            var service = new SubjectService(data, null, MapperMock.MappingData());
 
             await service.Create(new SubjectCreateModel()
             {
@@ -238,7 +238,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new SubjectService(data, null);
+            var service = new SubjectService(data, null, MapperMock.MappingData());
 
             await service.Create(new SubjectCreateModel()
             {
@@ -270,7 +270,7 @@ namespace Better_Shkolo.Test.Services
             await data.Subjects.AddAsync(subject);
             await data.SaveChangesAsync();
 
-            var service = new SubjectService(data, null);
+            var service = new SubjectService(data, null, MapperMock.MappingData());
             
             var result = await service.GetSubject(23);
 

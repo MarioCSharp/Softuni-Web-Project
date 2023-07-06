@@ -18,7 +18,6 @@ namespace Better_Shkolo.Services.SchoolService
         }
         public async Task<bool> AddSchool(School school)
         {
-            var countBefore = context.Schools.Count();
             var user = await context.Users.FindAsync(school.DirectorId);
 
             await context.Schools.AddAsync(school);
@@ -30,7 +29,7 @@ namespace Better_Shkolo.Services.SchoolService
             await context.Directors.AddAsync(new Director() { SchoolId = school.Id, UserId = user.Id});
             await context.SaveChangesAsync();
 
-            return countBefore + 1 == await context.Schools.CountAsync();
+            return await context.Schools.ContainsAsync(school);
         }
 
         public async Task<bool> DeleteSchool(int id)
@@ -85,7 +84,7 @@ namespace Better_Shkolo.Services.SchoolService
             context.Schools.Remove(school);
             await context.SaveChangesAsync();
 
-            return count - 1 == await context.Schools.CountAsync();
+            return !await context.Schools.ContainsAsync(school);
         }
 
         public async Task<List<SchoolViewModel>> GetAllSchools()

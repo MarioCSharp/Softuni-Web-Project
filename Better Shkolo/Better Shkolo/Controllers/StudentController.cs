@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Models.Parent;
+﻿using AutoMapper;
+using Better_Shkolo.Models.Parent;
 using Better_Shkolo.Models.Student;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
@@ -13,13 +14,16 @@ namespace Better_Shkolo.Controllers
         private IStudentService studentService;
         private IAccountService accountService;
         private IGradeService gradeService;
+        private IMapper mapper;
         public StudentController(IStudentService studentService,
                                  IAccountService accountService,
-                                 IGradeService gradeService)
+                                 IGradeService gradeService,
+                                 IMapper mapper)
         {
             this.studentService = studentService;
             this.accountService = accountService;
             this.gradeService = gradeService;
+            this.mapper = mapper;
         }
         [HttpGet]
         [Authorize(Policy = "CanAccessStudents")]
@@ -106,13 +110,9 @@ namespace Better_Shkolo.Controllers
         {
             var student = await studentService.GetStudent(id);
 
-            var model = new StudentCreateModel()
-            {
-                UserId = student.UserId,
-                GradeId = student.GradeId,
-                SchoolId = student.SchoolId,
-                Grades = await gradeService.GetGradesBySchoolId(student.SchoolId),
-            };
+            var model = mapper.Map<StudentCreateModel>(student);
+
+            model.Grades = await gradeService.GetGradesBySchoolId(student.SchoolId);
 
             return View(model);
         }

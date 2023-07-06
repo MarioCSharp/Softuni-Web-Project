@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Absence;
 using Better_Shkolo.Models.Parent;
@@ -12,41 +13,42 @@ namespace Better_Shkolo.Services.StudentService
     {
         private ApplicationDbContext context;
         private UserManager<User> userManager;
+        private IMapper mapper;
         public StudentService(ApplicationDbContext context,
-                              UserManager<User> userManager)
+                              UserManager<User> userManager,
+                              IMapper mapper)
         {
             this.context = context;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
         public async Task<bool> Add(StudentCreateModel model)
         {
             var studentUser = await context.Users.FindAsync(model.UserId);
             var school = await context.Schools.FindAsync(model.SchoolId);
             var grade = await context.Grades.FindAsync(model.GradeId);
-            var gradeTeacher = await context.Grades.FindAsync(model.GradeId);
-            var teacher = await context.Teachers.FindAsync(gradeTeacher.TeacherId);
 
-            if (studentUser is null || school is null || grade is null || teacher is null)
+            if (grade is null)
             {
                 return false;
             }
 
-            var count = await context.Students.CountAsync();
+            var teacher = await context.Teachers.FindAsync(grade.TeacherId);
 
-            var student = new Student()
+            if (studentUser is null || school is null || teacher is null)
             {
-                UserId = model.UserId,
-                SchoolId = model.SchoolId,
-                GradeId = model.GradeId,
-                GradeTeacherId = gradeTeacher.TeacherId,
-            };
+                return false;
+            }
+
+            var student = mapper.Map<Student>(model);
+            student.GradeTeacherId = grade.TeacherId;
 
             await context.Students.AddAsync(student);
             await context.SaveChangesAsync();
 
             await userManager.AddToRoleAsync(await context.Users.FindAsync(student.UserId), "Student");
 
-            return count + 1 == await context.Students.CountAsync();
+            return await context.Students.ContainsAsync(student);
         }
 
         public async Task<bool> AsignParent(ParentCreateModel model, int id)
@@ -57,8 +59,6 @@ namespace Better_Shkolo.Services.StudentService
             {
                 return false;
             }
-
-            var count = await context.Parents.CountAsync();
 
             var parent = new Parent()
             {
@@ -76,13 +76,11 @@ namespace Better_Shkolo.Services.StudentService
             student.ParentId = parent.Id;
             await context.SaveChangesAsync();
 
-            return count + 1 == await context.Parents.CountAsync();
+            return await context.Parents.ContainsAsync(parent);
         }
 
         public async Task<bool> Delete(int id)
         {
-            var count = await context.Students.CountAsync();
-
             var student = await context.Students.FindAsync(id);
 
             if (student is null)
@@ -109,7 +107,7 @@ namespace Better_Shkolo.Services.StudentService
             context.Students.Remove(student);
             await context.SaveChangesAsync();
 
-            return count - 1 == await context.Students.CountAsync();
+            return !await context.Students.ContainsAsync(student);
         }
 
         public async Task<bool> Edit(StudentCreateModel model, int id)

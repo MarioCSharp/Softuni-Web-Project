@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Grade;
 using Microsoft.AspNetCore.Identity;
@@ -9,12 +10,15 @@ namespace Better_Shkolo.Services.GradeService
     public class GradeService : IGradeService
     {
         private ApplicationDbContext context;
-        private UserManager<User> userManager;  
+        private UserManager<User> userManager; 
+        private IMapper mapper;
         public GradeService(ApplicationDbContext context,
-                            UserManager<User> userManager)
+                            UserManager<User> userManager,
+                            IMapper mapper)
         {
             this.context = context;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
         public async Task<bool> Create(GradeCreateModel model)
         {
@@ -25,25 +29,12 @@ namespace Better_Shkolo.Services.GradeService
                 return false;
             }
 
-            var count = await context.Grades.CountAsync();
-
-            var grade = new Grade()
-            {
-                GradeName = model.GradeName,
-                GradeSpecialty = model.GradeSpecialty,
-                SchoolId = model.SchoolId,
-                TeacherId = model.TeacherId
-            };
+            var grade = mapper.Map<Grade>(model);
 
             await context.Grades.AddAsync(grade);
             await context.SaveChangesAsync();
 
-            if (count + 1 == await context.Grades.CountAsync())
-            {
-                return true;
-            }
-
-            return false;
+            return await context.Grades.ContainsAsync(grade);
         }
 
         public async Task<bool> DeleteGrade(int id)

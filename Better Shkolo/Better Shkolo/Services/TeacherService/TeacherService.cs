@@ -24,8 +24,6 @@ namespace Better_Shkolo.Services.TeacherService
 
         public async Task<bool> Create(TeacherCreateModel model)
         {
-            var countNow = await context.Teachers.CountAsync();
-
             var teacher = new Teacher()
             {
                 SchoolId = model.SchoolId,
@@ -46,12 +44,11 @@ namespace Better_Shkolo.Services.TeacherService
                 return false;
             }
 
-            return countNow + 1 == await context.Teachers.CountAsync();
+            return await context.Teachers.ContainsAsync(teacher);
         }
 
         public async Task<bool> DeleteTeacher(int id, int newTeacherId = 0)
         {
-            var count = await context.Teachers.CountAsync();
             var teacher = await context.Teachers.FindAsync(id);
             var user = await context.Users.FirstOrDefaultAsync(x => x.Id == teacher.UserId);
 
@@ -77,7 +74,7 @@ namespace Better_Shkolo.Services.TeacherService
             context.Teachers.Remove(teacher);
             await context.SaveChangesAsync();
 
-            return count - 1 == await context.Teachers.CountAsync();
+            return !await context.Teachers.ContainsAsync(teacher);
         }
         public async Task<List<TeacherDisplayModel>> GetAllTeacherInSchool(int schoolId)
         {

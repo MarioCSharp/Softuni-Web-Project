@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Models.Parent;
+﻿using AutoMapper;
+using Better_Shkolo.Models.Parent;
 using Better_Shkolo.Models.Student;
 using Better_Shkolo.Services.StudentService;
 using Better_Shkolo.Test.Mocks;
@@ -49,7 +50,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             var result = await service.Add(new StudentCreateModel()
             {
@@ -94,7 +95,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             var result = await service.Add(new StudentCreateModel()
             {
@@ -139,7 +140,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             var result = await service.Add(new StudentCreateModel()
             {
@@ -184,7 +185,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             var result = await service.Add(new StudentCreateModel()
             {
@@ -231,7 +232,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             var result = await service.Add(new StudentCreateModel()
             {
@@ -277,7 +278,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             var result = await service.AsignParent(new ParentCreateModel
             {
@@ -310,7 +311,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             var result = await service.AsignParent(new ParentCreateModel
             {
@@ -362,7 +363,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             await service.Add(new StudentCreateModel()
             {
@@ -419,7 +420,7 @@ namespace Better_Shkolo.Test.Services
             });
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
             await service.Add(new StudentCreateModel()
             {
@@ -451,7 +452,7 @@ namespace Better_Shkolo.Test.Services
             await data.AddAsync(student);
             await data.SaveChangesAsync();
 
-            var service = new StudentService(data, UserManagerMock.Instance<User>().Object);
+            var service = new StudentService(data, UserManagerMock.Instance<User>().Object, MapperMock.MappingData());
 
 
             var result = await service.GetStudent(312);

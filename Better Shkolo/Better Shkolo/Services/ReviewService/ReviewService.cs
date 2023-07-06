@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Models.Review;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.TeacherService;
@@ -13,19 +13,19 @@ namespace Better_Shkolo.Services.ReviewService
         private ApplicationDbContext context;
         private ITeacherService teacherService;
         private IAccountService accountService;
+        private IMapper mapper;
         public ReviewService(ApplicationDbContext context,
                              ITeacherService teacherService,
-                             IAccountService accountService)
+                             IAccountService accountService,
+                             IMapper mapper)
         {
             this.context = context;
             this.teacherService = teacherService;
             this.accountService = accountService;
-
+            this.mapper = mapper;
         }
         public async Task<bool> Add(ReviewAddModel model)
         {
-            var count = await context.Reviews.CountAsync();
-
             var teacher = await teacherService.GetTeacher();
             var subject = await context.Subjects.FindAsync(model.SubjectId);
             var student = await context.Students.FindAsync(model.StudentId);
@@ -42,20 +42,15 @@ namespace Better_Shkolo.Services.ReviewService
                 return false;   
             }
 
-            var review = new Review()
-            {
-                Description = model.Description,
-                AddedOn = DateTime.Now,
-                SubjectId = model.SubjectId,
-                TeacherId = teacher.Id,
-                StudentId = model.StudentId,
-                SchoolId = teacher.SchoolId
-            };
+            var review = mapper.Map<Review>(model);
+            review.AddedOn = DateTime.Now;
+            review.TeacherId = teacher.Id;
+            review.SchoolId = teacher.SchoolId;
 
             await context.Reviews.AddAsync(review);
             await context.SaveChangesAsync();
 
-            return count + 1 == await context.Reviews.CountAsync();
+            return await context.Reviews.ContainsAsync(review);
         }
 
         public async Task<List<ReviewDisplayModel>> GetReviews()
@@ -100,8 +95,6 @@ namespace Better_Shkolo.Services.ReviewService
                         SubjectName = subject.Name,
                         Reviews = new List<ReviewViewModel>()
                     });
-
-
                 }
 
                 var teacher = await context.Teachers.FindAsync(review.TeacherId);

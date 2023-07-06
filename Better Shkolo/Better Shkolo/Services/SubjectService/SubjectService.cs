@@ -1,4 +1,5 @@
-﻿using Better_Shkolo.Data;
+﻿using AutoMapper;
+using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Subject;
 using Better_Shkolo.Services.AccountService;
@@ -10,11 +11,14 @@ namespace Better_Shkolo.Services.SubjectService
     {
         private ApplicationDbContext context;
         private IAccountService accountService;
+        private IMapper mapper;
         public SubjectService(ApplicationDbContext context,
-                              IAccountService accountService)
+                              IAccountService accountService,
+                              IMapper mapper)
         {
             this.context = context;
             this.accountService = accountService;
+            this.mapper = mapper;
         }
         public async Task<bool> Create(SubjectCreateModel model)
         {
@@ -25,20 +29,12 @@ namespace Better_Shkolo.Services.SubjectService
                 return false;
             }
 
-            var count = await context.Subjects.CountAsync();
-
-            var subject = new Subject()
-            {
-                Name = model.Name,
-                TeacherId = model.TeacherId,
-                SchoolId = model.SchoolId,
-                GradeId = model.GradeId
-            };
+            var subject = mapper.Map<Subject>(model); 
 
             await context.Subjects.AddAsync(subject);
             await context.SaveChangesAsync();
 
-            return count + 1 == await context.Subjects.CountAsync();
+            return await context.Subjects.ContainsAsync(subject);
         }
 
         public async Task<bool> DeleteSubject(int id)
@@ -50,8 +46,6 @@ namespace Better_Shkolo.Services.SubjectService
                 return false;
             }
 
-            var count = await context.Subjects.CountAsync();
-
             context.Absencess.RemoveRange(await context.Absencess.Where(x => x.SubjectId == subject.Id).ToArrayAsync());
             context.Marks.RemoveRange(await context.Marks.Where(x => x.SubjectId == subject.Id).ToArrayAsync());
             context.Reviews.RemoveRange(await context.Reviews.Where(x => x.SubjectId == subject.Id).ToArrayAsync());
@@ -60,7 +54,7 @@ namespace Better_Shkolo.Services.SubjectService
             context.Subjects.Remove(subject);
             await context.SaveChangesAsync();
 
-            return count - 1 == await context.Subjects.CountAsync();
+            return !await context.Subjects.ContainsAsync(subject);
         }
 
         public async Task<bool> Edit(SubjectCreateModel model, int id)
