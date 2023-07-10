@@ -2,7 +2,6 @@
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.StatisticsService;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Better_Shkolo.Controllers.Api
 {
@@ -22,6 +21,20 @@ namespace Better_Shkolo.Controllers.Api
         public async Task<StatisticsDisplayModel> GetStatistics()
         {
             return await statisticsService.GetStatistics(accountService.GetUserId());
+        }
+
+        [HttpGet]
+        [Route("GetMark")]
+        public async Task<IActionResult> GetMarkById(int id)
+        {
+            var mark = await statisticsService.GetMarkById(id);
+
+            if (mark is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(mark);
         }
     }
 }

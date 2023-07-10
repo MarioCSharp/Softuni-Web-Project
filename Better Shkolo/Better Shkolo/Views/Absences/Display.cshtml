@@ -1,0 +1,26 @@
+﻿@using Better_Shkolo.Models.Absence;
+@model IEnumerable<AbsencesesShowModel>
+
+<div class="list-group">
+    <h3>Absenceses</h3>
+    @foreach (var absences in Model)
+    {
+        <div class="list-group-item list-group-item-action">
+            @if (absences.ExcusedOn is not null)
+            {
+                <p>Added on: @absences.AddedOn</p>
+                <p>Excused on: @absences.ExcusedOn</p>
+            }
+            else
+            {
+                <p>Added on: @absences.AddedOn</p>
+                <p id="not-excused">Not excused!</p>
+            }
+        </div>
+    }
+</div>
+<style>
+    #not-excused{
+        color: red;
+    }
+</style>

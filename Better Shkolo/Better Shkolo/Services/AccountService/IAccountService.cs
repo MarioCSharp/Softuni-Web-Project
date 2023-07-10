@@ -6,5 +6,6 @@ namespace Better_Shkolo.Services.AccountService
     {
         Task<List<UserDisplayModel>> GetAllAvailabeUsers();
         string GetUserId();
+        Task<bool> IsGradeTeacher();
     }
 }

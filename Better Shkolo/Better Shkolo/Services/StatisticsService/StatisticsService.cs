@@ -1,7 +1,9 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Models.Api;
+using Better_Shkolo.Models.Mark;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
 
 namespace Better_Shkolo.Services.StatisticsService
 {
@@ -15,6 +17,43 @@ namespace Better_Shkolo.Services.StatisticsService
             this.context = context;
             this.memoryCache = memoryCache;
         }
+
+        public async Task<MarkInformationModel> GetMarkById(int id)
+        {
+            var mark = await context.Marks.FindAsync(id);
+
+            if (mark is null)
+            {
+                return null;
+            }
+
+            var markInfo = memoryCache.Get($"Mark{id}");
+
+            if (markInfo is null)
+            {
+                var teacher = await context.Teachers.FindAsync(mark.TeacherId);
+                var teacherUser = await context.Users.FindAsync(teacher.UserId);
+
+                var addedOn = mark.AddedOn.ToString("MM/dd/yyyy HH:mm:ss");
+
+                var result = new MarkInformationModel()
+                {
+                    Value = mark.Value,
+                    AddedOn = addedOn,
+                    TeacherName = $"{teacherUser.FirstName} {teacherUser.LastName}"
+                };
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetPriority(CacheItemPriority.Low);
+
+                memoryCache.Set($"Mark{id}", result, cacheOptions);
+
+                return result;
+            }
+
+            return (MarkInformationModel)markInfo;
+        }
+
         public async Task<StatisticsDisplayModel> GetStatistics(string userId)
         {
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
@@ -69,9 +108,13 @@ namespace Better_Shkolo.Services.StatisticsService
                 memoryCache.Set($"SchoolPlaces{student.SchoolId}", marksAvarageSchool.OrderByDescending(x => x.Value).ToList(), cacheOptions);
             }
 
-            var studentMarks = memoryCache.Get<double>($"Student{student.Id}");
-            var schoolPlaces = memoryCache.Get<List<CustomKVP>>($"SchoolPlaces{student.SchoolId}");
-            var gradeOrder = memoryCache.Get<List<CustomKVP>>($"GradePlaces{student.GradeId}");
+            double studentMarks = 0.0;
+            var schoolPlaces = new List<CustomKVP>();
+            var gradeOrder = new List<CustomKVP>();
+
+            memoryCache.TryGetValue($"Student{student.Id}", out studentMarks);
+            memoryCache.TryGetValue($"SchoolPlaces{student.SchoolId}", out schoolPlaces);
+            memoryCache.TryGetValue($"GradePlaces{student.GradeId}", out gradeOrder);
             studentMarks = Math.Round(studentMarks, 2);
 
             var studentKvp = new CustomKVP(student.Id, studentMarks);

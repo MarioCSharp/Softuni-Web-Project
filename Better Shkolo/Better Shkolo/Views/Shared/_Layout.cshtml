@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Better_Shkolo.Services.AccountService;
+@inject IAccountService service
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,19 +24,9 @@
                         
                     </ul>
 
-                    @if (User.IsInRole("Administrator"))
+                    @if (await service.IsGradeTeacher())
                     {
-                        <a class="nav-link text-dark" asp-controller="Admin" asp-action="Menu">Menu</a>
-                    }
-
-                    @if (User.IsInRole("Teacher"))
-                    {
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Subject" asp-action="Manage">Manage</a>
-                    }
-
-                    @if (User.IsInRole("Director"))
-                    {
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Director" asp-action="Menu">Menu</a>
+                        <a class="nav-link text-dark" asp-controller="Teacher" asp-action="ManageGrade">Manage grade</a>
                     }
 
                     <partial name="_LoginPartial" />

@@ -12,6 +12,19 @@ namespace Better_Shkolo.Controllers
 
         public IActionResult Index()
         {
+            if (User.IsInRole("Teacher"))
+            {
+                return RedirectToAction("Manage", "Subject");
+            }
+            else if (User.IsInRole("Director"))
+            {
+                return RedirectToAction("Menu", "Director");
+            }
+            else if (User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Menu", "Admin");
+            }
+
             return View();
         }
 

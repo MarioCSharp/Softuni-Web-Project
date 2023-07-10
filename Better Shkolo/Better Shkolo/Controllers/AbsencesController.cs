@@ -10,12 +10,12 @@ namespace Better_Shkolo.Controllers
     public class AbsencesController : Controller
     {
         private IStudentService studentService;
-        private IAbsencesService absenceService;
+        private IAbsencesService absencesService;
         public AbsencesController(IStudentService studentService,
                                  IAbsencesService absenceService)
         {
             this.studentService = studentService;
-            this.absenceService = absenceService;
+            this.absencesService = absenceService;
         }
         [HttpGet]
         [Authorize(Policy = "CanAddAbsenceses")]
@@ -31,7 +31,7 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "CanAddAbsenceses")]
         public async Task<IActionResult> Add(AbsencesAddModel model)
         {
-            var result = await absenceService.Add(model);
+            var result = await absencesService.Add(model);
 
             if (!result)
             {
@@ -44,9 +44,23 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "CanViewAbsencesesForStudent")]
         public async Task<IActionResult> View()
         {
-            var model = await absenceService.GetAbsenceses(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var model = await absencesService.GetAbsenceses(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanViewAbsencesesForStudent")]
+        public async Task<IActionResult> Display(int subjectId)
+        {
+            var absencesInSubject = await absencesService.GetAbsencesesBySubjectId(User.FindFirstValue(ClaimTypes.NameIdentifier), subjectId);
+
+            if (absencesInSubject is null)
+            {
+                return BadRequest();
+            }
+
+            return View(absencesInSubject);
         }
     }
 }

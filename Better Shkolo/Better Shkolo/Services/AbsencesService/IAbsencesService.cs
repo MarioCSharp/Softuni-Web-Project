@@ -6,5 +6,6 @@ namespace Better_Shkolo.Services.AbsenceService
     {
         Task<bool> Add(AbsencesAddModel model);
         Task<List<AbsencesesDisplayModel>> GetAbsenceses(string userId);
+        Task<List<AbsencesesShowModel>> GetAbsencesesBySubjectId(string userId, int subjectId);
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Absence;
-using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.AbsenceService
@@ -99,6 +97,28 @@ namespace Better_Shkolo.Services.AbsenceService
             }
 
             return model;
+        }
+
+        public async Task<List<AbsencesesShowModel>> GetAbsencesesBySubjectId(string userId, int subjectId)
+        {
+            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (student is null)
+            {
+                return null;
+            }
+
+            return await context.Absencess
+                .Where(x => x.StudentId == student.Id && x.SubjectId == subjectId)
+                .Select(x => new AbsencesesShowModel()
+                {
+                    Id = x.Id,
+                    SubjectId = x.SubjectId,
+                    AddedOn = x.AddedOn,
+                    ExcusedOn = x.ExcusedOn,
+                    SubjectName = x.Subject.Name
+                })
+                .ToListAsync();
         }
     }
 }

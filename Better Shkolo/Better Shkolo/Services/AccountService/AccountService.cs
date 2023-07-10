@@ -2,6 +2,7 @@
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Account;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Better_Shkolo.Services.AccountService
@@ -47,6 +48,20 @@ namespace Better_Shkolo.Services.AccountService
         public string GetUserId()
         {
             return httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
+        public async Task<bool> IsGradeTeacher()
+        {
+            var userId = GetUserId();
+
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (teacher is null)
+            {
+                return false;
+            }
+
+            return await context.Grades.AnyAsync(x => x.TeacherId == teacher.Id);
         }
     }
 }

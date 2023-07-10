@@ -79,6 +79,7 @@ namespace Better_Shkolo.Services.MarkService
                     {
                         SubjectId = subjectId,
                         SubjectName = subject.Name,
+                        MarkId = mark.Id,
                         Marks = new List<MarkViewModel>()
                     });
                 }

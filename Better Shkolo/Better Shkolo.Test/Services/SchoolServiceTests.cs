@@ -165,5 +165,73 @@ namespace Better_Shkolo.Test.Services
 
             Assert.Equal(school2, res);
         }
+
+        [Fact]
+        public async void GetAllSchoolsShouldWorkCorrectly()
+        {
+            using var data = DatabaseMock.Instance;
+
+            await data.Users.AddAsync(new User()
+            {
+                FirstName = "as",
+                LastName = "d",
+                Id = "asd",
+                PasswordHash = "asdasdas"
+            });
+            await data.SaveChangesAsync();
+
+            await data.Users.AddAsync(new User()
+            {
+                FirstName = "as",
+                LastName = "d",
+                Id = "bsd",
+                PasswordHash = "asdasdas"
+            });
+            await data.SaveChangesAsync();
+
+            await data.Users.AddAsync(new User()
+            {
+                FirstName = "as",
+                LastName = "d",
+                Id = "csd",
+                PasswordHash = "asdasdas"
+            });
+            await data.SaveChangesAsync();
+
+            var school = new School()
+            {
+                Id = 1,
+                Name = "asdasfasfs",
+                City = "ffga",
+                DirectorId = "asd"
+            };
+
+            var school1 = new School()
+            {
+                Id = 2,
+                Name = "dddd",
+                City = "ffafga",
+                DirectorId = "bsd"
+            };
+
+            var school2 = new School()
+            {
+                Id = 13,
+                Name = "fff",
+                City = "ffddga",
+                DirectorId = "csd"
+            };
+
+
+            var service = new SchoolService(data, UserManagerMock.Instance<User>().Object);
+
+            await service.AddSchool(school);
+            await service.AddSchool(school1);
+            await service.AddSchool(school2);
+
+            var res = await service.GetAllSchools();
+
+            Assert.Equal(3, res.Count);
+        }
     }
 }

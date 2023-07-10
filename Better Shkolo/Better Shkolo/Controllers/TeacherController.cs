@@ -126,5 +126,18 @@ namespace Better_Shkolo.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ManageGrade()
+        {
+            var isTeacher = await accountService.IsGradeTeacher();
+
+            if (!isTeacher)
+            {
+                return BadRequest();
+            }
+
+            return View();
+        }
     }
 }
