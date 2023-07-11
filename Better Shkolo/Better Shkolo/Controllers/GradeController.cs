@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Data;
 using AutoMapper;
+using System.Security.Claims;
 
 namespace Better_Shkolo.Controllers
 {
@@ -131,6 +132,21 @@ namespace Better_Shkolo.Controllers
             };
 
             return View(model);
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Students()
+        {
+            var isGradeTeacher = await accountService.IsGradeTeacher();
+
+            if (!isGradeTeacher)
+            {
+                return BadRequest();
+            }
+
+            var studentsInGrade = await gradeService.GetStudentsInGrade(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return View(studentsInGrade);
         }
     }
 }

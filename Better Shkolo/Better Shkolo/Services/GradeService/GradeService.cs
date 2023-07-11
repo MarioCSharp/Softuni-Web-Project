@@ -2,6 +2,7 @@
 using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Grade;
+using Better_Shkolo.Models.Student;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -97,6 +98,24 @@ namespace Better_Shkolo.Services.GradeService
                 {
                     Id = x.Id,
                     GradeName = x.GradeName
+                }).ToListAsync();
+        }
+
+        public async Task<List<StudentDisplayModel>> GetStudentsInGrade(string userId)
+        {
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            var grade = await context.Grades.FirstOrDefaultAsync(x => x.TeacherId == teacher.Id);
+
+            return await context.Students
+                .Where(x => x.GradeId == grade.Id)
+                .Select(x => new StudentDisplayModel()
+                {
+                    Id = x.Id,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    Email = x.User.Email,
+                    SchoolId = x.SchoolId
                 }).ToListAsync();
         }
     }

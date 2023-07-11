@@ -40,6 +40,17 @@ namespace Better_Shkolo.Services.AbsenceService
             return await context.Absencess.ContainsAsync(absence);
         }
 
+        public async void Excuse(Absences absences)
+        {
+            absences.ExcusedOn = DateTime.Now;
+            context.SaveChanges();
+        }
+
+        public async Task<Absences> GetAbsences(int id)
+        {
+            return await context.Absencess.FindAsync(id);
+        }
+
         public async Task<List<AbsencesesDisplayModel>> GetAbsenceses(string userId)
         {
             var model = new List<AbsencesesDisplayModel>();
@@ -119,6 +130,19 @@ namespace Better_Shkolo.Services.AbsenceService
                     SubjectName = x.Subject.Name
                 })
                 .ToListAsync();
+        }
+
+        public async Task<List<AbsencesesShowModel>> GetAllStudentAbsenceses(int studentId)
+        {
+            return await context.Absencess
+                .Where(x => x.StudentId == studentId)
+                .Select(x => new AbsencesesShowModel
+                {
+                    Id = x.Id,
+                    AddedOn = x.AddedOn,
+                    ExcusedOn = x.ExcusedOn,
+                    SubjectName = x.Subject.Name
+                }).ToListAsync();
         }
     }
 }

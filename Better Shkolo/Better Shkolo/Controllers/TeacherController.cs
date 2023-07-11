@@ -2,8 +2,10 @@
 using Better_Shkolo.Data;
 using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Teacher;
+using Better_Shkolo.Services.AbsenceService;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
+using Better_Shkolo.Services.StudentService;
 using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
@@ -15,8 +17,10 @@ namespace Better_Shkolo.Controllers
     public class TeacherController : Controller
     {
         private IAccountService accountService;
+        private IAbsencesService absencesService;
         private ITeacherService teacherService;
         private ISubjectService subjectService;
+        private IStudentService studentService;
         private IGradeService gradeService;
         private ApplicationDbContext context;
         private IMapper mapper;
@@ -25,7 +29,9 @@ namespace Better_Shkolo.Controllers
                                  IGradeService gradeService,
                                  ISubjectService subjectService,
                                  ApplicationDbContext context,
-                                 IMapper mapper)
+                                 IMapper mapper,
+                                 IStudentService studentService,
+                                 IAbsencesService absencesService)
         {
             this.accountService = accountService;
             this.teacherService = teacherService;
@@ -33,6 +39,8 @@ namespace Better_Shkolo.Controllers
             this.subjectService = subjectService;
             this.context = context;
             this.mapper = mapper;
+            this.studentService = studentService;
+            this.absencesService = absencesService;
         }
         [HttpGet]
         public async Task<IActionResult> Create(int id)
@@ -138,6 +146,21 @@ namespace Better_Shkolo.Controllers
             }
 
             return View();
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> StudentAbsenceses(int studentId)
+        {
+            var student = await studentService.GetStudent(studentId);
+
+            if (student is null)
+            {
+                return BadRequest();
+            }
+
+            var studentAbsenceses = await absencesService.GetAllStudentAbsenceses(studentId);
+
+            return View(studentAbsenceses);
         }
     }
 }

@@ -62,5 +62,20 @@ namespace Better_Shkolo.Controllers
 
             return View(absencesInSubject);
         }
+        [HttpGet]
+        [Authorize] //TODO: Policy
+        public async Task<IActionResult> Excuse(int id)
+        {
+            var absences = await absencesService.GetAbsences(id);
+
+            if (absences is null)
+            {
+                return BadRequest();
+            }
+
+            absencesService.Excuse(absences);
+
+            return RedirectToAction("Students", "Grade");
+        }
     }
 }
