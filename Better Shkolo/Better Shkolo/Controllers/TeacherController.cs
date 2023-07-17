@@ -5,6 +5,7 @@ using Better_Shkolo.Models.Teacher;
 using Better_Shkolo.Services.AbsenceService;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
+using Better_Shkolo.Services.MarkService;
 using Better_Shkolo.Services.StudentService;
 using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
@@ -22,6 +23,7 @@ namespace Better_Shkolo.Controllers
         private ISubjectService subjectService;
         private IStudentService studentService;
         private IGradeService gradeService;
+        private IMarkService markService;
         private ApplicationDbContext context;
         private IMapper mapper;
         public TeacherController(IAccountService accountService,
@@ -31,7 +33,8 @@ namespace Better_Shkolo.Controllers
                                  ApplicationDbContext context,
                                  IMapper mapper,
                                  IStudentService studentService,
-                                 IAbsencesService absencesService)
+                                 IAbsencesService absencesService,
+                                 IMarkService markService)
         {
             this.accountService = accountService;
             this.teacherService = teacherService;
@@ -41,6 +44,7 @@ namespace Better_Shkolo.Controllers
             this.mapper = mapper;
             this.studentService = studentService;
             this.absencesService = absencesService;
+            this.markService = markService;
         }
         [HttpGet]
         public async Task<IActionResult> Create(int id)
@@ -147,9 +151,10 @@ namespace Better_Shkolo.Controllers
 
             return View();
         }
+
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> StudentAbsenceses(int studentId)
+        public async Task<IActionResult> StudentMarks(int studentId)
         {
             var student = await studentService.GetStudent(studentId);
 
@@ -158,9 +163,9 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            var studentAbsenceses = await absencesService.GetAllStudentAbsenceses(studentId);
+            var studentMarks = await markService.GetMarks(student.UserId);
 
-            return View(studentAbsenceses);
+            return View(studentMarks);
         }
     }
 }

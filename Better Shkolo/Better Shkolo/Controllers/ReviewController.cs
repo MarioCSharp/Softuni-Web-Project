@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Models.Review;
 using Better_Shkolo.Services.ReviewService;
+using Better_Shkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,11 @@ namespace Better_Shkolo.Controllers
     public class ReviewController : Controller
     {
         private IReviewService reviewService;
-        public ReviewController(IReviewService reviewService)
+        private IStudentService studentService;
+        public ReviewController(IReviewService reviewService, IStudentService studentService)
         {
             this.reviewService = reviewService;
+            this.studentService = studentService;
         }
         [HttpGet]
         [Authorize(Policy = "CanAddReviews")]
@@ -46,20 +49,38 @@ namespace Better_Shkolo.Controllers
         }
         [HttpGet]
         [Authorize(Policy = "CanViewReviews")]
-        public async Task<IActionResult> View()
+        public async Task<IActionResult> View(string userId = null)
         {
-            var model = await reviewService.GetReviews();
+            var model = await reviewService.GetReviews(userId);
 
             return View(model);
         }
 
         [HttpGet]
         [Authorize(Policy = "CanViewReviews")]
-        public async Task<IActionResult> Display(int subjectId)
+        public async Task<IActionResult> Display(int subjectId, string userId = null)
         {
-            var model = await reviewService.GetReviewsBySubjectId(subjectId);
+            var model = await reviewService.GetReviewsBySubjectId(subjectId, userId);
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ById(int studentId)
+        {
+            var student = await studentService.GetStudent(studentId);
+
+            return RedirectToAction("View", "Review", new { userId = student.UserId });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Show(int studentId, int subjectId)
+        {
+            var student = await studentService.GetStudent(studentId);
+
+            return RedirectToAction("Display", "Review", new {subjectId = subjectId, userId = student.UserId});
         }
     }
 }

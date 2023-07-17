@@ -53,9 +53,12 @@ namespace Better_Shkolo.Services.ReviewService
             return await context.Reviews.ContainsAsync(review);
         }
 
-        public async Task<List<ReviewDisplayModel>> GetReviews()
+        public async Task<List<ReviewDisplayModel>> GetReviews(string userId = null)
         {
-            var userId = accountService.GetUserId();
+            if (userId is null)
+            {
+                userId = accountService.GetUserId();
+            }
 
             var model = new List<ReviewDisplayModel>();
 
@@ -93,6 +96,7 @@ namespace Better_Shkolo.Services.ReviewService
                     {
                         SubjectId = subjectId,
                         SubjectName = subject.Name,
+                        StudentId = studentId,
                         Reviews = new List<ReviewViewModel>()
                     });
                 }
@@ -106,6 +110,7 @@ namespace Better_Shkolo.Services.ReviewService
                     Description = review.Description,
                     AddedOn = review.AddedOn,
                     TeacherId = teacher.Id,
+                    StudentId = review.StudentId,
                     TeacherName = teacherUser.FirstName + " " + teacherUser.LastName,
                 });
             }
@@ -113,9 +118,12 @@ namespace Better_Shkolo.Services.ReviewService
             return model;
         }
 
-        public async Task<List<ReviewViewModel>> GetReviewsBySubjectId(int subjectId)
+        public async Task<List<ReviewViewModel>> GetReviewsBySubjectId(int subjectId, string userId)
         {
-            var userId = accountService.GetUserId();
+            if (userId is null)
+            {
+                userId = accountService.GetUserId();
+            }
 
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
 

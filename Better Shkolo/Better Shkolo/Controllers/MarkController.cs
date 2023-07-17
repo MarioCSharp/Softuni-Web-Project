@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Services.MarkService;
+using Better_Shkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -9,9 +10,11 @@ namespace Better_Shkolo.Controllers
     public class MarkController : Controller
     {
         private IMarkService markService;
-        public MarkController(IMarkService markService)
+        private IStudentService studentService;
+        public MarkController(IMarkService markService, IStudentService studentService)
         {
             this.markService = markService;
+            this.studentService = studentService;
         }
         [HttpGet]
         [Authorize(Policy = "CanAddMarks")]
@@ -51,6 +54,21 @@ namespace Better_Shkolo.Controllers
             var model = await markService.GetMarks(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             return View(model);
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ById(int studentId)
+        {
+            var student = await studentService.GetStudent(studentId);
+
+            if (student is null)
+            {
+                return BadRequest();
+            }
+
+            var studentMarks = await markService.GetMarks(student.UserId);
+
+            return View(studentMarks);
         }
     }
 }

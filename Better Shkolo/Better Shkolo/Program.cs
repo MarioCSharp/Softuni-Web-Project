@@ -75,7 +75,7 @@ namespace Better_Shkolo
 
                 options.AddPolicy("CanViewReviews", policy => policy
                 .RequireAssertion(context =>
-                context.User.IsInRole("Parent") || context.User.IsInRole("Student")));
+                context.User.IsInRole("Parent") || context.User.IsInRole("Student") || context.User.IsInRole("Teacher")));
 
                 options.AddPolicy("CanEditSchools", policy => policy
                 .RequireAssertion(context =>

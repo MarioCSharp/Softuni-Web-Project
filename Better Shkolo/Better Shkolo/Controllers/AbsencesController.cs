@@ -77,5 +77,21 @@ namespace Better_Shkolo.Controllers
 
             return RedirectToAction("Students", "Grade");
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ById(int studentId)
+        {
+            var student = await studentService.GetStudent(studentId);
+
+            if (student is null)
+            {
+                return BadRequest();
+            }
+
+            var studentAbsenceses = await absencesService.GetAllStudentAbsenceses(studentId);
+
+            return View(studentAbsenceses);
+        }
     }
 }

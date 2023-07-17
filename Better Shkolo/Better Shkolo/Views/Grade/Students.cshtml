@@ -6,9 +6,9 @@
     {
         <p class="list-group-item list-group-item-action">
             @student.FirstName @student.LastName - @student.Email |
-            <a asp-action="StudentAbsenceses" asp-controller="Teacher" asp-route-studentId="@student.Id">View absenceses</a>
-            <a asp-action="StudentMarks" asp-controller="Teacher" asp-route-studentId="@student.Id">View marks</a>
-            <a asp-action="StudentReviews" asp-controller="Teacher" asp-route-studentId="@student.Id">View marks</a>
+            <a asp-action="ById" asp-controller="Absences" asp-route-studentId="@student.Id">View absences</a>
+            <a asp-action="ById" asp-controller="Mark" asp-route-studentId="@student.Id">View marks</a>
+            <a asp-action="ById" asp-controller="Review" asp-route-studentId="@student.Id">View reviews</a>
         </p>
     }
 </div>

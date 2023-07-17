@@ -20,7 +20,6 @@ namespace Better_Shkolo.Test.Controllers
                         {
                             Assert.Equal(41, model.SubjectId);
                             Assert.Equal(33, model.Id);
-
                         }));
 
 
