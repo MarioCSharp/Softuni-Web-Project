@@ -104,6 +104,11 @@ namespace Better_Shkolo.Services.StatisticsService
                     memoryCache.Set($"Student{current.Id}", avarage, cacheOptions);
                 }
 
+                foreach (var current in studentsInSchool)
+                {
+
+                }
+
                 memoryCache.Set($"GradePlaces{student.GradeId}", marksAvarageGrade.OrderByDescending(x => x.Value).ToList(), cacheOptions);
                 memoryCache.Set($"SchoolPlaces{student.SchoolId}", marksAvarageSchool.OrderByDescending(x => x.Value).ToList(), cacheOptions);
             }

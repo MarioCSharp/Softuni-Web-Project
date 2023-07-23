@@ -19,6 +19,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Areas\Administrator\" />
+	  <Folder Include="Areas\Admin\" />
 	  <Folder Include="Models\Director\" />
 	</ItemGroup>
 </Project>

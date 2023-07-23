@@ -29,7 +29,9 @@ namespace Better_Shkolo.Services.TestService
 
             var test = mapper.Map<Test>(subject);
             test.AddedOn = DateTime.Now;
+            test.SubjectId = subject.Id;
             test.TestDate = model.TestDate;
+            test.Id = 0;
 
             await context.Tests.AddAsync(test);
             await context.SaveChangesAsync();

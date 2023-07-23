@@ -148,5 +148,27 @@ namespace Better_Shkolo.Controllers
 
             return View(studentsInGrade);
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Statistics()
+        {
+            var teacher = await teacherService.GetTeacher();
+
+            if (teacher is null)
+            {
+                return BadRequest();
+            }
+
+            var grade = await gradeService.GetGradeByTeacherId(teacher.Id);
+
+            if (grade is null)
+            {
+                return BadRequest();
+            }
+
+            var model = await gradeService.GetGradeStatistics(grade);
+
+            return View(model);
+        }
     }
 }

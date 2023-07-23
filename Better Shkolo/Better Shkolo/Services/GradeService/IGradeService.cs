@@ -12,5 +12,6 @@ namespace Better_Shkolo.Services.GradeService
         Task<List<GradeDisplayModel>> GetGradesBySchoolId(int schoolId);
         Task<Grade> GetGradeByTeacherId(int teacherId);
         Task<List<StudentDisplayModel>> GetStudentsInGrade(string userId);
+        Task<GradeStatisticsModel> GetGradeStatistics(Grade grade);
     }
 }

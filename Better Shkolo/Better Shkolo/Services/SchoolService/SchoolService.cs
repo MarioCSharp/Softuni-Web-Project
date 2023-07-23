@@ -47,7 +47,7 @@ namespace Better_Shkolo.Services.SchoolService
 
             await userManager.RemoveFromRoleAsync(directorUser, "Director");
 
-            var d = await context.Directors.FirstOrDefaultAsync(x => x.UserId == school.DirectorId);
+            var d = await context.Directors.FirstOrDefaultAsync(x => x.SchoolId == school.Id);
 
             context.Directors.Remove(d);
             await context.SaveChangesAsync();

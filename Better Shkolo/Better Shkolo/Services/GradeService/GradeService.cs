@@ -23,7 +23,8 @@ namespace Better_Shkolo.Services.GradeService
         }
         public async Task<bool> Create(GradeCreateModel model)
         {
-            if (string.IsNullOrEmpty(model.GradeName) || string.IsNullOrEmpty(model.GradeSpecialty)
+            if (string.IsNullOrEmpty(model.GradeName) 
+                || string.IsNullOrEmpty(model.GradeSpecialty)
                 || !await context.Schools.AnyAsync(x => x.Id == model.SchoolId)
                 || !await context.Teachers.AnyAsync(x => x.Id == model.TeacherId))
             {
@@ -59,19 +60,24 @@ namespace Better_Shkolo.Services.GradeService
                 context.Parents.Remove(parent);
                 await context.SaveChangesAsync();
 
-                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(parent.UserId), "Parent");
+                await userManager
+                    .RemoveFromRoleAsync(await context.Users.FindAsync(parent.UserId), "Parent");
             }
 
-            var studentsToDelete = await context.Students.Where(x => x.GradeId == grade.Id).ToArrayAsync();
+            var studentsToDelete = await context.Students
+                .Where(x => x.GradeId == grade.Id).ToArrayAsync();
 
             foreach (var student in studentsToDelete)
             {
-                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(student.UserId), "Student");
+                await userManager
+                    .RemoveFromRoleAsync(await context.Users.FindAsync(student.UserId), "Student");
             }
 
-            context.Subjects.RemoveRange(await context.Subjects.Where(x => x.GradeId == grade.Id).ToArrayAsync());
+            context.Subjects.RemoveRange(await context.Subjects
+                .Where(x => x.GradeId == grade.Id).ToArrayAsync());
             context.Students.RemoveRange(studentsToDelete);
-            context.Tests.RemoveRange(await context.Tests.Where(x => x.GradeId == grade.Id).ToArrayAsync());
+            context.Tests.RemoveRange(await context.Tests
+                .Where(x => x.GradeId == grade.Id).ToArrayAsync());
             
 
             context.Grades.Remove(grade);
@@ -101,11 +107,41 @@ namespace Better_Shkolo.Services.GradeService
                 }).ToListAsync();
         }
 
+        public async Task<GradeStatisticsModel> GetGradeStatistics(Grade grade)
+        {
+            var model = new GradeStatisticsModel();
+            model.GradeId = grade.Id;
+
+            var gradeSuccess = await context.Marks
+                .Where(x => x.Student.GradeId == grade.Id)
+                .AverageAsync(x => x.Value);
+            model.Success = gradeSuccess;
+
+            var absences = await context.Absencess
+                .Where(x => x.Student.GradeId == grade.Id)
+                .CountAsync();
+            model.Absences = absences;
+
+            var tests = await context.Absencess
+                .Where(x => x.Student.GradeId == grade.Id)
+                .CountAsync();
+            model.Tests = tests;
+
+            var reviews = await context.Reviews
+                .Where(x => x.Student.GradeId == grade.Id)
+                .CountAsync();
+            model.Reviews = reviews;
+
+            return model;
+        }
+
         public async Task<List<StudentDisplayModel>> GetStudentsInGrade(string userId)
         {
-            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == userId);
+            var teacher = await context.Teachers
+                .FirstOrDefaultAsync(x => x.UserId == userId);
 
-            var grade = await context.Grades.FirstOrDefaultAsync(x => x.TeacherId == teacher.Id);
+            var grade = await context.Grades
+                .FirstOrDefaultAsync(x => x.TeacherId == teacher.Id);
 
             return await context.Students
                 .Where(x => x.GradeId == grade.Id)
