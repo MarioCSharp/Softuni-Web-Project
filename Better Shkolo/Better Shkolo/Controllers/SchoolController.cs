@@ -58,7 +58,7 @@ namespace Better_Shkolo.Controllers
 
             if (result)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Menu", "Admin", new { area = "Admin" });
             }
 
             model.AvailableUsers = await accountService.GetAllAvailabeUsers();
@@ -67,18 +67,6 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> View()
-        {
-            var allSchools = await schoolService.GetAllSchools();
-
-            var model = new SchoolDisplayModel()
-            {
-                Schools = allSchools
-            };
-
-            return View(model);
-        }
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -89,7 +77,7 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(View));
+            return RedirectToAction("Menu", "Admin", new { area = "Admin" });
         }
 
         [HttpGet]
@@ -126,7 +114,7 @@ namespace Better_Shkolo.Controllers
 
             await context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(View));
+            return RedirectToAction("Menu", "Admin", new { area = "Admin" });
         }
     }
 }

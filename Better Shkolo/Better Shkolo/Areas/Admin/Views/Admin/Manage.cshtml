@@ -1,0 +1,30 @@
+﻿@using Better_Shkolo.Models.School;
+@model SchoolDisplayModel
+
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+
+<br />
+<br />
+<br />
+<div class="grey-bg container-fluid">
+    <a asp-area="" asp-controller="School" asp-action="Add" class="btn btn-primary">+</a>
+
+    <div class="">
+        @foreach (var school in Model.Schools)
+        {
+            <p class="list-group-item">
+                @school.Name - @school.City
+                <a href="/School/Delete/@school.Id" class="btn btn-danger">Delete</a>
+                <a href="/School/Edit/@school.Id" class="btn btn-warning">Edit</a>
+                <a href="/Teacher/Create/@school.Id" class="btn btn-primary">Add teacher</a>
+                <a href="/Teacher/View/@school.Id" class="btn btn-primary">View teachers</a>
+                <a href="/Subject/Create/@school.Id" class="btn btn-primary">Add subject</a>
+                <a href="/Teacher/View/@school.Id" class="btn btn-primary">View subjects</a>
+                <a href="/Grade/Create/@school.Id" class="btn btn-primary">Add grade</a>
+                <a href="/Grade/View/@school.Id" class="btn btn-primary">View grades</a>
+                <a href="/Student/Add/@school.Id" asp-route-id="@school.Id" class="btn btn-primary">Add student</a>
+                <a href ="/Student/View/@school.Id" class="btn btn-primary">View students</a>
+            </p>
+        }
+    </div>
+</div>

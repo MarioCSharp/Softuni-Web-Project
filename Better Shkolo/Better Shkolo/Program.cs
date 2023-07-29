@@ -91,7 +91,8 @@ namespace Better_Shkolo
 
                 options.AddPolicy("CanDisplayStudentsInSubject", policy => policy
                 .RequireAssertion(context =>
-                context.User.IsInRole("Teacher")));
+                context.User.IsInRole("Teacher") || context.User.IsInRole("Director")
+                || context.User.IsInRole("Administrator")));
 
                 options.AddPolicy("CanAddSubject", policy => policy
                 .RequireAssertion(context =>
@@ -164,9 +165,18 @@ namespace Better_Shkolo
 
             app.Initialize();
 
-            app.MapControllerRoute(
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
             app.MapRazorPages();
 
             app.Run();

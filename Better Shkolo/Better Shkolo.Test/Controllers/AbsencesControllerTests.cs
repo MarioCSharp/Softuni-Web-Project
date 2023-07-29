@@ -8,10 +8,10 @@ namespace Better_Shkolo.Test.Controllers
     {
         [Fact]
         public void AddShouldReturnViewWithModelAndCorrectData()
-            => MyMvc
-                 .Controller<AbsencesController>()
-                    .WithUser(user => user.InRole("Teacher"))
-                    .WithData(new Student() { Id = 33 }, new Subject() { Id = 41 })
+            => MyController<AbsencesController>
+                 .Instance(controller => 
+                     controller.WithUser(user => user.InRole("Teacher"))
+                     .WithData(new Student() { Id = 33 }, new Subject() { Id = 41 }))
                  .Calling(x => x.Add(33, 41))
                  .ShouldReturn()
                  .View(result =>

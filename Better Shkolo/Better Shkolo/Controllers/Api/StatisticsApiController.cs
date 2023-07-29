@@ -36,5 +36,19 @@ namespace Better_Shkolo.Controllers.Api
 
             return Ok(mark);
         }
+
+        [HttpGet]
+        [Route("GetStatistics")]
+        public async Task<IActionResult> GetApplicationStatistics()
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return BadRequest();
+            }
+
+            var statistics = await statisticsService.GetApplicationStatistics();
+
+            return Ok(statistics);
+        }
     }
 }

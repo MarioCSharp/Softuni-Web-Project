@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Better Shkolo", "Better Shkolo\Better Shkolo.csproj", "{D7D9849A-8627-47B1-836A-A28D209A87CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better Shkolo.Test", "Better Shkolo.Test\Better Shkolo.Test.csproj", "{D6C218E6-E823-4782-86EE-9C744694CB63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Better Shkolo.Test", "Better Shkolo.Test\Better Shkolo.Test.csproj", "{D6C218E6-E823-4782-86EE-9C744694CB63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

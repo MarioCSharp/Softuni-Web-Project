@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Models.Api;
+using Better_Shkolo.Models.Application;
 using Better_Shkolo.Models.Mark;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -52,6 +53,36 @@ namespace Better_Shkolo.Services.StatisticsService
             }
 
             return (MarkInformationModel)markInfo;
+        }
+
+        public async Task<ApplicationStatisticsModel> GetApplicationStatistics()
+        {
+            var statistics = memoryCache.Get<ApplicationStatisticsModel>("ApplicationStatistics");
+
+            if (statistics is null)
+            {
+                statistics = new ApplicationStatisticsModel()
+                {
+                    Schools = await context.Schools.CountAsync(),
+                    Users = await context.Users.CountAsync(),
+                    Directors = await context.Directors.CountAsync(),
+                    Teachers = await context.Teachers.CountAsync(),
+                    Students = await context.Students.CountAsync(),
+                    Marks = await context.Marks.CountAsync(),
+                    Reviews = await context.Reviews.CountAsync(),
+                    Tests = await context.Tests.CountAsync(),
+                    Absences = await context.Absencess.CountAsync(),
+                    Grades = await context.Grades.CountAsync(),
+                    Subjects = await context.Subjects.CountAsync()
+                };
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+
+                memoryCache.Set("ApplicationStatistics", statistics, cacheOptions);
+            }
+
+            return statistics;
         }
 
         public async Task<StatisticsDisplayModel> GetStatistics(string userId)
