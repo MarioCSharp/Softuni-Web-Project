@@ -1,4 +1,5 @@
 ﻿using Better_Shkolo.Data;
+using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Api;
 using Better_Shkolo.Models.Application;
 using Better_Shkolo.Models.Mark;
@@ -189,6 +190,33 @@ namespace Better_Shkolo.Services.StatisticsService
             }
 
             return model;
+        }
+
+        public async Task<ApplicationStatisticsModel> GetSchoolStatistics(int schoolId)
+        {
+            var statistics = memoryCache.Get<ApplicationStatisticsModel>($"SchoolStatistics{schoolId}");
+
+            if (statistics is null)
+            {
+                statistics = new ApplicationStatisticsModel()
+                {
+                    Teachers = await context.Teachers.CountAsync(x => x.SchoolId == schoolId),
+                    Students = await context.Students.CountAsync(x => x.SchoolId == schoolId),
+                    Marks = await context.Marks.CountAsync(x => x.SchoolId == schoolId),
+                    Reviews = await context.Reviews.CountAsync(x => x.SchoolId == schoolId),
+                    Tests = await context.Tests.CountAsync(x => x.SchoolId == schoolId),
+                    Absences = await context.Absencess.CountAsync(x => x.SchoolId == schoolId),
+                    Grades = await context.Grades.CountAsync(x => x.SchoolId == schoolId),
+                    Subjects = await context.Subjects.CountAsync(x => x.SchoolId == schoolId),
+                };
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+
+                memoryCache.Set($"SchoolStatistics{schoolId}", statistics, cacheOptions);
+            }
+
+            return statistics;
         }
     }
 

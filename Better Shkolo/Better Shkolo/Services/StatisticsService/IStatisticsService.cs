@@ -9,5 +9,6 @@ namespace Better_Shkolo.Services.StatisticsService
         Task<StatisticsDisplayModel> GetStatistics(string userId);
         Task<MarkInformationModel> GetMarkById(int id);
         Task<ApplicationStatisticsModel> GetApplicationStatistics();
+        Task<ApplicationStatisticsModel> GetSchoolStatistics(int schoolId);
     }
 }

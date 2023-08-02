@@ -1,10 +1,10 @@
 ﻿@using Better_Shkolo.Models.Mark;
 @model IEnumerable<MarkDisplayModel>
 
-<div class="">
+<div class="list-group grey-bg container-fluid">
     @foreach (var mark in Model)
     {
-        <div class="">
+        <div class="list-group-item list-group-item-action">
             @mark.SubjectName |
             @foreach (var item in mark.Marks)
             {
@@ -45,23 +45,27 @@
         z-index: 1;
     }
 
-    #six{
+    #six {
         background-color: #26C281;
         border-color: #26C281;
     }
-    #five{
+
+    #five {
         background-color: #3598dc;
         border-color: #3598dc;
     }
-    #four{
+
+    #four {
         background-color: #F7CA18;
         border-color: #F7CA18;
     }
-    #three{
+
+    #three {
         background-color: #f2784b;
         border-color: #f2784b;
     }
-    #two{
+
+    #two {
         background-color: #e7505a;
         border-color: #e7505a;
     }

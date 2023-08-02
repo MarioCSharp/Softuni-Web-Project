@@ -50,5 +50,19 @@ namespace Better_Shkolo.Controllers.Api
 
             return Ok(statistics);
         }
+
+        [HttpGet]
+        [Route("GetSchoolStatistics")]
+        public async Task<IActionResult> GetSchoolStatistics(int schoolId)
+        {
+            if (!User.IsInRole("Director") && !User.IsInRole("Administrator"))
+            {
+                return BadRequest();
+            }
+
+            var statistics = await statisticsService.GetSchoolStatistics(schoolId);
+
+            return Ok(statistics);
+        }
     }
 }

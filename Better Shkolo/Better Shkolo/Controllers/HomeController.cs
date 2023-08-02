@@ -18,7 +18,7 @@ namespace Better_Shkolo.Controllers
             }
             else if (User.IsInRole("Director"))
             {
-                return RedirectToAction("Menu", "Director");
+                return RedirectToAction("Menu", "Director", new { area = "Director" });
             }
             else if (User.IsInRole("Administrator"))
             {

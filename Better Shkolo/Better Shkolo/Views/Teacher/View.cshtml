@@ -1,7 +1,14 @@
-﻿@using Better_Shkolo.Models.Teacher;
+﻿@{
+    Layout = "Layout";
+}
+@using Better_Shkolo.Models.Teacher;
 @model TeacherViewModel
 
-<div class="list-group">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<br />
+<br />
+<br />
+<div class="list-group grey-bg container-fluid">
     @foreach (var teacher in Model.Teachers)
     {
         <p class="list-group-item list-group-item-action">

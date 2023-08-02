@@ -1,0 +1,21 @@
+﻿@using Better_Shkolo.Models.School;
+@model SchoolViewModel
+
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+
+<br />
+<br />
+<br />
+
+<p class="list-group-item">
+    @Model.Name - @Model.City
+    <a href="/School/Edit/@Model.Id" class="btn btn-warning">Edit</a>
+    <a href="/Teacher/Create/@Model.Id" class="btn btn-primary">Add teacher</a>
+    <a href="/Teacher/View/@Model.Id" class="btn btn-primary">View teachers</a>
+    <a href="/Subject/Create/@Model.Id" class="btn btn-primary">Add subject</a>
+    <a href="/Teacher/View/@Model.Id" class="btn btn-primary">View subjects</a>
+    <a href="/Grade/Create/@Model.Id" class="btn btn-primary">Add grade</a>
+    <a href="/Grade/View/@Model.Id" class="btn btn-primary">View grades</a>
+    <a href="/Student/Add/@Model.Id" asp-route-id="@Model.Id" class="btn btn-primary">Add student</a>
+    <a href="/Student/View/@Model.Id" class="btn btn-primary">View students</a>
+</p>

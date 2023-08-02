@@ -1,13 +1,20 @@
-﻿@using Better_Shkolo.Models.Grade;
+﻿@{
+    Layout = "Layout";
+}
+@using Better_Shkolo.Models.Grade;
 @model GradeViewModel
 
-<div class="list-group">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<br />
+<br />
+<br />
+<div class="list-group  grey-bg container-fluid">
     @foreach (var grade in Model.Grades)
     {
         <p class="list-group-item list-group-item-action">
             @grade.GradeName
             <a asp-controller="Grade" asp-action="Delete" asp-route-id="@grade.Id" class="btn btn-danger">Delete</a>
-            <a asp-controller="Grade" asp-action="Edit" asp-route-id="@grade.Id" class="btn btn-secondary">Edit</a>
+            <a asp-controller="Grade" asp-action="Edit" asp-route-id="@grade.Id" class="btn btn-warning">Edit</a>
         </p>
     }
 </div>

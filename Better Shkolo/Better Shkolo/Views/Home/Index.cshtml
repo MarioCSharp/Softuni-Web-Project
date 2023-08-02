@@ -2,136 +2,113 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-">
+<div id="elements">
     @if (User.IsInRole("Student") || User.IsInRole("Parent"))
     {
-        <style>
-            .card-success {
-                background-color: blue;
-                padding-right: 60px;
-            }
-
-            .card-absences {
-                background-color: red;
-                padding-right: 60px;
-            }
-
-            .card-review {
-                background-color: gold;
-                padding-right: 60px;
-            }
-
-            .card-tests {
-                background-color: purple;
-                padding-right: 60px;
-            }
-
-            .square-card {
-                height: 0;
-                padding-bottom: 50%;
-                position: relative;
-            }
-
-                .square-card .card-body {
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                    align-items: flex-end;
-                    padding: 10px;
-                }
-
-            .card-link {
-                margin-bottom: 20px;
-            }
-
-            .ranking-square {
-                width: 800px;
-                height: 400px;
-                border: 1px solid black;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 150px auto;
-            }
-
-            .student-position {
-                text-align: center;
-            }
-
-            .position-row {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .position-space {
-                width: 20px; /* Adjust the height as per your preference */
-            }
-
-                .student-position h1 {
-                    font-size: 24px;
-                }
-        </style>
-
-        <div class="d-flex justify-content-center">
-            <div class="col-6 col-md-3">
-                <a asp-action="View" asp-controller="Mark" class="card-link">
-                    <div class="card card-success square-card">
-                        <div class="card-body">
-                            <h5 id="success" class="text-white text-right mb-0"></h5>
-                            <p class="card-text text-white text-right">Average success</p>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <div class="container">
+            <div class="row">
+                <a asp-action="View" asp-controller="Mark" class="col-md-4 col-xl-3">
+                    <div class="card bg-c-blue order-card">
+                        <div class="card-block">
+                            <h6 class="m-b-20 text-white">Success</h6>
+                            <h2 class="text-right text-white"><i class="fa fa-arrow-circle-o-up f-left"></i><span id="success"></span></h2>
                         </div>
                     </div>
                 </a>
-            </div>
-            <div class="col-6 col-md-3">
-                <a asp-action="View" asp-controller="Absences" class="card-link">
-                    <div class="card card-absences square-card">
-                        <div class="card-body">
-                            <h5 id="absenceses" class="text-white text-right mb-0"></h5>
-                            <p class="card-text text-white text-right">Absences</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-md-3">
-                <a asp-action="View" asp-controller="Review" class="card-link">
-                    <div class="card card-review square-card">
-                        <div class="card-body">
-                            <h5 id="reviews" class="text-white text-right mb-0"></h5>
-                            <p class="card-text text-white text-right">Reviews</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-md-3">
-                <a asp-action="View" asp-controller="Test" class="card-link">
-                    <div class="card card-tests square-card">
-                        <div class="card-body">
-                            <h5 id="tests" class="text-white text-right mb-0"></h5>
-                            <p class="card-text text-white text-right">Tests</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
 
-        <div class="ranking-square">
-            <div class="student-position">
-                <div class="position-row">
-                    <h1 id="position-success-grade"></h1>
-                    <div class="position-space"></div>
-                    <h1 id="position-success-school"></h1>
-                </div>
+                <a asp-action="View" asp-controller="Absences" class="col-md-4 col-xl-3">
+                    <div class="card bg-c-green order-card">
+                        <div class="card-block">
+                            <h6 class="m-b-20">Absences</h6>
+                            <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span id="absenceses"></span></h2>
+                        </div>
+                    </div>
+                </a>
+
+                <a asp-action="View" asp-controller="Review" class="col-md-4 col-xl-3">
+                    <div class="card bg-c-yellow order-card">
+                        <div class="card-block">
+                            <h6 class="m-b-20">Reviews</h6>
+                            <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span id="reviews"></span></h2>
+                        </div>
+                    </div>
+                </a>
+
+                <a asp-action="View" asp-controller="Review" class="col-md-4 col-xl-3">
+                    <div class="card bg-c-pink order-card">
+                        <div class="card-block">
+                            <h6 class="m-b-20">Tests</h6>
+                            <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span id="tests"></span></h2>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     }
 </div>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+
+    h2 {
+        text-align: right;
+    }
+
+    body {
+        margin-top: 20px;
+        background: #FAFAFA;
+    }
+
+    .order-card {
+        color: #fff;
+    }
+
+    .bg-c-blue {
+        background: linear-gradient(45deg,#4099ff,#73b4ff);
+    }
+
+    .bg-c-green {
+        background: linear-gradient(45deg,#FF0000,#EE4B2B);
+    }
+
+    .bg-c-yellow {
+        background: linear-gradient(45deg,#FFB64D,#ffcb80);
+    }
+
+    .bg-c-pink {
+        background: linear-gradient(45deg,#9F2B68,#BF40BF);
+    }
+
+
+    .card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+        box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+        border: none;
+        margin-bottom: 30px;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .card .card-block {
+            padding: 25px;
+        }
+
+    .order-card i {
+        font-size: 26px;
+    }
+
+    .f-left {
+        float: left;
+    }
+
+    .f-right {
+        float: right;
+    }
+</style>
 
 @section Scripts {
     <script>
