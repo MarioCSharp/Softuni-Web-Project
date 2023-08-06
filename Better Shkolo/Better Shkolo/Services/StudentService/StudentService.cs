@@ -131,6 +131,11 @@ namespace Better_Shkolo.Services.StudentService
             return await context.Students.FindAsync(id);
         }
 
+        public async Task<Student> GetStudent(string id)
+        {
+            return await context.Students.FirstOrDefaultAsync(x => x.UserId == id);
+        }
+
         public async Task<AbsencesAddModel> GetStudentModel(int id)
         {
             var student = await context.Students.FindAsync(id);

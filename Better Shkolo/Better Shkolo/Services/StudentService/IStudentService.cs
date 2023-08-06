@@ -12,6 +12,7 @@ namespace Better_Shkolo.Services.StudentService
         Task<bool> AsignParent(ParentCreateModel model, int id);
         Task<bool> Edit(StudentCreateModel model, int id);
         Task<Student> GetStudent(int id);
+        Task<Student> GetStudent(string id);
         Task<bool> Delete(int id);
         Task<List<StudentDisplayModel>> GetStudentsInSubject(int id);
         Task<AbsencesAddModel> GetStudentModel(int id);

@@ -124,7 +124,7 @@ namespace Better_Shkolo.Services.StatisticsService
                                     .Where(x => x.StudentId == current.Id)
                                     .AverageAsync(x => x.Value);
 
-                    var kvp = new CustomKVP(current.Id, avarage);
+                    var kvp = new CustomKVP(current.Id, avarage, current, await context.Users.FindAsync(current.UserId));
 
                     marksAvarageSchool.Add(kvp);
 
@@ -134,11 +134,6 @@ namespace Better_Shkolo.Services.StatisticsService
                     }
 
                     memoryCache.Set($"Student{current.Id}", avarage, cacheOptions);
-                }
-
-                foreach (var current in studentsInSchool)
-                {
-
                 }
 
                 memoryCache.Set($"GradePlaces{student.GradeId}", marksAvarageGrade.OrderByDescending(x => x.Value).ToList(), cacheOptions);
@@ -154,7 +149,7 @@ namespace Better_Shkolo.Services.StatisticsService
             memoryCache.TryGetValue($"GradePlaces{student.GradeId}", out gradeOrder);
             studentMarks = Math.Round(studentMarks, 2);
 
-            var studentKvp = new CustomKVP(student.Id, studentMarks);
+            var studentKvp = new CustomKVP(student.Id, studentMarks, student, await context.Users.FindAsync(student.UserId));
 
             var placeSchool = memoryCache.Get($"StudentPlaceSchool{student.Id}");
 
@@ -222,13 +217,17 @@ namespace Better_Shkolo.Services.StatisticsService
 
     public class CustomKVP : IComparable<CustomKVP>
     {
-        public CustomKVP(int key, double value)
+        public CustomKVP(int key, double value, Student student, User user)
         {
             this.Key = key;
             this.Value = value;
+            Student = student;
+            User = user;
         }
         public int Key { get; set; }
         public double Value { get; set; }
+        public Student Student { get; set; }
+        public User User { get; set; }
 
         public int CompareTo(CustomKVP? other)
         {

@@ -21,7 +21,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        
+                        @if (User.IsInRole("Student"))
+                        {
+                            <a class="nav-link text-dark" asp-controller="Standings" asp-action="View">Standings</a>
+                        }
                     </ul>
 
                     @if (await service.IsGradeTeacher())

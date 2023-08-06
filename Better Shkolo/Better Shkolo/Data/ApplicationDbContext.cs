@@ -19,8 +19,9 @@ namespace Better_Shkolo.Data
         public DbSet<Parent> Parents { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Test> Tests { get; set; }
+        public DbSet<Data.Models.Test> Tests { get; set; }
         public DbSet<Absences> Absencess { get; set; }
         public DbSet<Director> Directors { get; set; }
+
     }
 }

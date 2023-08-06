@@ -11,7 +11,11 @@ namespace Better_Shkolo
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+            {
+                Args = args,
+                ApplicationName = typeof(Program).Assembly.FullName
+            });
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -137,7 +141,6 @@ namespace Better_Shkolo
             });
 
             builder.Services.AddApplicationServices(typeof(IAccountService));
-
             builder.Services.AddMemoryCache();
             builder.Services.AddAutoMapper(typeof(Program));
 
@@ -153,17 +156,14 @@ namespace Better_Shkolo
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseHttpsRedirection()
+                .UseStaticFiles()
+                .UseRouting();
 
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseStatusCodePages();
-
-            app.Initialize();
+            app.UseAuthentication()
+                .UseAuthorization()
+                .UseStatusCodePages()
+                .Initialize();
 
             app.UseEndpoints(endpoints =>
             {
