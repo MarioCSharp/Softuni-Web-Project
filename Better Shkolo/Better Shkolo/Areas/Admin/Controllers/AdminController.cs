@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Better_Shkolo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Policy = "CanAccessAdminMenu")]
+    [Authorize(Policy = "AdministratorPolicy")]
     public class AdminController : Controller
     {
         private ISchoolService schoolService;

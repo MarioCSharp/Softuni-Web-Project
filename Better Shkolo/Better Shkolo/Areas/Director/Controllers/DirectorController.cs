@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Better_Shkolo.Areas.Director.Controllers
 {
     [Area("Director")]
-    [Authorize(Policy = "CanAccessDirectorMenu")]
+    [Authorize(Policy = "DirectorPolicy")]
     public class DirectorController : Controller
     {
         private IDirectorService directorService;

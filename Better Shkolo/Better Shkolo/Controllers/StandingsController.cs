@@ -20,7 +20,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "StudentPolicy")]
         public async Task<IActionResult> View(string searchTerm, string gradeTerm, int currentPage)
         {
             var stundentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -26,7 +26,7 @@ namespace Better_Shkolo.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
-        [Authorize(Policy = "CanAccessStudents")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Add(int id)
         {
             var model = new StudentCreateModel()
@@ -39,7 +39,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanAccessStudents")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Add(StudentCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -63,7 +63,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanAccessStudents")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> View(int id)
         {
             var model = new StudentViewModel()
@@ -75,6 +75,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> AsignParent(int id)
         {
             var model = new ParentCreateModel()
@@ -85,7 +86,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanAccessStudents")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> AsignParent(ParentCreateModel model, int id)
         {
             if (!ModelState.IsValid)
@@ -105,7 +106,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanAccessStudents")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(int id)
         {
             var student = await studentService.GetStudent(id);
@@ -118,7 +119,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "CanAccessStudents")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(StudentCreateModel model, int id)
         {
             var result = await studentService.Edit(model, id);
@@ -132,7 +133,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanAccessStudents")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await studentService.Delete(id);

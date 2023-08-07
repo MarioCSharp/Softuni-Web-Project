@@ -29,7 +29,7 @@ namespace Better_Shkolo.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
-        [Authorize(Policy = "CanAddSubject")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Create(int id)
         {
             var model = new SubjectCreateModel()
@@ -43,7 +43,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "CanAddSubject")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Create(SubjectCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -65,7 +65,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanViewSubjects")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> View(int id)
         {
             var model = new SubjectViewModel()
@@ -76,7 +76,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanManageSubjects")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Manage()
         {
             var model = new SubjectViewModel()
@@ -88,7 +88,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanEditSubjects")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> ToEdit(int id)
         {
             var subjects = await subjectService.GetSubjectsByTeacherId(id);
@@ -102,7 +102,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanEditSubjects")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(int id)
         {
             var subject = await subjectService.GetSubject(id);
@@ -120,7 +120,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanEditSubjects")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(SubjectCreateModel model, int id)
         {
             if (!ModelState.IsValid)
@@ -139,7 +139,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanDeleteSubjects")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await subjectService.DeleteSubject(id);

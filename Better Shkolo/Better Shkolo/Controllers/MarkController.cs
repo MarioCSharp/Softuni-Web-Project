@@ -17,7 +17,7 @@ namespace Better_Shkolo.Controllers
             this.studentService = studentService;
         }
         [HttpGet]
-        [Authorize(Policy = "CanAddMarks")]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Add(int id, int subjectId)
         {
             var model = new MarkAddModel()
@@ -29,7 +29,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanAddMarks")]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Add(MarkAddModel model)
         {
             if (!ModelState.IsValid)
@@ -48,7 +48,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanViewMarks")]
+        [Authorize(Policy = "StudentParentPolicy")]
         public async Task<IActionResult> View()
         {
             var model = await markService.GetMarks(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -56,7 +56,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> ById(int studentId)
         {
             var student = await studentService.GetStudent(studentId);

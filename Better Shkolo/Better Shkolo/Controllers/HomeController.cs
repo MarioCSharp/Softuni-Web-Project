@@ -1,4 +1,5 @@
 ﻿using Better_Shkolo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,7 +10,7 @@ namespace Better_Shkolo.Controllers
         public HomeController()
         {
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             if (User.IsInRole("Teacher"))

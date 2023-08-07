@@ -30,7 +30,7 @@ namespace Better_Shkolo.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
-        [Authorize(Policy = "CanAddGrades")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Create(int id)
         {
             var model = new GradeCreateModel()
@@ -51,7 +51,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "CanAddGrades")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Create(GradeCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanDeleteGrades")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await gradeService.DeleteGrade(id);
@@ -86,7 +86,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanEditGrades")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(int id)
         {
             var grade = await gradeService.GetGrade(id);
@@ -103,7 +103,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanEditGrades")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(GradeCreateModel model, int id)
         {
             if (!ModelState.IsValid)
@@ -123,7 +123,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanViewGrades")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> View(int id)
         {
             var model = new GradeViewModel()
@@ -134,7 +134,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Students()
         {
             var isGradeTeacher = await accountService.IsGradeTeacher();
@@ -149,7 +149,7 @@ namespace Better_Shkolo.Controllers
             return View(studentsInGrade);
         }
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Statistics()
         {
             var teacher = await teacherService.GetTeacher();

@@ -18,7 +18,7 @@ namespace Better_Shkolo.Controllers
             this.absencesService = absenceService;
         }
         [HttpGet]
-        [Authorize(Policy = "CanAddAbsenceses")]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Add(int id, int subjectId)
         {
             var model = await studentService.GetStudentModel(id);
@@ -28,7 +28,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanAddAbsenceses")]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Add(AbsencesAddModel model)
         {
             var result = await absencesService.Add(model);
@@ -41,7 +41,7 @@ namespace Better_Shkolo.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        [Authorize(Policy = "CanViewAbsencesesForStudent")]
+        [Authorize(Policy = "StudentParentPolicy")]
         public async Task<IActionResult> View()
         {
             var model = await absencesService.GetAbsenceses(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -50,7 +50,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanViewAbsencesesForStudent")]
+        [Authorize(Policy = "StudentParentPolicy")]
         public async Task<IActionResult> Display(int subjectId)
         {
             var absencesInSubject = await absencesService.GetAbsencesesBySubjectId(User.FindFirstValue(ClaimTypes.NameIdentifier), subjectId);
@@ -63,7 +63,7 @@ namespace Better_Shkolo.Controllers
             return View(absencesInSubject);
         }
         [HttpGet]
-        [Authorize] //TODO: Policy
+        [Authorize(Policy = "TeacherPolicy")] //TODO: Policy
         public async Task<IActionResult> Excuse(int id)
         {
             var absences = await absencesService.GetAbsences(id);
@@ -79,7 +79,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> ById(int studentId)
         {
             var student = await studentService.GetStudent(studentId);

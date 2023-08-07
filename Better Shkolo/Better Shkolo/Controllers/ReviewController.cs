@@ -16,7 +16,7 @@ namespace Better_Shkolo.Controllers
             this.studentService = studentService;
         }
         [HttpGet]
-        [Authorize(Policy = "CanAddReviews")]
+        [Authorize(Policy = "TeacherPolicy")]
         public IActionResult Add(int id, int subjectId)
         {
             var model = new ReviewAddModel()
@@ -29,7 +29,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "CanAddReviews")]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Add(ReviewAddModel model)
         {
             if (!ModelState.IsValid)
@@ -48,7 +48,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanViewReviews")]
+        [Authorize(Policy = "StudentParentPolicy")]
         public async Task<IActionResult> View(string userId = null)
         {
             var model = await reviewService.GetReviews(userId);
@@ -57,7 +57,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanViewReviews")]
+        [Authorize(Policy = "StudentParentTeacherPolicy")]
         public async Task<IActionResult> Display(int subjectId, string userId = null)
         {
             var model = await reviewService.GetReviewsBySubjectId(subjectId, userId);
@@ -66,7 +66,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> ById(int studentId)
         {
             var student = await studentService.GetStudent(studentId);
@@ -75,7 +75,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Show(int studentId, int subjectId)
         {
             var student = await studentService.GetStudent(studentId);

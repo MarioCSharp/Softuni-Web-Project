@@ -13,7 +13,7 @@ namespace Better_Shkolo.Controllers
             this.testService = testService;
         }
         [HttpGet]
-        [Authorize(Policy = "CanAddTests")]
+        [Authorize(Policy = "TeacherPolicy")]
         public IActionResult Add(int id)
         {
             var model = new TestAddModel()
@@ -24,7 +24,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanAddTests")]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Add(TestAddModel model)
         {
             if (!ModelState.IsValid)

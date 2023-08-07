@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize(Policy = "CanAccessSchools")]
     public class SchoolController : Controller
     {
         private IAccountService accountService;
@@ -28,6 +27,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdministratorPolicy")]
         public async Task<IActionResult> Add()
         {
             var model = new SchoolCreateModel()
@@ -38,6 +38,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "AdministratorPolicy")]
         public async Task<IActionResult> Add(SchoolCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -68,6 +69,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdministratorPolicy")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await schoolService.DeleteSchool(id);
@@ -81,7 +83,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "CanEditSchools")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(int id)
         {
             var school = await schoolService.GetSchool(id);
@@ -98,7 +100,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Policy = "CanEditSchools")]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Edit(SchoolCreateModel model, int id)
         {
             if (!ModelState.IsValid)

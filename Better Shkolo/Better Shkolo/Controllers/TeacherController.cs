@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
 {
-    [Authorize(Policy = "CanAccessTeachers")]
     public class TeacherController : Controller
     {
         private IAccountService accountService;
@@ -47,6 +46,7 @@ namespace Better_Shkolo.Controllers
             this.markService = markService;
         }
         [HttpGet]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Create(int id)
         {
             var model = new TeacherCreateModel()
@@ -59,6 +59,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Create(TeacherCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -79,6 +80,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Delete(int id)
         {
             var teacher = await teacherService.GetTeacher(id);
@@ -111,6 +113,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> Delete(GradeDeleteModel model)
         {
             var grade = await gradeService.GetGradeByTeacherId(model.OldTeacherId);
@@ -129,6 +132,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdministratorDirectorPolicy")]
         public async Task<IActionResult> View(int id)
         {
             var model = new TeacherViewModel()
@@ -139,7 +143,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> ManageGrade()
         {
             var isTeacher = await accountService.IsGradeTeacher();
@@ -153,7 +157,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Policy = "StudentParentPolicy")]
         public async Task<IActionResult> StudentMarks(int studentId)
         {
             var student = await studentService.GetStudent(studentId);
