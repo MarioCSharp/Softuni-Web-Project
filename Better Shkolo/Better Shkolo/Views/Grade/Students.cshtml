@@ -1,14 +1,28 @@
 ﻿@using Better_Shkolo.Models.Student;
 @model IEnumerable<StudentDisplayModel>
 
+@if (User.IsInRole("Administrator") || User.IsInRole("Director"))
+{
+    Layout = "Layout";
+
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+
+    <br />
+    <br />
+    <br />
+}
+
 <div class="list-group">
     @foreach (var student in Model)
     {
         <p class="list-group-item list-group-item-action">
             @student.FirstName @student.LastName - @student.Email |
-            <a asp-action="ById" asp-controller="Absences" asp-route-studentId="@student.Id">View absences</a>
-            <a asp-action="ById" asp-controller="Mark" asp-route-studentId="@student.Id">View marks</a>
-            <a asp-action="ById" asp-controller="Review" asp-route-studentId="@student.Id">View reviews</a>
+            @if (User.IsInRole("Teacher"))
+            {
+                <a asp-action = "ById" asp-controller = "Absences" asp-route-studentId = "@student.Id" > View absences </a >
+                <a asp-action = "ById" asp-controller = "Mark" asp-route-studentId = "@student.Id" > View marks </a >
+                <a asp-action = "ById" asp-controller = "Review" asp-route-studentId = "@student.Id" > View reviews </a >
+            }
         </p>
     }
 </div>

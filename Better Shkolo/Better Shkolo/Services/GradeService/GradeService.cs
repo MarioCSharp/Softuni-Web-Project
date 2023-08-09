@@ -154,5 +154,19 @@ namespace Better_Shkolo.Services.GradeService
                     SchoolId = x.SchoolId
                 }).ToListAsync();
         }
+
+        public async Task<List<StudentDisplayModel>> GetStudentsInGrade(int id)
+        {
+            return await context.Students
+                .Where(x => x.GradeId == id)
+                .Select(x => new StudentDisplayModel
+                {
+                    Id = x.Id,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    Email = x.User.Email,
+                    SchoolId = x.SchoolId
+                }).ToListAsync();
+        }
     }
 }

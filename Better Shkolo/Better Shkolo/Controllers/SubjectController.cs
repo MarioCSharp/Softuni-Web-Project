@@ -76,7 +76,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "AdministratorDirectorPolicy")]
+        [Authorize(Policy = "TeacherPolicy")]
         public async Task<IActionResult> Manage()
         {
             var model = new SubjectViewModel()
@@ -135,7 +135,7 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(View));
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

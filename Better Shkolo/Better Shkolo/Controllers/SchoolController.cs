@@ -59,7 +59,7 @@ namespace Better_Shkolo.Controllers
 
             if (result)
             {
-                return RedirectToAction("Menu", "Admin", new { area = "Admin" });
+                return RedirectToAction("Index", "Home");
             }
 
             model.AvailableUsers = await accountService.GetAllAvailabeUsers();
@@ -79,7 +79,7 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction("Menu", "Admin", new { area = "Admin" });
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -116,7 +116,7 @@ namespace Better_Shkolo.Controllers
 
             await context.SaveChangesAsync();
 
-            return RedirectToAction("Menu", "Admin", new { area = "Admin" });
+            return RedirectToAction("Index", "Home");
         }
     }
 }

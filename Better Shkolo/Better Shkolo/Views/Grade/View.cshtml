@@ -15,6 +15,7 @@
             @grade.GradeName
             <a asp-controller="Grade" asp-action="Delete" asp-route-id="@grade.Id" class="btn btn-danger">Delete</a>
             <a asp-controller="Grade" asp-action="Edit" asp-route-id="@grade.Id" class="btn btn-warning">Edit</a>
+            <a asp-controller="Grade" asp-action="Students" asp-route-id="@grade.Id" class="btn btn-primary">Students</a>
         </p>
     }
 </div>

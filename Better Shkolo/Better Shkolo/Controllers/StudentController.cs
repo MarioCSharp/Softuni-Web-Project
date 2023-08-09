@@ -146,7 +146,7 @@ namespace Better_Shkolo.Controllers
             return BadRequest();
         }
         [HttpGet]
-        [Authorize(Policy = "CanDisplayStudentsInSubject")]
+        [Authorize(Policy = "AdministratorDirectorTeacherPolicy")]
         public async Task<IActionResult> Display(int id)
         {
             var model = new StudentViewModel()

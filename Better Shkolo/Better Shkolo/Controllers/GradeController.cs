@@ -82,7 +82,7 @@ namespace Better_Shkolo.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(View));
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -119,7 +119,7 @@ namespace Better_Shkolo.Controllers
 
             context.SaveChanges();
 
-            return RedirectToAction(nameof(View));
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -134,9 +134,16 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "TeacherPolicy")]
-        public async Task<IActionResult> Students()
+        [Authorize(Policy = "AdministratorDirectorTeacherPolicy")]
+        public async Task<IActionResult> Students(int id)
         {
+            if (id != 0)
+            {
+                var model = await gradeService.GetStudentsInGrade(id);
+
+                return View(model);
+            }
+
             var isGradeTeacher = await accountService.IsGradeTeacher();
 
             if (!isGradeTeacher)
