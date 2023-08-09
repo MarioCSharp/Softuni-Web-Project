@@ -21,13 +21,13 @@ namespace Better_Shkolo.Controllers
 
         [HttpGet]
         [Authorize(Policy = "StudentPolicy")]
-        public async Task<IActionResult> View(string searchTerm, string gradeTerm, int currentPage)
+        public async Task<IActionResult> View(string searchTerm)
         {
             var stundentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var student = await studentService.GetStudent(stundentUserId);
 
-            var model = await standingsService.GetStandings(student, searchTerm, gradeTerm, currentPage, 2);
+            var model = await standingsService.GetStandings(student, searchTerm);
 
             return View(model);
         }

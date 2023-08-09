@@ -8,5 +8,6 @@
         public string Email { get; set; }
         public double Success { get; set; }
         public Data.Models.Student Student { get; set; }
+        public int Place { get; set; }
     }
 }

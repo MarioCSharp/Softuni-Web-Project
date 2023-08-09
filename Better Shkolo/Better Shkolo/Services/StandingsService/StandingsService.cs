@@ -22,7 +22,7 @@ namespace Better_Shkolo.Services.StandingsService
             this.statisticsService = statisticsService;
         }
 
-        public async Task<StandingsDisplayModel> GetStandings(Student student, string searchTerm, string gradeTerm, int currentPage, int studentsPerPage)
+        public async Task<StandingsDisplayModel> GetStandings(Student student, string searchTerm)
         {
             var schoolPlaces = memoryCache.Get<List<CustomKVP>>($"SchoolPlaces{student.SchoolId}");
 
@@ -45,7 +45,8 @@ namespace Better_Shkolo.Services.StandingsService
                             FirstName = x.User.FirstName,
                             LastName = x.User.LastName,
                             Email = x.User.Email,
-                            Student = x.Student
+                            Student = x.Student,
+                            Place = x.Place
                         }).ToList();
                 }
 
@@ -59,7 +60,8 @@ namespace Better_Shkolo.Services.StandingsService
                             FirstName = x.User.FirstName,
                             LastName = x.User.LastName,
                             Email = x.User.Email,
-                            Student = x.Student
+                            Student = x.Student,
+                            Place = x.Place
                         }).ToList();
                 }
 
@@ -79,7 +81,8 @@ namespace Better_Shkolo.Services.StandingsService
                         FirstName = x.User.FirstName,
                         LastName = x.User.LastName,
                         Email = x.User.Email,
-                        Student = x.Student
+                        Student = x.Student,
+                        Place = x.Place
                     }).ToList();
             }
 
@@ -94,7 +97,8 @@ namespace Better_Shkolo.Services.StandingsService
                         FirstName = x.User.FirstName,
                         LastName = x.User.LastName,
                         Email = x.User.Email,
-                        Student = x.Student
+                        Student = x.Student,
+                        Place = x.Place
                     }).ToList();
             }
 

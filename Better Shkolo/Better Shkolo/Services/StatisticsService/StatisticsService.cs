@@ -5,7 +5,6 @@ using Better_Shkolo.Models.Application;
 using Better_Shkolo.Models.Mark;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
 
 namespace Better_Shkolo.Services.StatisticsService
 {
@@ -112,8 +111,6 @@ namespace Better_Shkolo.Services.StatisticsService
                 var studentsInSchool = await context.Students.Where(x => x.SchoolId == student.SchoolId).ToListAsync();
 
                 var marksAvarageSchool = new List<CustomKVP>();
-                var marksAvarageGrade = new List<CustomKVP>();
-
 
                 var cacheOptions = new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(45));
@@ -128,36 +125,25 @@ namespace Better_Shkolo.Services.StatisticsService
 
                     marksAvarageSchool.Add(kvp);
 
-                    if (current.GradeId == student.GradeId)
-                    {
-                        marksAvarageGrade.Add(kvp);
-                    }
-
                     memoryCache.Set($"Student{current.Id}", avarage, cacheOptions);
                 }
 
-                memoryCache.Set($"GradePlaces{student.GradeId}", marksAvarageGrade.OrderByDescending(x => x.Value).ToList(), cacheOptions);
-                memoryCache.Set($"SchoolPlaces{student.SchoolId}", marksAvarageSchool.OrderByDescending(x => x.Value).ToList(), cacheOptions);
+                var place = 1;
+
+                foreach (var current in marksAvarageSchool.OrderByDescending(x => x.Value))
+                {
+                    current.Place = place++;
+                }
+
+                memoryCache.Set($"SchoolPlaces{student.SchoolId}", marksAvarageSchool.ToList(), cacheOptions);
             }
 
             double studentMarks = 0.0;
             var schoolPlaces = new List<CustomKVP>();
-            var gradeOrder = new List<CustomKVP>();
 
             memoryCache.TryGetValue($"Student{student.Id}", out studentMarks);
             memoryCache.TryGetValue($"SchoolPlaces{student.SchoolId}", out schoolPlaces);
-            memoryCache.TryGetValue($"GradePlaces{student.GradeId}", out gradeOrder);
             studentMarks = Math.Round(studentMarks, 2);
-
-            var studentKvp = new CustomKVP(student.Id, studentMarks, student, await context.Users.FindAsync(student.UserId));
-
-            var placeSchool = memoryCache.Get($"StudentPlaceSchool{student.Id}");
-
-            if (placeSchool is null)
-            {
-                memoryCache.Set($"StudentPlaceSchool{student.Id}", schoolPlaces.IndexOf(studentKvp) + 1);
-                memoryCache.Set($"StudentPlaceGrade{student.Id}", gradeOrder.IndexOf(studentKvp) + 1);
-            }
 
             var model = new StatisticsDisplayModel()
             {
@@ -165,8 +151,6 @@ namespace Better_Shkolo.Services.StatisticsService
                 Tests = tests,
                 Absenceses = absenceses,
                 Reviews = reviews,
-                PlaceInGrade = memoryCache.Get<int>($"StudentPlaceGrade{student.Id}"),
-                PlaceInSchool = memoryCache.Get<int>($"StudentPlaceSchool{student.Id}")
             };
 
             if (absenceses == 0)
@@ -228,6 +212,7 @@ namespace Better_Shkolo.Services.StatisticsService
         public double Value { get; set; }
         public Student Student { get; set; }
         public User User { get; set; }
+        public int Place { get; set; }
 
         public int CompareTo(CustomKVP? other)
         {

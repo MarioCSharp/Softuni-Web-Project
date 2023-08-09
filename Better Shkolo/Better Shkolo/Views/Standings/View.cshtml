@@ -9,24 +9,23 @@
             <input asp-for="SearchTerm" class="form-control" placeholder="">
         </div>
     </div>
-
 </form>
 
 <br />
 
-@foreach (var student in Model.SchoolStandings)
+@foreach (var student in Model.SchoolStandings.Take(20))
 {
     <div class="card">
         @if (student.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             <div class="card-body bg-primary">
-                @student.FirstName @student.LastName - @student.Email (@student.Success)
+                @student.Place @student.FirstName @student.LastName - @student.Email (@student.Success)
             </div>
         }
         else
         {
             <div class="card-body">
-                @student.FirstName @student.LastName - @student.Email (@student.Success)
+                @student.Place @student.FirstName @student.LastName - @student.Email (@student.Success)
             </div>
         }
     </div>

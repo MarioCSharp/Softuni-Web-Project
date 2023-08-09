@@ -6,6 +6,6 @@ namespace Better_Shkolo.Services.StandingsService
 {
     public interface IStandingsService
     {
-        Task<StandingsDisplayModel> GetStandings(Student student, string searchTerm, string gradeTerm, int currentPage, int studentsPerPage);
+        Task<StandingsDisplayModel> GetStandings(Student student, string searchTerm);
     }
 }
