@@ -43,7 +43,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "CanViewTests")]
+        [Authorize(Policy = "StudentParentPolicy")]
         public async Task<IActionResult> View()
         {
             var model = await testService.GetTests();

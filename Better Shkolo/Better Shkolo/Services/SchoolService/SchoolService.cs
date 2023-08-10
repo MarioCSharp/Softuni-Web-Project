@@ -59,6 +59,8 @@ namespace Better_Shkolo.Services.SchoolService
             foreach (var parent in parents)
             {
                 await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(parent.UserId), "Parent");
+                context.Parents.Remove(parent);
+                await context.SaveChangesAsync();
             }
 
             foreach (var student in students)
@@ -71,15 +73,14 @@ namespace Better_Shkolo.Services.SchoolService
                 await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(teacher.UserId), "Teacher");
             }
 
-            context.Absencess.RemoveRange(await context.Absencess.Where(x => x.SchoolId == id).ToArrayAsync());
-            context.Grades.RemoveRange(await context.Grades.Where(x => x.SchoolId == id).ToArrayAsync());
-            context.Marks.RemoveRange(await context.Marks.Where(x => x.SchoolId == id).ToArrayAsync());
-            context.Parents.RemoveRange(parents);
-            context.Reviews.RemoveRange(await context.Reviews.Where(x => x.SchoolId == id).ToArrayAsync());
             context.Students.RemoveRange(students);
-            context.Subjects.RemoveRange(await context.Subjects.Where(x => x.SchoolId == id).ToArrayAsync());
-            context.Teachers.RemoveRange(teachers);
+            context.Marks.RemoveRange(await context.Marks.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Reviews.RemoveRange(await context.Reviews.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Absencess.RemoveRange(await context.Absencess.Where(x => x.SchoolId == id).ToArrayAsync());
             context.Tests.RemoveRange(await context.Tests.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Subjects.RemoveRange(await context.Subjects.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Grades.RemoveRange(await context.Grades.Where(x => x.SchoolId == id).ToArrayAsync());
+            context.Teachers.RemoveRange(teachers);
 
             context.Schools.Remove(school);
             await context.SaveChangesAsync();

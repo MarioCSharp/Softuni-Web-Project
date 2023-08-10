@@ -65,6 +65,8 @@ namespace Better_Shkolo.Services.TestService
                 return null;
             }
 
+            student = await context.Students.FindAsync(studentId);
+
             var tests = await context.Tests.Where(x => x.GradeId == student.GradeId).ToListAsync();
 
             foreach (var test in tests)

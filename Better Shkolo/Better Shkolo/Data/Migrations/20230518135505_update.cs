@@ -102,7 +102,7 @@ namespace Better_Shkolo.Data.Migrations
                 column: "SchoolId",
                 principalTable: "Schools",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Marks_Student_StudentId",
@@ -134,7 +134,7 @@ namespace Better_Shkolo.Data.Migrations
                 column: "TeacherId",
                 principalTable: "Teachers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Schools_AspNetUsers_DirectorId",
@@ -244,12 +244,12 @@ namespace Better_Shkolo.Data.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Marks_Schools_SchoolId",
+                name: "FK_Reviews_Teachers_TeacherId",
                 table: "Marks",
                 column: "SchoolId",
                 principalTable: "Schools",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Marks_Student_StudentId",
@@ -281,7 +281,7 @@ namespace Better_Shkolo.Data.Migrations
                 column: "TeacherId",
                 principalTable: "Teachers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Schools_AspNetUsers_DirectorId",

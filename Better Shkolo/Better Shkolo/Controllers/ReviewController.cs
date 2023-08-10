@@ -48,7 +48,7 @@ namespace Better_Shkolo.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Policy = "StudentParentPolicy")]
+        [Authorize(Policy = "StudentParentTeacherPolicy")]
         public async Task<IActionResult> View(string userId = null)
         {
             var model = await reviewService.GetReviews(userId);
@@ -75,7 +75,7 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "TeacherPolicy")]
+        [Authorize(Policy = "StudentParentTeacherPolicy")]
         public async Task<IActionResult> Show(int studentId, int subjectId)
         {
             var student = await studentService.GetStudent(studentId);

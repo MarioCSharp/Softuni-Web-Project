@@ -73,7 +73,9 @@ namespace Better_Shkolo.Services.StudentService
 
             await userManager.AddToRoleAsync(user, "Parent");
 
-            student.ParentId = parent.Id;
+            var p = await context.Parents.FirstOrDefaultAsync(x => x.UserId == model.UserId);
+
+            student.ParentId = p.Id;
             await context.SaveChangesAsync();
 
             return await context.Parents.ContainsAsync(parent);

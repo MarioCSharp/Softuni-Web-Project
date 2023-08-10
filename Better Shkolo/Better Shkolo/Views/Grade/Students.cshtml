@@ -19,9 +19,9 @@
             @student.FirstName @student.LastName - @student.Email |
             @if (User.IsInRole("Teacher"))
             {
-                <a asp-action = "ById" asp-controller = "Absences" asp-route-studentId = "@student.Id" > View absences </a >
-                <a asp-action = "ById" asp-controller = "Mark" asp-route-studentId = "@student.Id" > View marks </a >
-                <a asp-action = "ById" asp-controller = "Review" asp-route-studentId = "@student.Id" > View reviews </a >
+                <a asp-action="ById" asp-controller ="Absences" asp-route-studentId="@student.Id"> View absences </a>
+                <a asp-action="ById" asp-controller ="Mark" asp-route-studentId="@student.Id"> View marks </a>
+                <a asp-action="ById" asp-controller ="Review" asp-route-studentId="@student.Id"> View reviews </a>
             }
         </p>
     }
