@@ -9,11 +9,11 @@ namespace Better_Shkolo.Models.Grade
         [Required]
         [StringLength(Constants.Grade.GradeNameMaxLength, MinimumLength = Constants.Grade.GradeNameMinLength)]
         [Display(Name = "Grade Name")]
-        public string GradeName { get; set; }
+        public string GradeName { get; set; } = null!;
         [Required]
         [StringLength(Constants.Grade.GradeSpecialtyMaxLength, MinimumLength = Constants.Grade.GradeSpecialtyMinLength)]
         [Display(Name = "Grade Specialty")]
-        public string GradeSpecialty { get; set; }
+        public string GradeSpecialty { get; set; } = null!;
         [Required]
         [Display(Name = "Teacher")]
         public int TeacherId { get; set; }
