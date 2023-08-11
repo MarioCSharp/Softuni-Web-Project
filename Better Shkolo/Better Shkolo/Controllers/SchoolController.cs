@@ -5,6 +5,7 @@ using Better_Shkolo.Models.School;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.SchoolService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Controllers
@@ -15,15 +16,18 @@ namespace Better_Shkolo.Controllers
         private ISchoolService schoolService;
         private ApplicationDbContext context;
         private IMapper mapper;
+        private UserManager<User> userManager;
         public SchoolController(IAccountService accountService
                                 , ISchoolService schoolService
                                 , ApplicationDbContext context
-                                , IMapper mapper)
+                                , IMapper mapper,
+                                 UserManager<User> userManager)
         {
             this.accountService = accountService;
             this.schoolService = schoolService;
             this.context = context;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -109,6 +113,12 @@ namespace Better_Shkolo.Controllers
             }
 
             var school = await schoolService.GetSchool(id);
+
+            if (school.DirectorId != model.DirectorId)
+            {
+                await userManager.AddToRoleAsync(await context.Users.FindAsync(model.DirectorId), "Director");
+                await userManager.RemoveFromRoleAsync(await context.Users.FindAsync(school.DirectorId), "Director");
+            }
 
             school.Name = model.Name;
             school.City = model.City;
