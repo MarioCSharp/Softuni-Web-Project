@@ -117,11 +117,24 @@ namespace Better_Shkolo.Services.StatisticsService
 
                 foreach (var current in studentsInSchool)
                 {
-                    var avarage = await context.Marks
-                                    .Where(x => x.StudentId == current.Id)
-                                    .AverageAsync(x => x.Value);
+                    var marks = await context.Marks
+                                    .Where(x => x.StudentId == current.Id).ToListAsync();
 
-                    var kvp = new CustomKVP(current.Id, avarage, current, await context.Users.FindAsync(current.UserId));
+                    var kvp = new CustomKVP();
+
+                    if (marks.Count == 0)
+                    {
+                        kvp = new CustomKVP(current.Id, 0, current, await context.Users.FindAsync(current.UserId));
+
+                        marksAvarageSchool.Add(kvp);
+
+                        memoryCache.Set($"Student{current.Id}", 0, cacheOptions);
+                        continue;
+                    }
+
+                    var avarage = marks.Average(x => x.Value);
+
+                    kvp = new CustomKVP(current.Id, avarage, current, await context.Users.FindAsync(current.UserId));
 
                     marksAvarageSchool.Add(kvp);
 
@@ -201,6 +214,10 @@ namespace Better_Shkolo.Services.StatisticsService
 
     public class CustomKVP : IComparable<CustomKVP>
     {
+        public CustomKVP()
+        {
+            
+        }
         public CustomKVP(int key, double value, Student student, User user)
         {
             this.Key = key;

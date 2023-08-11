@@ -37,6 +37,7 @@ namespace Better_Shkolo.Services.StandingsService
                 if (!string.IsNullOrWhiteSpace(searchTerm))
                 {
                     model.SchoolStandings = schoolPlaces
+                        .OrderBy(x => x.Place)
                         .Where(x => (x.User.FirstName + " " + x.User.LastName).ToLower().Contains(searchTerm.ToLower()))
                         .Select(x => new StudentStandingsModel()
                         {
@@ -52,7 +53,7 @@ namespace Better_Shkolo.Services.StandingsService
 
                 if (string.IsNullOrWhiteSpace(searchTerm))
                 {
-                    model.SchoolStandings = schoolPlaces
+                    model.SchoolStandings = schoolPlaces.OrderBy(x => x.Place)
                         .Select(x => new StudentStandingsModel()
                         {
                             Success = Math.Round(x.Value, 2),
@@ -72,7 +73,7 @@ namespace Better_Shkolo.Services.StandingsService
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                model.SchoolStandings = schoolPlaces
+                model.SchoolStandings = schoolPlaces.OrderBy(x => x.Place)
                     .Where(x => (x.User.FirstName + " " + x.User.LastName).ToLower().Contains(searchTerm.ToLower()))
                     .Select(x => new StudentStandingsModel()
                     {
@@ -89,7 +90,7 @@ namespace Better_Shkolo.Services.StandingsService
 
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
-                model.SchoolStandings = schoolPlaces
+                model.SchoolStandings = schoolPlaces.OrderBy(x => x.Place)
                     .Select(x => new StudentStandingsModel()
                     {
                         Success = Math.Round(x.Value, 2),
