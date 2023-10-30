@@ -22,6 +22,6 @@ namespace Better_Shkolo.Data
         public DbSet<Data.Models.Test> Tests { get; set; }
         public DbSet<Absences> Absencess { get; set; }
         public DbSet<Director> Directors { get; set; }
-
+        public DbSet<Message> Messages { get; set; }
     }
 }

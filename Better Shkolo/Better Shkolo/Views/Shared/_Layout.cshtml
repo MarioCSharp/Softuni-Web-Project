@@ -25,15 +25,19 @@
                         {
                             <a class="nav-link text-dark" asp-controller="Standings" asp-action="View">Standings</a>
                         }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Messages</a>
+                        }
                     </ul>
 
                     @if (await service.IsGradeTeacher())
                     {
                         <a class="nav-link text-dark" asp-controller="Teacher" asp-action="ManageGrade">Manage grade</a>
                     }
-
                     <partial name="_LoginPartial" />
                 </div>
+                
             </div>
         </nav>
     </header>

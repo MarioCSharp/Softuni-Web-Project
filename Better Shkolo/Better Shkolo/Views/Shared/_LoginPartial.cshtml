@@ -2,6 +2,9 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+<head>
+    <link rel="stylesheet" href="~/css/Dropdown.css" />
+</head>
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
@@ -21,4 +24,6 @@
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
         </li>
     }
+
 </ul>
+
