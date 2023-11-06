@@ -11,6 +11,8 @@ using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Better_Shkolo.Controllers
 {

@@ -1,7 +1,9 @@
-﻿using Better_Shkolo.Services.AccountService;
+﻿using Better_Shkolo.Models.Message;
+using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.MessageService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Better_Shkolo.Controllers
 {
@@ -25,7 +27,7 @@ namespace Better_Shkolo.Controllers
         [Authorize]
         public async Task<IActionResult> Send()
         {
-            return View();
+            return View(await messageService.GenerateModel(accountService.GetUserId()));
         }
     }
 }

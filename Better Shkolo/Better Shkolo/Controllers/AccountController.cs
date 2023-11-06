@@ -40,7 +40,6 @@ namespace Better_Shkolo.Controllers
             };
 
             var result = await userManager.CreateAsync(user, registerModel.Password);
-
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(user, isPersistent: false);

@@ -2,18 +2,9 @@
 {
     public enum SentTo
     {
-        Parent,
-        Teacher,
-        Student,
-        Director,
-        Administrator,
+        User,
         Grade,
-        School,
-        TeachersInSchool,
-        StudentsInSchool,
-        ParentsInSchool,
-        TeachersInGrade,
-        StudentsInGrade,
-        ParentsInGrade
+        Teachers,
+        School
     }
 }

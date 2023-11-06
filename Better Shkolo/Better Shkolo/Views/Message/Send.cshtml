@@ -1,1 +1,83 @@
-﻿
+﻿@using Better_Shkolo.Data.Enums;
+@using Better_Shkolo.Models.Message;
+@model MessageSendModel
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Add" method="post">
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" aria-required="true" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Content"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SentTo"></label>
+                <select asp-for="SentTo" class="form-control">
+                    @foreach (var option in Model.Options)
+                    {
+                        @if (option == 3 && (User.IsInRole("Administrator") || User.IsInRole("Director")))
+                        {
+                            <option value="@option">@((SentTo)option)</option>
+                        }
+                        else if (option == 2 && (User.IsInRole("Administrator") || User.IsInRole("Director")))
+                        {
+                            <option value="@option">@((SentTo)option)</option>
+                        }
+                        else if (option == 1 && (User.IsInRole("Administrator") || User.IsInRole("Director")))
+                        {
+                            <option value="@option">@((SentTo)option)</option>
+                        }
+                        else if (option != 3 && option != 2)
+                        {
+                            <option value="@option">@((SentTo)option)</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            @if (Model.SentTo == 0)
+            {
+                <div class="mb-3">
+                    <label asp-for="SentToUserId"></label>
+                    <select asp-for="SentToUserId" class="form-control">
+                        @foreach (var option in Model.Users)
+                        {
+                            <option value="@option">@option.FirstName @option.LastName</option>
+                        }
+                    </select>
+                </div>
+            }
+            @if (Model.SentTo == 1)
+            {
+                <div class="mb-3">
+                    <label asp-for="SentToGradeId"></label>
+                    <select asp-for="SentToGradeId" class="form-control">
+                        @foreach (var option in Model.Grades)
+                        {
+                            <option value="@option">@option.GradeName</option>
+                        }
+                    </select>
+                </div>
+            }
+            @if (Model.SentTo == 3)
+            {
+                <div class="mb-3">
+                    <label asp-for="SentToSchoolId"></label>
+                    <select asp-for="SentToSchoolId" class="form-control">
+                        @foreach (var option in Model.Schools)
+                        {
+                            <option value="@option">@option.Name</option>
+                        }
+                    </select>
+                </div>
+            }
+            <div class="mb-3 text-center">
+                <input class="btn btn-primary" type="submit" />
+            </div>
+        </form>
+    </div>
+</div>

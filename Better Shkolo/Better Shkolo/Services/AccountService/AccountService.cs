@@ -25,7 +25,6 @@ namespace Better_Shkolo.Services.AccountService
         {
             var result = new List<UserDisplayModel>();
 
-
             foreach (var user in context.Users)
             {
                 var roles =  await userManager.GetRolesAsync(user);

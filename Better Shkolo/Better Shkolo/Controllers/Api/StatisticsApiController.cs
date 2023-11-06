@@ -1,7 +1,10 @@
-﻿using Better_Shkolo.Models.Api;
+﻿using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Api;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.StatisticsService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Better_Shkolo.Controllers.Api
 {
@@ -12,7 +15,8 @@ namespace Better_Shkolo.Controllers.Api
         private IStatisticsService statisticsService;
         private IAccountService accountService;
         public StatisticsApiController(IStatisticsService statisticsService,
-                                       IAccountService accountService)
+                                       IAccountService accountService,
+                                       SignInManager<User> signInManager)
         {
             this.statisticsService = statisticsService;
             this.accountService = accountService;
