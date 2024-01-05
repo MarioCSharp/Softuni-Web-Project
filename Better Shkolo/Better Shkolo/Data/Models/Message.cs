@@ -8,8 +8,6 @@ namespace Better_Shkolo.Data.Models
     {
         public int Id { get; set; }
         [Required]
-        public SentTo SentTo { get; set; }
-        [Required]
         public string SentToUserId { get; set; } = null!;
         [ForeignKey(nameof(SentToUserId))]
         public User SentToUser { get; set; } = null!;

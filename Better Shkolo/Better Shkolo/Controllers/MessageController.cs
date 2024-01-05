@@ -29,5 +29,20 @@ namespace Better_Shkolo.Controllers
         {
             return View(await messageService.GenerateModel(accountService.GetUserId()));
         }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Send(MessageSendModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var res = await messageService.SendAsync(accountService.GetUserId(), model);
+
+            if (res == null) return BadRequest();
+
+            return RedirectToAction("Index", "Message");
+        }
     }
 }

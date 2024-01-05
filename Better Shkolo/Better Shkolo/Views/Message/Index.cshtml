@@ -1,1 +1,20 @@
-﻿
+﻿@using Better_Shkolo.Models.Message
+@model List<MeesageIndexModel>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="list-group">
+    <h3>Absenceses</h3>
+    @foreach (var absences in Model)
+    {
+        <a class="list-group-item list-group-item-action">
+            <p>@absences.Title</p>
+            <p>Sent by: @absences.SentByUserId</p>
+        </a>
+    }
+</div>

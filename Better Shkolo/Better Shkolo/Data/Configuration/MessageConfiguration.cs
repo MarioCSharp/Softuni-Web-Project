@@ -9,9 +9,6 @@ namespace Better_Shkolo.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Message> builder)
         {
-            builder
-                .Property(c => c.SentTo)
-                .HasConversion(c => c.ToString(), c => Enum.Parse<SentTo>(c));
         }
     }
 }

@@ -30,11 +30,6 @@ namespace Better_Shkolo.Services.MessageService
             var model = new MessageSendModel();
             var user = await context.Users.FindAsync(userId);
 
-            model.Options = new List<int>()
-            {
-                0, 1, 2, 3
-            };
-
             var users = cache.Get<List<UserDisplayModel>>("UsersForMessageService");
 
             if (users == null)
@@ -57,28 +52,6 @@ namespace Better_Shkolo.Services.MessageService
                 model.Users = users;
             }
 
-            if (await um.IsInRoleAsync(user, "Administrator") || await um.IsInRoleAsync(user, "Director"))
-            {
-                var grades = cache.Get<List<GradeDisplayModel>>("GradesForMessageService");
-
-                if (grades == null)
-                {
-
-                }
-                else
-                {
-                    model.Grades = grades;
-                }
-            }
-            else
-            {
-                model.Grades = new List<GradeDisplayModel>();
-                model.Schools = new List<SchoolViewModel>();
-                model.Teachers = new List<TeacherDisplayModel>();
-            }
-            
-
-
             return model;
         }
 
@@ -98,6 +71,28 @@ namespace Better_Shkolo.Services.MessageService
                     Read = x.Read
                 })
                 .ToListAsync();
+        }
+
+        public async Task<bool> SendAsync(string userId, MessageSendModel model)
+        {
+            var user = await context.Users.FindAsync(userId);
+            var sentToUser = await context.Users.FindAsync(model.SentToUserId);
+
+            if (user is null || sentToUser is null) throw new Exception("User not found!");
+
+            var message = new Message
+            {
+                SentToUserId = sentToUser.Id,
+                Title = model.Title,
+                Content = model.Content,
+                SentByUserId = user.Id,
+                Read = false
+            };
+
+            await context.Messages.AddAsync(message);
+            await context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

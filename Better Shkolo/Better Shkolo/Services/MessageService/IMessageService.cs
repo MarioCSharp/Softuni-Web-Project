@@ -7,5 +7,6 @@ namespace Better_Shkolo.Services.MessageService
     {
         Task<List<MeesageIndexModel>> GetMeesagesAsync(string userId);
         Task<MessageSendModel> GenerateModel(string userId);
+        Task<bool> SendAsync(string userId, MessageSendModel model);
     }
 }
