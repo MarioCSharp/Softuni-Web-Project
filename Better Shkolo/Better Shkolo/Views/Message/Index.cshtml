@@ -12,7 +12,7 @@
     <h3>Absenceses</h3>
     @foreach (var absences in Model)
     {
-        <a class="list-group-item list-group-item-action">
+        <a class="list-group-item list-group-item-action" asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id">
             <p>@absences.Title</p>
             <p>Sent by: @absences.SentByUserId</p>
         </a>

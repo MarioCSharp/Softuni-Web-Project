@@ -1,0 +1,37 @@
+﻿@using Better_Shkolo.Models.Message;
+@model MessageSendGradeModel
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Send" method="post">
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" aria-required="true" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Content"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SendGradeId"></label>
+                <select asp-for="SendGradeId" class="form-control">
+                    @foreach (var option in Model.Grades)
+                    {
+                        <option value="@option.Id">@option.GradeName</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3 text-center">
+                <input class="btn btn-primary" type="submit" />
+            </div>
+        </form>
+    </div>
+</div>

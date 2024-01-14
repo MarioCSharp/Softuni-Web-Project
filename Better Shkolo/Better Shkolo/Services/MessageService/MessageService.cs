@@ -1,10 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Account;
-using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Message;
-using Better_Shkolo.Models.School;
-using Better_Shkolo.Models.Teacher;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -55,6 +52,25 @@ namespace Better_Shkolo.Services.MessageService
             return model;
         }
 
+        public async Task<MessageDetailsModel> GetDetailsAsync(int id)
+        {
+            var msg = await context.Messages.FindAsync(id);
+            var user = await context.Users.FindAsync(msg.SentByUserId);
+
+            if (msg is null || user is null)
+            {
+                return null;
+            }
+
+            return new MessageDetailsModel
+            {
+                Content = msg.Content,
+                Titile = msg.Title,
+                SentByUserEmail = user.Email,
+                SentByUserName = user.FirstName + " " + user.LastName,
+            };
+        }
+
         public async Task<List<MeesageIndexModel>> GetMeesagesAsync(string userId)
         {
             var user = await context.Users.FindAsync(userId);
@@ -91,6 +107,28 @@ namespace Better_Shkolo.Services.MessageService
 
             await context.Messages.AddAsync(message);
             await context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> SendGradeAsync(string userId, MessageSendGradeModel model)
+        {
+            var users = await context.Students.Where(x => x.GradeId == model.SendGradeId).ToListAsync();
+
+            foreach (var u in users)
+            {
+                var res = await SendAsync(userId, new MessageSendModel()
+                {
+                    Title = model.Title,
+                    Content = model.Content,
+                    SentToUserId = u.UserId
+                });
+
+                if (!res)
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
