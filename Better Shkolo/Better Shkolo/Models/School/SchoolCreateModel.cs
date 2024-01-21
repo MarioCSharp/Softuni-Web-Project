@@ -9,12 +9,14 @@ namespace Better_Shkolo.Models.School
     {
         [Required]
         [StringLength(Constants.School.NameMaxLength, MinimumLength = Constants.School.NameMinLength)]
+        [Display(Name = "Име")]
         public string Name { get; set; }
         [Required]
         [StringLength(Constants.School.CityMaxLength, MinimumLength = Constants.School.CityMinLength)]
+        [Display(Name = "Град")]
         public string City { get; set; }
         [Required]
-        [Display(Name = "Director")]
+        [Display(Name = "Директор")]
         public string DirectorId { get; set; }
 
         public List<UserDisplayModel> AvailableUsers { get; set; } = null!;

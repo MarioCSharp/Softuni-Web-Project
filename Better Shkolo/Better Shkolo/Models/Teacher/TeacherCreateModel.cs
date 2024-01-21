@@ -6,8 +6,8 @@ namespace Better_Shkolo.Models.Teacher
     public class TeacherCreateModel
     {
         [Required]
-        [Display(Name = "Teacher")]
-        public string UserId { get; set; }
+        [Display(Name = "Учител")]
+        public string UserId { get; set; } = null!;
         public int SchoolId { get; set; }
 
         public List<UserDisplayModel> Users { get; set; }

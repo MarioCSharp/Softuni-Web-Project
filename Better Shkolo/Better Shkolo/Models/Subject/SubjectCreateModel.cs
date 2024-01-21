@@ -9,14 +9,15 @@ namespace Better_Shkolo.Models.Subject
     {
         [Required]
         [StringLength(Constants.Subject.NameMaxLength, MinimumLength = Constants.Subject.NameMinLength)]
-        public string Name { get; set; }
+        [Display(Name = "Име")]
+        public string Name { get; set; } = null!;
         [Required]
-        [Display(Name = "Teacher")]
+        [Display(Name = "Учител")]
         public int TeacherId { get; set; }
         [Required]
         public int SchoolId { get; set; }
         [Required]
-        [Display(Name = "Grade")]
+        [Display(Name = "Клас")]
         public int GradeId { get; set; }
 
         public List<TeacherDisplayModel> TeachersInSchool { get; set; }

@@ -22,7 +22,7 @@
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="SentToUserId"></label>
+                <label asp-for="SentToUserId">Получател</label>
                 <select asp-for="SentToUserId" class="form-control">
                     @foreach (var option in Model.Users)
                     {

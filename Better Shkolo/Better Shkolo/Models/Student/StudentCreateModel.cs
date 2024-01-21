@@ -7,13 +7,13 @@ namespace Better_Shkolo.Models.Student
     public class StudentCreateModel
     {
         [Required]
-        [Display(Name = "User")]
-        public string UserId { get; set; }
+        [Display(Name = "Потребител")]
+        public string UserId { get; set; } = null!;
         [Required]
-        [Display(Name = "School")]
+        [Display(Name = "Училище")]
         public int SchoolId { get; set; }
         [Required]
-        [Display(Name = "Grade")]
+        [Display(Name = "Клас")]
         public int GradeId { get; set; }
         public int GradeTeacherId { get; set; }
 

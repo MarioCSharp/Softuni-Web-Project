@@ -8,6 +8,7 @@ namespace Better_Shkolo.Models.Mark
         [Required]
         [Range(Constants.Mark.MarkMinValue, Constants.Mark.MarkMaxValue
             , ErrorMessage = "The mark must be in range {0} to {1}")]
+        [Display(Name = "Оценка")]
         public int Value { get; set; }
         [Required]
         public int StudentId { get; set; }

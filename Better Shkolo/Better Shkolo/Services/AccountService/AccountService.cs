@@ -62,5 +62,19 @@ namespace Better_Shkolo.Services.AccountService
 
             return await context.Grades.AnyAsync(x => x.TeacherId == teacher.Id);
         }
+
+        public async Task<bool> HasRole()
+        {
+            var user = await context.Users.FindAsync(GetUserId());
+
+            if (user is null)
+            {
+                return false;
+            }
+
+            var roles = await userManager.GetRolesAsync(user);
+
+            return roles.Count > 0;
+        }
     }
 }

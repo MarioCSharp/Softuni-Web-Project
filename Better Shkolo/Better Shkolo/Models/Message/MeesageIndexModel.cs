@@ -8,5 +8,8 @@ namespace Better_Shkolo.Models.Message
         public string Title { get; set; } = null!;
         public string SentByUserId { get; set; } = null!;
         public bool Read { get; set; }
+        public string SentByFirstName { get; set; } = null!;
+        public string SentByLastName { get; set; } = null!;
+        public string SentByEmail { get; set; } = null!;
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using Better_Shkolo.Models.Account;
 @model LoginModel
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Вписаване";
 }
 <br />
 <br />
@@ -15,7 +15,6 @@
     <div class="col-md-4 offset-md-4">
         <section>
             <form id="account" method="post">
-
                 <input type="hidden" asp-for="ReturnUrl" />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -29,11 +28,11 @@
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-primary">Вписване</button>
                 </div>
                 <div class="form-group">
                     <p>
-                        <a asp-controller="Account" asp-action="Register">Register as a new user</a>
+                        <a asp-controller="Account" asp-action="Register">Регистрирай се!</a>
                     </p>
                 </div>
             </form>

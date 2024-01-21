@@ -6,8 +6,8 @@ namespace Better_Shkolo.Models.Parent
     public class ParentCreateModel
     {
         [Required]
-        [Display(Name = "Parent")]
-        public string UserId { get; set; }
+        [Display(Name = "Родител")]
+        public string UserId { get; set; } = null!;
         public List<UserDisplayModel> Users { get; set; }
     }
 }

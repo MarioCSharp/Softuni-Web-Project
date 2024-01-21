@@ -20,9 +20,9 @@
     {
         <p class="list-group-item list-group-item-action">
             @student.FirstName @student.LastName - @student.Email
-            <a asp-controller="Student" asp-action="AsignParent" asp-route-id="@student.Id" class="btn btn-primary">Asign parent</a>
-            <a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-warning">Edit</a>
-            <a asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Delete</a>
+            <a asp-controller="Student" asp-action="AsignParent" asp-route-id="@student.Id" class="btn btn-primary">Впиши родител</a>
+            <a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-warning">Коригирай</a>
+            <a asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Изтрий</a>
         </p>
     }
 </div>

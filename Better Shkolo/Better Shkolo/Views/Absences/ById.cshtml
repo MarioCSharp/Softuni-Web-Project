@@ -16,14 +16,14 @@
         <div class="list-group-item list-group-item-action">
             @if (absences.ExcusedOn is not null)
             {
-                <p>Added on: @absences.AddedOn</p>
-                <p>Excused on: @absences.ExcusedOn</p>
+                <p>Добавено на: @absences.AddedOn</p>
+                <p>Извинено на: @absences.ExcusedOn</p>
             }
             else
             {
-                <p>Added on: @absences.AddedOn</p>
-                <p id="not-excused">Not excused!</p> 
-                <a asp-action="Excuse" asp-controller="Absences" class="btn btn-primary" asp-route-id="@absences.Id">Excuse</a>
+                <p>Добавено на: @absences.AddedOn</p>
+                <p id="not-excused">НЕ извинено!</p> 
+                <a asp-action="Excuse" asp-controller="Absences" class="btn btn-primary" asp-route-id="@absences.Id">Извини</a>
             }
         </div>
     }

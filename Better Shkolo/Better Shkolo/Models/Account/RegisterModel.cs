@@ -8,23 +8,24 @@ namespace Better_Shkolo.Models.Account
     {
         [Required]
         [StringLength(Constants.User.FirstNameMaxLength, MinimumLength = Constants.User.FirstNameMinLength)]
-        [Display(Name = "First name")]
+        [Display(Name = "Собствено име")]
         public string FirstName { get; set; } = null!;
         [Required]
         [StringLength(Constants.User.LastNameMaxLength, MinimumLength = Constants.User.LastNameMinLength)]
-        [Display(Name = "Last name")]
+        [Display(Name = "Фамилно име")]
         public string LastName { get; set; } = null!;
         [Required]
         [EmailAddress]
+        [Display(Name = "Имейл")]
         public string Email { get; set; } = null!;
         [Required]
         [PasswordPropertyText]
         [Compare(nameof(PasswordRepeat))]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; } = null!;
         [Required]
         [PasswordPropertyText]
-        [Display(Name = "Repeat password")]
+        [Display(Name = "Повтори паролата")]
         public string PasswordRepeat { get; set; } = null!;
     }
 }

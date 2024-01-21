@@ -13,7 +13,7 @@
     @foreach (var absences in Model)
     {
         <p class="list-group-item list-group-item-action">
-            @absences.SubjectName | <a class="btn btn-primary">@absences.Absenceses.Count</a> <a asp-action="Display" asp-controller="Absences" asp-route-subjectId="@absences.SubjectId">View</a>
+            @absences.SubjectName | <a class="btn btn-primary">@absences.Absenceses.Count</a> <a asp-action="Display" asp-controller="Absences" asp-route-subjectId="@absences.SubjectId">Виж</a>
         </p>
     }
 </div>

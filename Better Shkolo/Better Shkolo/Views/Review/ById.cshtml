@@ -11,7 +11,7 @@
     @foreach (var review in Model)
     {
         <p class="list-group-item list-group-item-action">
-            @review.SubjectName | @review.Reviews.Count <a asp-action="Display" asp-controller="Review" asp-route-subjectId="@review.SubjectId" class="btn btn-primary">View</a>
+            @review.SubjectName | @review.Reviews.Count <a asp-action="Display" asp-controller="Review" asp-route-subjectId="@review.SubjectId" class="btn btn-primary">Виж</a>
         </p>
     }
 </div>

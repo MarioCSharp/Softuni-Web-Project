@@ -22,8 +22,8 @@
             @subject.Name
             @if(User.IsInRole("Administrator") || User.IsInRole("Director"))
             {
-                <a asp-controller="Subject" asp-action="Delete" asp-route-id="@subject.Id" class="btn btn-danger">Delete</a>
-                <a asp-controller="Subject" asp-action="Edit" asp-route-id="@subject.Id" class="btn btn-warning">Edit</a>
+                <a asp-controller="Subject" asp-action="Delete" asp-route-id="@subject.Id" class="btn btn-danger">Изтрий</a>
+                <a asp-controller="Subject" asp-action="Edit" asp-route-id="@subject.Id" class="btn btn-warning">Коригирай</a>
             }
         </p>
     }

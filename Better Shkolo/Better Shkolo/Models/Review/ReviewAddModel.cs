@@ -7,7 +7,8 @@ namespace Better_Shkolo.Models.Review
     {
         [Required]
         [StringLength(Constants.Review.DescriptionMaxLength, MinimumLength = Constants.Review.DescriptionMinLength)]
-        public string Description { get; set; }
+        [Display(Name = "Отзив")]
+        public string Description { get; set; } = null!;
         [Required]
         public int SubjectId { get; set; }
         [Required]

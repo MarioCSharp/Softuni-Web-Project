@@ -14,7 +14,7 @@ namespace Better_Shkolo.Models.Grade
         [StringLength(Constants.Grade.GradeSpecialtyMaxLength, MinimumLength = Constants.Grade.GradeSpecialtyMinLength)]
         public string GradeSpecialty { get; set; } = null!;
         [Required]
-        [Display(Name = "Teacher")]
+        [Display(Name = "Учител")]
         public int TeacherId { get; set; }
         [Required]
         public int SchoolId { get; set; }

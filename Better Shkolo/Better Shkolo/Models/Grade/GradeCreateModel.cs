@@ -8,14 +8,14 @@ namespace Better_Shkolo.Models.Grade
     {
         [Required]
         [StringLength(Constants.Grade.GradeNameMaxLength, MinimumLength = Constants.Grade.GradeNameMinLength)]
-        [Display(Name = "Grade Name")]
+        [Display(Name = "Паралелка")]
         public string GradeName { get; set; } = null!;
         [Required]
         [StringLength(Constants.Grade.GradeSpecialtyMaxLength, MinimumLength = Constants.Grade.GradeSpecialtyMinLength)]
-        [Display(Name = "Grade Specialty")]
+        [Display(Name = "Специалност")]
         public string GradeSpecialty { get; set; } = null!;
         [Required]
-        [Display(Name = "Teacher")]
+        [Display(Name = "Класен ръководител")]
         public int TeacherId { get; set; }
         [Required]
         public int SchoolId { get; set; }

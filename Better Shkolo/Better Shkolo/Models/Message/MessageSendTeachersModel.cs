@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.Grade;
+﻿using Better_Shkolo.Models.School;
 using System.ComponentModel.DataAnnotations;
 
 namespace Better_Shkolo.Models.Message
 {
-    public class MessageSendGradeModel
+    public class MessageSendTeachersModel
     {
         [Required]
         [Display(Name = "Заглавие")]
@@ -12,7 +12,7 @@ namespace Better_Shkolo.Models.Message
         [Display(Name = "Съобщение")]
         public string Content { get; set; } = null!;
         [Required]
-        public int SendGradeId { get; set; }
-        public List<GradeDisplayModel> Grades { get; set; }
+        public int SendTeacherSchoolId { get; set; }
+        public List<SchoolViewModel> Schools { get; set; }
     }
 }

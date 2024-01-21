@@ -12,9 +12,9 @@
     {
         <p class="list-group-item list-group-item-action">
             @student.FirstName @student.LastName - @student.Email
-            <a asp-controller="Absences" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Add absence</a>
-            <a asp-controller="Mark" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Add mark</a>
-            <a asp-controller="Review" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Add review</a>
+            <a asp-controller="Absences" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави отсъствие</a>
+            <a asp-controller="Mark" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави оценка</a>
+            <a asp-controller="Review" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави отзив</a>
         </p>
     }
 </div>

@@ -28,28 +28,30 @@
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item active">
-                            <a class="nav-link" aria-current="page" href="/Home/Index">Home</a>
+                            <a class="nav-link" aria-current="page" href="/Home/Index">Начало</a>
                         </li>
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="/Admin/Admin/Manage">Schools</a>
+                                <a class="nav-link" href="/Admin/Admin/Manage">Училища</a>
                             </li>
                         }
                         @if (User.IsInRole("Director"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="/Director/Director/Manage">Manage</a>
+                                <a class="nav-link" href="/Director/Director/Manage">Управлявай</a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Messages</a>
-                        </li>
-                        
+                        @if (await service.HasRole())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Съобщения</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <form class="form-inline">
-                    <a href="/Account/Logout" class="nav-link btn btn-link text-dark">Logout</a>
+                    <a href="/Account/Logout" class="nav-link btn btn-link text-dark">Излез</a>
                 </form>
             </div>
         </nav>

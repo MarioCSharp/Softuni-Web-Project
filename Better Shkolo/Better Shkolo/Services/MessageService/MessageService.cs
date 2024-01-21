@@ -84,7 +84,10 @@ namespace Better_Shkolo.Services.MessageService
                     Id = x.Id,
                     Title = x.Title,
                     SentByUserId = x.SentByUserId,
-                    Read = x.Read
+                    Read = x.Read,
+                    SentByFirstName = x.SentBy.FirstName,
+                    SentByLastName = x.SentBy.LastName,
+                    SentByEmail = x.SentBy.Email
                 })
                 .ToListAsync();
         }
