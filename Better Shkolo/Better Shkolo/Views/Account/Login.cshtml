@@ -1,45 +1,64 @@
 ﻿@using Better_Shkolo.Models.Account;
 @model LoginModel
 @{
-    ViewData["Title"] = "Вписаване";
+    ViewData["Title"] = "Вписване";
 }
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<h3 class="text-center">@ViewData["Title"]</h3>
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <section>
-            <form id="account" method="post">
-                <input type="hidden" asp-for="ReturnUrl" />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" type="password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Вписване</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a asp-controller="Account" asp-action="Register">Регистрирай се!</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-</div>
 
+<style>
+    /* Add custom CSS styles for the form container */
+    .form-container {
+        background-color: #f0f0f0; /* Set the desired gray color */
+        padding: 70px; /* Add some padding for better appearance */
+        border-radius: 10px; /* Optional: Add border radius for rounded corners */
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="col-md-6 form-container"> <!-- Add the form-container class here -->
+        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" role="tab"
+                   aria-controls="pills-login" aria-selected="true" asp-action="Login" asp-controller="Account">Вписване</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="tab-register" data-mdb-toggle="pill" role="tab"
+                   aria-controls="pills-register" aria-selected="false" asp-action="Register" asp-controller="Account">Регистрация</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+                <form method="post">
+                    <h3>Вписане в школо</h3>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" asp-for="Email"></label>
+                        <input type="email" id="loginName" class="form-control" asp-for="Email" />
+                        <span asp-validation-for="Email"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" asp-for="Password"></label>
+                        <input type="password" id="loginPassword" class="form-control" asp-for="Password" />
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Вписване</button>
+                    <div class="text-center">
+                        <p>Нямаш регистрация? <a asp-action="Register" asp-controller="Account">Натисни тук</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

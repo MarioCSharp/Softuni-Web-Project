@@ -8,7 +8,8 @@
 <br />
 <br />
 <br />
-
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 <div id="elements">
     @if (User.IsInRole("Student") || User.IsInRole("Parent"))
     {
@@ -54,6 +55,26 @@
         </div>
     }
 </div>
+@section Scripts {
+    <script>
+        let statisticsData = null;
+        fetch('/api/statistics/GetStudentStatistics')
+            .then(response => response.json())
+            .then(data => {
+                // Store the data in a variable
+                statisticsData = data;
+            });
+
+        // Update the UI with the new data
+        $(document).ready(() => {
+            $('#success').text(statisticsData.Success);
+            $('#absenceses').text(statisticsData.absenceses);
+            $('#reviews').text(statisticsData.reviews);
+            $('#tests').text(statisticsData.tests);
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+}
 
 <style>
     a {
@@ -116,20 +137,3 @@
         float: right;
     }
 </style>
-
-
-
-
-@section Scripts {
-    <script>
-        $.get('/api/statistics', (data) => {
-            $('#success').text(data.success);
-            $('#absenceses').text(data.absenceses);
-            $('#reviews').text(data.reviews);
-            $('#tests').text(data.tests);
-            $('#position-success-grade').text("Grade Position: " + data.placeInGrade);
-            $('#position-success-school').text("School Position: " + data.placeInSchool);
-            console.log(data.Success);
-        });
-    </script>
-}

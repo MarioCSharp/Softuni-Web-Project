@@ -4,7 +4,6 @@ using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.StatisticsService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Better_Shkolo.Controllers.Api
 {
@@ -22,16 +21,17 @@ namespace Better_Shkolo.Controllers.Api
             this.accountService = accountService;
         }
         [HttpGet]
-        public async Task<StatisticsDisplayModel> GetStatistics()
+        [Route("GetStudentStatistics")]
+        public StatisticsDisplayModel GetStatistics()
         {
-            return await statisticsService.GetStatistics(accountService.GetUserId());
+            return statisticsService.GetStatistics(accountService.GetUserId());
         }
 
         [HttpGet]
         [Route("GetMark")]
-        public async Task<IActionResult> GetMarkById(int id)
+        public IActionResult GetMarkById(int id)
         {
-            var mark = await statisticsService.GetMarkById(id);
+            var mark = statisticsService.GetMarkById(id);
 
             if (mark is null)
             {
@@ -43,28 +43,28 @@ namespace Better_Shkolo.Controllers.Api
 
         [HttpGet]
         [Route("GetStatistics")]
-        public async Task<IActionResult> GetApplicationStatistics()
+        public IActionResult GetApplicationStatistics()
         {
             if (!User.IsInRole("Administrator"))
             {
                 return BadRequest();
             }
 
-            var statistics = await statisticsService.GetApplicationStatistics();
+            var statistics = statisticsService.GetApplicationStatistics();
 
             return Ok(statistics);
         }
 
         [HttpGet]
         [Route("GetSchoolStatistics")]
-        public async Task<IActionResult> GetSchoolStatistics(int schoolId)
+        public IActionResult GetSchoolStatistics(int schoolId)
         {
             if (!User.IsInRole("Director") && !User.IsInRole("Administrator"))
             {
                 return BadRequest();
             }
 
-            var statistics = await statisticsService.GetSchoolStatistics(schoolId);
+            var statistics = statisticsService.GetSchoolStatistics(schoolId);
 
             return Ok(statistics);
         }

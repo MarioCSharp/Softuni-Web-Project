@@ -30,7 +30,7 @@ namespace Better_Shkolo.Services.StandingsService
 
             if (schoolPlaces is null)
             {
-                await statisticsService.GetStatistics(student.UserId);
+                statisticsService.GetStatistics(student.UserId);
             }
             else
             {

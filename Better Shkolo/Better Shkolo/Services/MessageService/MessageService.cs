@@ -22,6 +22,18 @@ namespace Better_Shkolo.Services.MessageService
             this.um = um;
         }
 
+        public async Task<bool> Delete(string userId, int msgId)
+        {
+            var msg = await context.Messages.FindAsync(msgId);
+
+            if (msg is null || msg.SentToUserId != userId) return false;
+
+            msg.Deleted = true;
+            await context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<MessageSendModel> GenerateModel(string userId)
         {
             var model = new MessageSendModel();
@@ -57,6 +69,9 @@ namespace Better_Shkolo.Services.MessageService
             var msg = await context.Messages.FindAsync(id);
             var user = await context.Users.FindAsync(msg.SentByUserId);
 
+            msg.Read = true;
+            await context.SaveChangesAsync();
+
             if (msg is null || user is null)
             {
                 return null;
@@ -68,28 +83,61 @@ namespace Better_Shkolo.Services.MessageService
                 Titile = msg.Title,
                 SentByUserEmail = user.Email,
                 SentByUserName = user.FirstName + " " + user.LastName,
+                Deleted = msg.Deleted,
+                TimeSent = msg.DateSent.ToString("MMMM dd"),
             };
         }
 
-        public async Task<List<MeesageIndexModel>> GetMeesagesAsync(string userId)
+        public async Task<MessageIndexModel> GetMeesagesAsync(string userId)
         {
             var user = await context.Users.FindAsync(userId);
 
             if (user is null) throw new Exception("User is not found. (GetMeesagesAsync) - MessageService");
+            var model = new MessageIndexModel();
 
-            return await context.Messages
-                .Where(x => x.SentToUserId == userId)
-                .Select(x => new MeesageIndexModel()
+            model.Recieved =  await context.Messages
+                .Where(x => x.SentToUserId == userId && !x.Deleted)
+                .Select(x => new RecievedMessageModel()
                 {
                     Id = x.Id,
                     Title = x.Title,
-                    SentByUserId = x.SentByUserId,
-                    Read = x.Read,
                     SentByFirstName = x.SentBy.FirstName,
                     SentByLastName = x.SentBy.LastName,
-                    SentByEmail = x.SentBy.Email
+                    SentByUserEmail = x.SentBy.Email,
+                    Deleted = x.Deleted,
+                    TimeSent = x.DateSent.ToString("MMMM dd")
                 })
                 .ToListAsync();
+
+            model.Sent = await context.Messages
+                .Where(x => x.SentByUserId == userId && !x.Deleted)
+                .Select(x => new SentMessageModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    SentToFirstName = x.SentToUser.FirstName,
+                    SentToLastName = x.SentToUser.LastName,
+                    SentToEmail = x.SentBy.Email,
+                    Deleted = x.Deleted,
+                    TimeSent = x.DateSent.ToString("MMMM dd")
+                })
+                .ToListAsync();
+
+            model.Deleted = await context.Messages
+                .Where(x => x.SentToUserId == userId && x.Deleted)
+                .Select(x => new DeleteMessageModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    SentByFirstName = x.SentBy.FirstName,
+                    SentByLastName = x.SentBy.LastName,
+                    SentToEmail = x.SentBy.Email,
+                    Deleted = x.Deleted,
+                    TimeSent = x.DateSent.ToString("MMMM dd")
+                })
+                .ToListAsync();
+
+            return model;
         }
 
         public async Task<bool> SendAsync(string userId, MessageSendModel model)
@@ -105,7 +153,9 @@ namespace Better_Shkolo.Services.MessageService
                 Title = model.Title,
                 Content = model.Content,
                 SentByUserId = user.Id,
-                Read = false
+                Read = false,
+                Deleted = false,
+                DateSent = DateTime.UtcNow,
             };
 
             await context.Messages.AddAsync(message);

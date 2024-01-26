@@ -1,5 +1,4 @@
-﻿using Better_Shkolo.Data.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Better_Shkolo.Data.Models
@@ -20,5 +19,7 @@ namespace Better_Shkolo.Data.Models
         [ForeignKey(nameof(SentByUserId))]
         public User SentBy { get; set; } = null!;
         public bool Read { get; set; }
+        public bool Deleted { get; set; }
+        public DateTime DateSent { get; set; }
     }
 }

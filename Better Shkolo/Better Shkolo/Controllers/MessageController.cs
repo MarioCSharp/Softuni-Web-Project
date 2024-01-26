@@ -109,5 +109,15 @@ namespace Better_Shkolo.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await messageService.Delete(accountService.GetUserId(), id);
+
+            if (!result) return BadRequest();
+
+            return Ok(result);
+        }
     }
 }

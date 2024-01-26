@@ -8,12 +8,16 @@
 <br />
 <br />
 <br />
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
-<form method="post">
-    <h3>Добавяне на отсъствие на @Model.FirstName @Model.LastName - @Model.Email ?</h3>
-    <input asp-for="SubjectId" type="hidden"/>
-    <input asp-for="SchoolId" type="hidden"/>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Добави</button>
-    </div>
-</form>
+<div class="grey-bg">
+    <form method="post">
+        <h3>Добавяне на отсъствие на @Model.FirstName @Model.LastName - @Model.Email ?</h3>
+        <input asp-for="SubjectId" type="hidden" />
+        <input asp-for="SchoolId" type="hidden" />
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Добави</button>
+        </div>
+    </form>
+</div>

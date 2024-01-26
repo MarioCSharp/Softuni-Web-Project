@@ -3,7 +3,6 @@ using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Api;
 using Better_Shkolo.Models.Application;
 using Better_Shkolo.Models.Mark;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Better_Shkolo.Services.StatisticsService
@@ -19,9 +18,9 @@ namespace Better_Shkolo.Services.StatisticsService
             this.memoryCache = memoryCache;
         }
 
-        public async Task<MarkInformationModel> GetMarkById(int id)
+        public MarkInformationModel GetMarkById(int id)
         {
-            var mark = await context.Marks.FindAsync(id);
+            var mark = context.Marks.Find(id);
 
             if (mark is null)
             {
@@ -32,8 +31,8 @@ namespace Better_Shkolo.Services.StatisticsService
 
             if (markInfo is null)
             {
-                var teacher = await context.Teachers.FindAsync(mark.TeacherId);
-                var teacherUser = await context.Users.FindAsync(teacher.UserId);
+                var teacher = context.Teachers.Find(mark.TeacherId);
+                var teacherUser = context.Users.Find(teacher.UserId);
 
                 var addedOn = mark.AddedOn.ToString("MM/dd/yyyy HH:mm:ss");
 
@@ -55,7 +54,7 @@ namespace Better_Shkolo.Services.StatisticsService
             return (MarkInformationModel)markInfo;
         }
 
-        public async Task<ApplicationStatisticsModel> GetApplicationStatistics()
+        public ApplicationStatisticsModel GetApplicationStatistics()
         {
             var statistics = memoryCache.Get<ApplicationStatisticsModel>("ApplicationStatistics");
 
@@ -63,17 +62,17 @@ namespace Better_Shkolo.Services.StatisticsService
             {
                 statistics = new ApplicationStatisticsModel()
                 {
-                    Schools = await context.Schools.CountAsync(),
-                    Users = await context.Users.CountAsync(),
-                    Directors = await context.Directors.CountAsync(),
-                    Teachers = await context.Teachers.CountAsync(),
-                    Students = await context.Students.CountAsync(),
-                    Marks = await context.Marks.CountAsync(),
-                    Reviews = await context.Reviews.CountAsync(),
-                    Tests = await context.Tests.CountAsync(),
-                    Absences = await context.Absencess.CountAsync(),
-                    Grades = await context.Grades.CountAsync(),
-                    Subjects = await context.Subjects.CountAsync()
+                    Schools = context.Schools.Count(),
+                    Users = context.Users.Count(),
+                    Directors = context.Directors.Count(),
+                    Teachers = context.Teachers.Count(),
+                    Students = context.Students.Count(),
+                    Marks = context.Marks.Count(),
+                    Reviews = context.Reviews.Count(),
+                    Tests = context.Tests.Count(),
+                    Absences = context.Absencess.Count(),
+                    Grades = context.Grades.Count(),
+                    Subjects = context.Subjects.Count()
                 };
 
                 var cacheOptions = new MemoryCacheEntryOptions()
@@ -85,14 +84,14 @@ namespace Better_Shkolo.Services.StatisticsService
             return statistics;
         }
 
-        public async Task<StatisticsDisplayModel> GetStatistics(string userId)
+        public StatisticsDisplayModel GetStatistics(string userId)
         {
-            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+            var student = context.Students.FirstOrDefault(x => x.UserId == userId);
 
             if (student == null)
             {
-                var parent = await context.Parents.FirstOrDefaultAsync(x => x.UserId == userId);
-                student = await context.Students.FirstOrDefaultAsync(x => x.ParentId == parent.Id);
+                var parent = context.Parents.FirstOrDefault(x => x.UserId == userId);
+                student = context.Students.FirstOrDefault(x => x.ParentId == parent.Id);
             }
 
             if (student == null)
@@ -100,15 +99,15 @@ namespace Better_Shkolo.Services.StatisticsService
                 return null;
             }
 
-            var absenceses = await context.Absencess.CountAsync(x => x.StudentId == student.Id);
-            var reviews = await context.Reviews.CountAsync(x => x.StudentId == student.Id);
-            var tests = await context.Tests.CountAsync(x => x.GradeId == student.GradeId);
+            var absenceses = context.Absencess.Count(x => x.StudentId == student.Id);
+            var reviews = context.Reviews.Count(x => x.StudentId == student.Id);
+            var tests = context.Tests.Count(x => x.GradeId == student.GradeId);
 
             var schoolOrder = memoryCache.Get($"SchoolPlaces{student.SchoolId}");
 
             if (schoolOrder is null)
             {
-                var studentsInSchool = await context.Students.Where(x => x.SchoolId == student.SchoolId).ToListAsync();
+                var studentsInSchool = context.Students.Where(x => x.SchoolId == student.SchoolId).ToList();
 
                 var marksAvarageSchool = new List<CustomKVP>();
 
@@ -117,14 +116,14 @@ namespace Better_Shkolo.Services.StatisticsService
 
                 foreach (var current in studentsInSchool)
                 {
-                    var marks = await context.Marks
-                                    .Where(x => x.StudentId == current.Id).ToListAsync();
+                    var marks = context.Marks
+                                    .Where(x => x.StudentId == current.Id).ToList();
 
                     var kvp = new CustomKVP();
 
                     if (marks.Count == 0)
                     {
-                        kvp = new CustomKVP(current.Id, 0, current, await context.Users.FindAsync(current.UserId));
+                        kvp = new CustomKVP(current.Id, 0, current, context.Users.Find(current.UserId));
 
                         marksAvarageSchool.Add(kvp);
 
@@ -134,7 +133,7 @@ namespace Better_Shkolo.Services.StatisticsService
 
                     var avarage = marks.Average(x => x.Value);
 
-                    kvp = new CustomKVP(current.Id, avarage, current, await context.Users.FindAsync(current.UserId));
+                    kvp = new CustomKVP(current.Id, avarage, current, context.Users.Find(current.UserId));
 
                     marksAvarageSchool.Add(kvp);
 
@@ -184,7 +183,7 @@ namespace Better_Shkolo.Services.StatisticsService
             return model;
         }
 
-        public async Task<ApplicationStatisticsModel> GetSchoolStatistics(int schoolId)
+        public ApplicationStatisticsModel GetSchoolStatistics(int schoolId)
         {
             var statistics = memoryCache.Get<ApplicationStatisticsModel>($"SchoolStatistics{schoolId}");
 
@@ -192,14 +191,14 @@ namespace Better_Shkolo.Services.StatisticsService
             {
                 statistics = new ApplicationStatisticsModel()
                 {
-                    Teachers = await context.Teachers.CountAsync(x => x.SchoolId == schoolId),
-                    Students = await context.Students.CountAsync(x => x.SchoolId == schoolId),
-                    Marks = await context.Marks.CountAsync(x => x.SchoolId == schoolId),
-                    Reviews = await context.Reviews.CountAsync(x => x.SchoolId == schoolId),
-                    Tests = await context.Tests.CountAsync(x => x.SchoolId == schoolId),
-                    Absences = await context.Absencess.CountAsync(x => x.SchoolId == schoolId),
-                    Grades = await context.Grades.CountAsync(x => x.SchoolId == schoolId),
-                    Subjects = await context.Subjects.CountAsync(x => x.SchoolId == schoolId),
+                    Teachers = context.Teachers.Count(x => x.SchoolId == schoolId),
+                    Students = context.Students.Count(x => x.SchoolId == schoolId),
+                    Marks = context.Marks.Count(x => x.SchoolId == schoolId),
+                    Reviews = context.Reviews.Count(x => x.SchoolId == schoolId),
+                    Tests = context.Tests.Count(x => x.SchoolId == schoolId),
+                    Absences = context.Absencess.Count(x => x.SchoolId == schoolId),
+                    Grades = context.Grades.Count(x => x.SchoolId == schoolId),
+                    Subjects = context.Subjects.Count(x => x.SchoolId == schoolId),
                 };
 
                 var cacheOptions = new MemoryCacheEntryOptions()
@@ -216,7 +215,7 @@ namespace Better_Shkolo.Services.StatisticsService
     {
         public CustomKVP()
         {
-            
+
         }
         public CustomKVP(int key, double value, Student student, User user)
         {

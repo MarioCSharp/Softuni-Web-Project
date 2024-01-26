@@ -1,20 +1,188 @@
 ﻿@using Better_Shkolo.Models.Message
-@model List<MeesageIndexModel>
+@model MessageIndexModel
 <br />
 <br />
 <br />
 <br />
 <br />
-<br />
-<br />
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<div class="list-group">
-    <h3>Съобщения</h3>
-    @foreach (var absences in Model)
-    {
-        <a class="list-group-item list-group-item-action" asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id">
-            <p>@absences.Title</p>
-            <p>Изпратено от: @absences.SentByFirstName @absences.SentByLastName - @absences.SentByEmail</p>
-        </a>
-    }
-</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body bg-primary text-white mailbox-widget pb-0">
+                    <ul class="nav nav-tabs custom-tab border-bottom-0 mt-4" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="inbox-tab" data-toggle="tab" aria-controls="inbox" href="#inbox" role="tab" aria-selected="true" onclick="changeTabColor(this)">
+                                <span class="d-block d-md-none"><i class="ti-email"></i></span>
+                                <span class="d-none d-md-block" style="color: black">СЪОБЩЕНИЯ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="sent-tab" data-toggle="tab" aria-controls="sent" href="#sent" role="tab" aria-selected="false" onclick="changeTabColor(this)">
+                                <span class="d-block d-md-none"><i class="ti-export"></i></span>
+                                <span class="d-none d-md-block" style="color: black">ИЗПРАТЕНИ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="delete-tab" data-toggle="tab" aria-controls="delete" href="#delete" role="tab" aria-selected="false" onclick="changeTabColor(this)">
+                                <span class="d-block d-md-none"><i class="ti-trash"></i></span>
+                                <span class="d-none d-md-block" style="color: black">ИЗТРИТИ</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                        <div>
+                            <div class="row p-4 no-gutters align-items-center">
+                                <div class="col-sm-12 col-md-6">
+                                    <h3 class="font-light mb-0"><i class="ti-email mr-2"></i>@Model.Recieved.Count(x => x.Read == false) Непрочетени съобщения</h3>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var absences in Model.Recieved)
+                                            {
+                                            <tr>
+                                                <td class="align-middle"><i class="fa fa-star text-warning"></i></td>
+                                                <td class="align-middle">
+                                                    <span class="mb-0 text-muted">@absences.SentByFirstName @absences.SentByLastName</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <a asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id" class="link">
+                                                        <span class="badge badge-pill text-white font-medium badge-danger mr-2">School</span>
+                                                        <span class="text-dark">@absences.Title</span>
+                                                    </a>
+                                                </td>
+                                                <td class="align-middle"><i class="fa fa-paperclip text-muted"></i></td>
+                                                <td class="align-middle text-muted">@absences.TimeSent</td>
+                                                <td class="align-middle buttons">
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-circle btn-primary text-white deletebtn" asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id">
+                                                            Виж
+                                                        </a>
+                                                        <a class="btn btn-circle btn-danger text-white deletebtn" asp-action="Delete" asp-controller="Message" asp-route-id="@absences.Id">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="sent" aria-labelledby="sent-tab" role="tabpanel">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                                <div>
+                                    <div class="row p-4 no-gutters align-items-center">
+                                        <div class="col-sm-12 col-md-6">
+                                            <h3 class="font-light mb-0"><i class="ti-email mr-2"></i>@Model.Sent.Count Изпратени съобщения</h3>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                            <tbody>
+                                                <tr>
+                                                    @foreach (var absences in Model.Sent)
+                                                    {
+                                                    <tr>
+                                                        <td class="align-middle"><i class="fa fa-star text-warning"></i></td>
+                                                        <td class="align-middle">
+                                                            <span class="mb-0 text-muted">@absences.SentToFirstName @absences.SentToLastName</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <a asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id" class="link">
+                                                                <span class="badge badge-pill text-white font-medium badge-danger mr-2">School</span>
+                                                                <span class="text-dark">@absences.Title</span>
+                                                            </a>
+                                                        </td>
+                                                        <td class="align-middle"><i class="fa fa-paperclip text-muted"></i></td>
+                                                        <td class="align-middle text-muted">@absences.TimeSent</td>
+                                                        <td class="align-middle buttons">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-circle btn-primary text-white deletebtn" asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id">
+                                                                    Виж
+                                                                </a>
+                                                                <a class="btn btn-circle btn-danger text-white deletebtn" asp-action="Delete" asp-controller="Message" asp-route-id="@absences.Id">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="delete" aria-labelledby="delete-tab" role="tabpanel">
+                                <div class="row p-3 text-dark">
+                                    <div>
+                                        <div class="row p-4 no-gutters align-items-center">
+                                            <div class="col-sm-12 col-md-6">
+                                                <h3 class="font-light mb-0"><i class="ti-email mr-2"></i>@Model.Deleted.Count Изтрити съобщения</h3>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                                <tbody>
+                                                    <tr>
+                                                        @foreach (var absences in Model.Deleted)
+                                                        {
+                                                        <tr>
+                                                            <td class="align-middle"><i class="fa fa-star text-warning"></i></td>
+                                                            <td class="align-middle">
+                                                                <span class="mb-0 text-muted">@absences.SentByFirstName @absences.SentByLastName</span>
+                                                            </td>
+                                                            <td class="align-middle text-center">
+                                                                <a asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id" class="link">
+                                                                    <span class="badge badge-pill text-white font-medium badge-danger mr-2">School</span>
+                                                                    <span class="text-dark">@absences.Title</span>
+                                                                </a>
+                                                            </td>
+                                                            <td class="align-middle"><i class="fa fa-paperclip text-muted"></i></td>
+                                                            <td class="align-middle text-muted">@absences.TimeSent</td>
+                                                            <td class="align-middle buttons">
+                                                                <div class="btn-group">
+                                                                    <a class="btn btn-circle btn-primary text-white deletebtn" asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id">
+                                                                        Виж
+                                                                    </a>
+                                                                    <a class="btn btn-circle btn-danger text-white deletebtn" asp-action="Delete" asp-controller="Message" asp-route-id="@absences.Id">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .deletebtn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+            }
+        </style>
