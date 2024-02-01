@@ -60,24 +60,24 @@
     }
 </div>
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        let statisticsData = null;
-        fetch('/api/statistics/GetStudentStatistics')
-            .then(response => response.json())
-            .then(data => {
-                // Store the data in a variable
-                statisticsData = data;
-            });
-
-        // Update the UI with the new data
         $(document).ready(() => {
-            $('#success').text(statisticsData.Success);
-            $('#absenceses').text(statisticsData.absenceses);
-            $('#reviews').text(statisticsData.reviews);
-            $('#tests').text(statisticsData.tests);
+            // Fetch data from the API
+            fetch('/api/statistics/GetStudentStatistics')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the UI with the new data
+                    $('#success').text(data.success);
+                    $('#absenceses').text(data.absenceses);
+                    $('#reviews').text(data.reviews);
+                    $('#tests').text(data.tests);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 }
 
 <style>

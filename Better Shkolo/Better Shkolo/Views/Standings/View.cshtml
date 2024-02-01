@@ -1,19 +1,6 @@
 ﻿@using Better_Shkolo.Models.Standings;
 @using System.Security.Claims;
 @model StandingsDisplayModel
-
-<form method="get">
-    <div class="row">
-        <div class="form-group col-md-3">
-            <label asp-for="SearchTerm"></label>
-            <input asp-for="SearchTerm" class="form-control" placeholder="">
-        </div>
-    </div>
-</form>
-
-<br />
-<br />
-<br />
 <br />
 <br />
 <br />
@@ -21,6 +8,14 @@
 <br />
 <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="">
+        </div>
+    </div>
+    </form>
 @foreach (var student in Model.SchoolStandings.Take(20))
 {
     <div class="card">

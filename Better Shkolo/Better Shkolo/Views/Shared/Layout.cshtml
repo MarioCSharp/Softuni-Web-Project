@@ -54,6 +54,12 @@
                                 <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Съобщения</a>
                             </li>
                         }
+                        @if (await service.HasRole() && !User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Standings" asp-action="View">Класация</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <a href="/Account/MyProfile" class="nav-link btn btn-link text-dark">Профил</a>
