@@ -1,0 +1,155 @@
+﻿@using Better_Shkolo.Models.Student
+@model StudentProfileModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .deletebtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .mark-button {
+            margin-right: 5px;
+        }
+
+        #six {
+            background-color: #26C281;
+            border-color: #26C281;
+        }
+
+        #five {
+            background-color: #3598dc;
+            border-color: #3598dc;
+        }
+
+        #four {
+            background-color: #F7CA18;
+            border-color: #F7CA18;
+        }
+
+        #three {
+            background-color: #f2784b;
+            border-color: #f2784b;
+        }
+
+        #two {
+            background-color: #e7505a;
+            border-color: #e7505a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body bg-transparent text-white mailbox-widget pb-0">
+                        <ul class="nav nav-tabs custom-tab border-bottom-0 mt-4" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="inbox-tab" data-toggle="tab" aria-controls="inbox" href="#inbox" role="tab" aria-selected="true">
+                                    <span class="d-block d-md-none"><i class="ti-email"></i></span>
+                                    <span class="d-none d-md-block" style="color: black">Оценки</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="sent-tab" data-toggle="tab" aria-controls="sent" href="#sent" role="tab" aria-selected="false">
+                                    <span class="d-block d-md-none"><i class="ti-export"></i></span>
+                                    <span class="d-none d-md-block" style="color: black">Отзиви</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="delete-tab" data-toggle="tab" aria-controls="delete" href="#delete" role="tab" aria-selected="false">
+                                    <span class="d-block d-md-none"><i class="ti-trash"></i></span>
+                                    <span class="d-none d-md-block" style="color: black">Отсъствия</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                    <tbody>
+                                        @foreach (var subject in Model.AllSubjects)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <strong>@subject.Name:</strong>
+                                                    @foreach (var item in Model.Marks.Where(x => x.SubjectName == subject.Name))
+                                                    {
+                                                        @if (item.Value == 6)
+                                                        {
+                                                            <button class="mark-button" value="@item.Id" id="six">@item.Value</button>
+                                                        }
+                                                        @if (item.Value == 5)
+                                                        {
+                                                            <button class="mark-button" value="@item.Id" id="five">@item.Value</button>
+                                                        }
+                                                        @if (item.Value == 4)
+                                                        {
+                                                            <button class="mark-button" value="@item.Id" id="four">@item.Value</button>
+                                                        }
+                                                        @if (item.Value == 3)
+                                                        {
+                                                            <button class="mark-button" value="@item.Id" id="three">@item.Value</button>
+                                                        }
+                                                        @if (item.Value == 2)
+                                                        {
+                                                            <button class="mark-button" value="@item.Id" id="two">@item.Value</button>
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="sent" aria-labelledby="sent-tab" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                    <tbody>
+                                        @foreach (var subject in Model.AllSubjects)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <strong>@subject.Name: @Model.Reviews.Where(x => x.SubjectId == subject.Id).Count()</strong>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="delete" aria-labelledby="delete-tab" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                    <tbody>
+                                        @foreach (var subject in Model.AllSubjects)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <strong>@subject.Name: @Model.Absences.Where(x => x.SubjectId == subject.Id).Count()</strong>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

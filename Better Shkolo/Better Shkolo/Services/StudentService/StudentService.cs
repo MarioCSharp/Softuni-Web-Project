@@ -2,8 +2,13 @@
 using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Absence;
+using Better_Shkolo.Models.Absences;
+using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Models.Parent;
+using Better_Shkolo.Models.Review;
 using Better_Shkolo.Models.Student;
+using Better_Shkolo.Models.Subject;
+using Better_Shkolo.Models.Test;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -150,6 +155,79 @@ namespace Better_Shkolo.Services.StudentService
             model.LastName = user.LastName;
             model.Email = user.Email;
             model.SchoolId = student.SchoolId;
+
+            return model;
+        }
+
+        public async Task<StudentProfileModel> GetStudentProfile(string userId)
+        {
+            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (student == null) return null;
+
+            var model = new StudentProfileModel();
+
+            model.Marks = await context.Marks
+                .Where(x => x.StudentId == student.Id)
+                .Select(x => new MarkOverallModel()
+                {
+                    Id = x.Id,
+                    Value = x.Value,
+                    TeacherFullName = x.Teacher.User.FirstName + " " + x.Teacher.User.LastName,
+                    SubjectName = x.Subject.Name,
+                    AddedOn = x.AddedOn,
+                    SubjectId = x.Subject.Id
+                })
+                .ToListAsync();
+
+            model.Absences = await context.Absencess
+                .Where(x => x.StudentId == student.Id)
+                .Select(x => new AbsencesOverallModel()
+                {
+                    Id = x.Id,
+                    AddedOn = x.AddedOn,
+                    ExcusedOn = x.ExcusedOn,
+                    TeacherFullName = x.Teacher.User.FirstName + " " + x.Teacher.User.LastName,
+                    SubjectName = x.Subject.Name,
+                    SubjectId = x.Subject.Id
+                })
+                .ToListAsync();
+
+            model.Reviews = await context.Reviews
+                .Where(x => x.StudentId == student.Id)
+                .Select(x => new ReviewOverallModel()
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    AddedOn = x.AddedOn,
+                    TeacherFullName = x.Teacher.User.FirstName + " " + x.Teacher.User.LastName,
+                    SubjectName = x.Subject.Name,
+                    SubjectId = x.Subject.Id
+                })
+                .ToListAsync();
+
+            model.Tests = await context.Tests
+                .Where(x => x.GradeId == student.GradeId)
+                .Select(x => new TestOverallModel()
+                {
+                    Id = x.Id,
+                    AddedOn = x.AddedOn,
+                    TestDate = x.TestDate,
+                    TeacherFullName = x.Teacher.User.FirstName + " " + x.Teacher.User.LastName,
+                    SubjectName = x.Subject.Name,
+                    SubjectId = x.Subject.Id
+                })
+                .ToListAsync();
+
+            model.AllSubjects = await context.Subjects
+                .Where(x => x.GradeId == student.GradeId)
+                .Select(x => new SubjectDisplayModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    SubjectId = x.Id
+                })
+                .ToListAsync();
 
             return model;
         }

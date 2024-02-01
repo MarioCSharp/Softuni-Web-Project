@@ -16,7 +16,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <div class="container">
             <div class="row">
-                <a asp-action="View" asp-controller="Mark" class="col-md-4 col-xl-3">
+                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
                     <div class="card bg-c-blue order-card">
                         <div class="card-block">
                             <h6 class="m-b-20 text-white">Успех</h6>
@@ -25,7 +25,7 @@
                     </div>
                 </a>
 
-                <a asp-action="View" asp-controller="Absences" class="col-md-4 col-xl-3">
+                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
                     <div class="card bg-c-green order-card">
                         <div class="card-block">
                             <h6 class="m-b-20">Отсъствия</h6>
@@ -34,7 +34,7 @@
                     </div>
                 </a>
 
-                <a asp-action="View" asp-controller="Review" class="col-md-4 col-xl-3">
+                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
                     <div class="card bg-c-yellow order-card">
                         <div class="card-block">
                             <h6 class="m-b-20">Отзиви</h6>
@@ -43,7 +43,7 @@
                     </div>
                 </a>
 
-                <a asp-action="View" asp-controller="Test" class="col-md-4 col-xl-3">
+                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
                     <div class="card bg-c-pink order-card">
                         <div class="card-block">
                             <h6 class="m-b-20">Тестове</h6>
@@ -53,6 +53,10 @@
                 </a>
             </div>
         </div>
+    }
+    @if (!User.IsInRole("Student") && !User.IsInRole("Parent") && !User.IsInRole("Teacher"))
+    {
+        <h3 style="color:red">Все още не си добавен в твоето училище!</h3>
     }
 </div>
 @section Scripts {

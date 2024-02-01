@@ -183,6 +183,7 @@ namespace Better_Shkolo.Services.GradeService
                 .Select(x => new StudentDisplayModel()
                 {
                     Id = x.Id,
+                    UserId = x.UserId,
                     FirstName = x.User.FirstName,
                     LastName = x.User.LastName,
                     Email = x.User.Email,

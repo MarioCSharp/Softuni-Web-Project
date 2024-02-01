@@ -8,5 +8,7 @@ namespace Better_Shkolo.Services.AccountService
         string GetUserId();
         Task<bool> IsGradeTeacher();
         Task<bool> HasRole();
+        Task<UserProfileModel> GetUser();
+        Task<bool> EditUser(UserProfileModel model);
     }
 }

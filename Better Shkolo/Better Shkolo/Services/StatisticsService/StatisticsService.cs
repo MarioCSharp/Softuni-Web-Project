@@ -91,6 +91,10 @@ namespace Better_Shkolo.Services.StatisticsService
             if (student == null)
             {
                 var parent = context.Parents.FirstOrDefault(x => x.UserId == userId);
+                if (parent is null)
+                {
+                    return null;
+                }
                 student = context.Students.FirstOrDefault(x => x.ParentId == parent.Id);
             }
 

@@ -1,5 +1,7 @@
 ﻿using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Account;
+using Better_Shkolo.Services.AccountService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +11,13 @@ namespace Better_Shkolo.Controllers
     {
         private UserManager<User> userManager;
         private SignInManager<User> signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private IAccountService accountService;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
+                                IAccountService accountService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.accountService = accountService;
         }
         [HttpGet]
         public async Task<IActionResult> Register()
@@ -95,6 +100,37 @@ namespace Better_Shkolo.Controllers
             await signInManager.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> MyProfile()
+        {
+            var user = await accountService.GetUser();
+
+            return View(user);
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Information()
+        {
+            var user = await accountService.GetUser();
+
+            return View(user);
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Information(UserProfileModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var res = await accountService.EditUser(model);
+
+            if (!res) return BadRequest();
+
+            return RedirectToAction("MyProfile", "Account");
         }
     }
 }

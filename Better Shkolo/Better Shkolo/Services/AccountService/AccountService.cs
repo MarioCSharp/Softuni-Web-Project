@@ -27,7 +27,7 @@ namespace Better_Shkolo.Services.AccountService
 
             foreach (var user in context.Users)
             {
-                var roles =  await userManager.GetRolesAsync(user);
+                var roles = await userManager.GetRolesAsync(user);
 
                 if (roles.Count == 0)
                 {
@@ -75,6 +75,42 @@ namespace Better_Shkolo.Services.AccountService
             var roles = await userManager.GetRolesAsync(user);
 
             return roles.Count > 0;
+        }
+
+        public async Task<UserProfileModel> GetUser()
+        {
+            var user = await context.Users.FindAsync(GetUserId());
+
+            return new UserProfileModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.Phone,
+                City = user.City,
+                Address = user.Address,
+                Country = user.Country,
+                BirthDate = user.BirthDate
+            };
+        }
+
+        public async Task<bool> EditUser(UserProfileModel model)
+        {
+            var user = await context.Users.FindAsync(GetUserId());
+
+            if (user is null) return false;
+
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.Email = user.Email;
+            model.PhoneNumber = user.Phone;
+            model.City = user.City;
+            model.Address = user.Address;
+            model.Country = user.Country;
+            model.BirthDate = user.BirthDate;
+            await context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

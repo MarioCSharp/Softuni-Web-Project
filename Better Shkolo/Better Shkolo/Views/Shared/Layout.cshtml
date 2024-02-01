@@ -42,6 +42,12 @@
                                 <a class="nav-link" href="/Director/Director/Manage">Управлявай</a>
                             </li>
                         }
+                        @if (await service.IsGradeTeacher())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Grade/Students">Моят клас</a>
+                            </li>
+                        }
                         @if (await service.HasRole())
                         {
                             <li class="nav-item">
@@ -50,6 +56,7 @@
                         }
                     </ul>
                 </div>
+                <a href="/Account/MyProfile" class="nav-link btn btn-link text-dark">Профил</a>
                 <form class="form-inline">
                     <a href="/Account/Logout" class="nav-link btn btn-link text-dark">Излез</a>
                 </form>

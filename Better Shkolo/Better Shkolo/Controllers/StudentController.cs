@@ -157,5 +157,30 @@ namespace Better_Shkolo.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Profile(string userId)
+        {
+            if (userId is null)
+            {
+                userId = accountService.GetUserId();
+            }
+
+            var currentUserId = accountService.GetUserId();
+
+            if (currentUserId == userId
+                || User.IsInRole("Teacher")
+                || User.IsInRole("Director")
+                || User.IsInRole("Administrator"))
+            {
+                var res = await studentService.GetStudentProfile(userId);
+
+                if (res is null) return BadRequest();
+
+                return View(res);
+            }
+
+            return BadRequest();
+        }
     }
 }

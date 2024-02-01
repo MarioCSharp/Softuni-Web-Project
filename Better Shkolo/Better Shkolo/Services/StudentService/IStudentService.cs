@@ -16,5 +16,6 @@ namespace Better_Shkolo.Services.StudentService
         Task<bool> Delete(int id);
         Task<List<StudentDisplayModel>> GetStudentsInSubject(int id);
         Task<AbsencesAddModel> GetStudentModel(int id);
+        Task<StudentProfileModel> GetStudentProfile(string userId);
     }
 }
