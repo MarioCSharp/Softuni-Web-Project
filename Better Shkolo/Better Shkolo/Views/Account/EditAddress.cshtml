@@ -1,6 +1,5 @@
 ﻿@using Better_Shkolo.Models.Account
-
-@model UserProfileModel
+@model UserAddressModel
 <br />
 <br />
 <br />
@@ -56,58 +55,37 @@
             </div>
             <div class="col-md-8">
                 <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Име</h6>
+                    <form method="post">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Държава</h6>
+                                </div>
+                                <input class="form-control" asp-for="Country" />
+                                <span asp-validation-for="Country"></span>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.FirstName
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Град</h6>
+                                </div>
+                                <input class="form-control" asp-for="City" />
+                                <span asp-validation-for="City"></span>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Фамилно име</h6>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Адрес</h6>
+                                </div>
+                                <input class="form-control" asp-for="Address" />
+                                <span asp-validation-for="Address"></span>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.LastName
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Имейл</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Email
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Телефонен номер</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.PhoneNumber
+                            <hr>
+                            <div class="mb-3 text-center">
+                                <input class="btn btn-primary" type="submit" />
                             </div>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Адрес</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Country @Model.City, @Model.Address
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <a asp-action="Information" asp-controller="Account" class="btn btn-info ">Редактирай</a>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

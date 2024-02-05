@@ -1,9 +1,8 @@
 ﻿@using Better_Shkolo.Models.Absence;
 @model IEnumerable<AbsencesesShowModel>
-
-<br />
-<br />
-<br />
+@{
+    Layout = "Layout";
+}
 <br />
 <br />
 <br />
@@ -12,10 +11,11 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
 <div class="list-group grey-bg">
-    <h3>Absenceses</h3>
+    <h3>Отсъствия</h3>
     @foreach (var absences in Model)
     {
         <div class="list-group-item list-group-item-action">
+            @absences.SubjectName
             @if (absences.ExcusedOn is not null)
             {
                 <p>Добавено на: @absences.AddedOn</p>

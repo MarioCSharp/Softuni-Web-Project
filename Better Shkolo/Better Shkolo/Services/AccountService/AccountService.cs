@@ -100,14 +100,40 @@ namespace Better_Shkolo.Services.AccountService
 
             if (user is null) return false;
 
-            model.FirstName = user.FirstName;
-            model.LastName = user.LastName;
-            model.Email = user.Email;
-            model.PhoneNumber = user.Phone;
-            model.City = user.City;
-            model.Address = user.Address;
-            model.Country = user.Country;
-            model.BirthDate = user.BirthDate;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.Phone = model.PhoneNumber;
+            user.City = model.City;
+            user.Address = model.Address;
+            user.Country = model.Country;
+            user.BirthDate = model.BirthDate;
+            if (string.IsNullOrEmpty(user.Address))
+            {
+                user.Address = "";
+            }
+            if (string.IsNullOrEmpty(user.City))
+            {
+                user.City = "";
+            }
+            if (string.IsNullOrEmpty(user.Country))
+            {
+                user.Country = "";
+            }
+            await context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> EditAddress(UserAddressModel model)
+        {
+            var user = await context.Users.FindAsync(GetUserId());
+
+            if (user is null) return false;
+
+            user.Address = model.Address;
+            user.City = model.City;
+            user.Country = model.Country;
             await context.SaveChangesAsync();
 
             return true;

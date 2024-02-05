@@ -50,10 +50,9 @@ namespace Better_Shkolo.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "StudentParentPolicy")]
-        public async Task<IActionResult> Display(int subjectId)
+        public async Task<IActionResult> Display(int subjectId, string userId)
         {
-            var absencesInSubject = await absencesService.GetAbsencesesBySubjectId(User.FindFirstValue(ClaimTypes.NameIdentifier), subjectId);
+            var absencesInSubject = await absencesService.GetAbsencesesBySubjectId(userId, subjectId);
 
             if (absencesInSubject is null)
             {

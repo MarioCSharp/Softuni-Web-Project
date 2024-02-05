@@ -132,5 +132,37 @@ namespace Better_Shkolo.Controllers
 
             return RedirectToAction("MyProfile", "Account");
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> EditAddress()
+        {
+            var user = await accountService.GetUser();
+
+            var model = new UserAddressModel()
+            {
+                Address = user.Address,
+                City = user.City,
+                Country = user.Country,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EditAddress(UserAddressModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await accountService.EditAddress(model);
+
+            if (!result) return BadRequest();
+
+            return RedirectToAction(nameof(MyProfile));
+        }
     }
 }

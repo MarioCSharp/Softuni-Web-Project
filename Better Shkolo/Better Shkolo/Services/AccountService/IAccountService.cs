@@ -10,5 +10,6 @@ namespace Better_Shkolo.Services.AccountService
         Task<bool> HasRole();
         Task<UserProfileModel> GetUser();
         Task<bool> EditUser(UserProfileModel model);
+        Task<bool> EditAddress(UserAddressModel model);
     }
 }

@@ -17,7 +17,37 @@
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4>@Model.FirstName @Model.LastName</h4>
-                                <p class="text-secondary mb-1">Администратор</p>
+                                @if (User.IsInRole("Administrator"))
+                                {
+                                    <p class="text-secondary mb-1">
+
+                                        Администратор
+                                    </p>
+                                }
+                                else if (User.IsInRole("Director"))
+                                {
+                                    <p class="text-secondary mb-1">
+                                        Директор
+                                    </p>
+                                }
+                                else if (User.IsInRole("Student"))
+                                {
+                                    <p class="text-secondary mb-1">
+                                        Ученик
+                                    </p>
+                                }
+                                else if (User.IsInRole("Parent"))
+                                {
+                                    <p class="text-secondary mb-1">
+                                        Родител
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-secondary mb-1">
+                                        Потребител
+                                    </p>
+                                }
                                 <p class="text-muted font-size-sm">@Model.Country @Model.City @Model.Address</p>
                             </div>
                         </div>
@@ -26,8 +56,9 @@
             </div>
             <div class="col-md-8">
                 <div class="card mb-3">
-                    <div class="card-body">
-                        <form method="post">
+                    <form method="post">
+                        <div class="card-body">
+
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Име</h6>
@@ -64,16 +95,14 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Адрес</h6>
                                 </div>
-                                <a asp-action="EditAdrress" asp-controller="Account">Редактирай адрес</a>
+                                <a asp-action="EditAddress" asp-controller="Account">Редактирай адрес</a>
                             </div>
                             <hr>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <btn type="submit" class="btn btn-primary btn-block mb-4">Запази</btn>
-                                </div>
+                            <div class="mb-3 text-center">
+                                <input class="btn btn-primary" type="submit" />
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

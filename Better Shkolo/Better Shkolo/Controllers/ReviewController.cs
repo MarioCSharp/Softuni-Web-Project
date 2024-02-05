@@ -76,9 +76,9 @@ namespace Better_Shkolo.Controllers
 
         [HttpGet]
         [Authorize(Policy = "StudentParentTeacherPolicy")]
-        public async Task<IActionResult> Show(int studentId, int subjectId)
+        public async Task<IActionResult> Show(int studentId, int subjectId, string userId)
         {
-            var student = await studentService.GetStudent(studentId);
+            var student = await studentService.GetStudent(userId);
 
             return RedirectToAction("Display", "Review", new {subjectId = subjectId, userId = student.UserId});
         }

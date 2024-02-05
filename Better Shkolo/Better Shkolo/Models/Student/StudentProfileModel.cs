@@ -8,6 +8,7 @@ namespace Better_Shkolo.Models.Student
 {
     public class StudentProfileModel
     {
+        public string UserId { get; set; } = null!;
         public string StudentFullName { get; set; } = null!;
         public List<MarkOverallModel> Marks { get; set; } = null!;
         public List<AbsencesOverallModel> Absences { get; set; } = null!;

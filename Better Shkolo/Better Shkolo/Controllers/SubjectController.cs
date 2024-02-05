@@ -84,6 +84,11 @@ namespace Better_Shkolo.Controllers
                 Subjects = await subjectService.GetSubjectsByUser(),
             };
 
+            if (model.Subjects is null)
+            {
+                model.Subjects = new List<SubjectDisplayModel>();
+            }
+
             return View(model);
         }
 

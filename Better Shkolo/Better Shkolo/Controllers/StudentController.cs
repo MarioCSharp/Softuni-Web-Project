@@ -177,6 +177,8 @@ namespace Better_Shkolo.Controllers
 
                 if (res is null) return BadRequest();
 
+                res.UserId = userId;
+
                 return View(res);
             }
 

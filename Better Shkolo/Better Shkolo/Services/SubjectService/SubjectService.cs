@@ -139,6 +139,11 @@ namespace Better_Shkolo.Services.SubjectService
 
             var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == userId);
 
+            if (teacher is null)
+            {
+                return null;
+            }
+
             return await context.Subjects.Where(x => x.TeacherId == teacher.Id)
                 .Select(x => new SubjectDisplayModel()
                 {

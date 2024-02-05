@@ -32,7 +32,7 @@
 
         public class Subject
         {
-            public const int NameMaxLength = 30;
+            public const int NameMaxLength = 300;
             public const int NameMinLength = 3;
         }
 

@@ -122,7 +122,7 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    <strong>@subject.Name: @Model.Reviews.Where(x => x.SubjectId == subject.Id).Count()</strong>
+                                                    <strong>@subject.Name: @Model.Reviews.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Show" asp-controller="Review" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
                                                 </td>
                                             </tr>
                                         }
@@ -138,7 +138,7 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    <strong>@subject.Name: @Model.Absences.Where(x => x.SubjectId == subject.Id).Count()</strong>
+                                                    <strong>@subject.Name: @Model.Absences.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Display" asp-controller="Absences" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
                                                 </td>
                                             </tr>
                                         }
