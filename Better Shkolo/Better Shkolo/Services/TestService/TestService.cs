@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Better_Shkolo.Data;
+using Better_Shkolo.Data.Migrations;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Test;
 using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Better_Shkolo.Services.TestService
 {
@@ -31,7 +33,44 @@ namespace Better_Shkolo.Services.TestService
             test.AddedOn = DateTime.Now;
             test.SubjectId = subject.Id;
             test.TestDate = model.TestDate;
+            test.Type = model.Type;
             test.Id = 0;
+
+            if (test.Type == "Контролно")
+            {
+                var count = 0;
+
+                foreach (var t in context.Tests.Where(x => x.GradeId == test.GradeId))
+                {
+                    if (t.TestDate.Day == test.TestDate.Day)
+                    {
+                        count++;
+                    }
+
+                    if (count >= 2)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (test.Type == "Класно")
+            {
+                foreach (var t in context.Tests.Where(x => x.GradeId == test.GradeId))
+                {
+                    int firstDayOfWeek = (int)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+                    DateTime startOfWeek = t.TestDate.Date.AddDays(-(int)t.TestDate.DayOfWeek + firstDayOfWeek);
+                    DateTime endOfWeek = startOfWeek.AddDays(6);
+
+                    bool isSameWeek = startOfWeek <= test.TestDate && test.TestDate <= endOfWeek;
+
+                    if (isSameWeek)
+                    {
+                        t.TestDate.AddDays(7);
+                        await context.SaveChangesAsync();
+                    }
+                }
+            }
 
             await context.Tests.AddAsync(test);
             await context.SaveChangesAsync();
@@ -46,6 +85,11 @@ namespace Better_Shkolo.Services.TestService
             var model = new List<TestDisplayModel>();
 
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (student == null)
+            {
+                return new List<TestDisplayModel>();
+            }
 
             var studentId = 0;
 

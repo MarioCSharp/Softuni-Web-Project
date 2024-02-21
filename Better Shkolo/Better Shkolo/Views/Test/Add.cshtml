@@ -6,14 +6,22 @@
 <br />
 <br />
 <br />
-<br /><link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<br />
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form asp-action="Add" method="post">
             <div class="mb-3">
-                <input class="form-control" asp-for="TestDate" />
+                <input class="form-control" asp-for="TestDate" value="@DateTime.UtcNow"/>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Type"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="Класно">Класно</option>
+                    <option value="Контролно">Контролно</option>
+                </select>
             </div>
             <input type="hidden" asp-for="SubjectId" />
             <div class="mb-3 text-center">

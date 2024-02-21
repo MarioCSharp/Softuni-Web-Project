@@ -39,8 +39,12 @@ namespace Better_Shkolo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", "Something went wrong!");
-            return View(model);
+            return RedirectToAction(nameof(AlreadyExists));
+        }
+        [Authorize]
+        public async Task<IActionResult> AlreadyExists()
+        {
+            return await View();
         }
         [HttpGet]
         [Authorize(Policy = "StudentParentPolicy")]
