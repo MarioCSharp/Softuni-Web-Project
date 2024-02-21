@@ -32,6 +32,21 @@
                                 <span class="d-none d-md-block" style="color: black">ИЗТРИТИ</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Send" asp-controller="Message">
+                                <span class="d-block d-md-none"><i class="ti-trash"></i></span>
+                                <span class="d-none d-md-block" style="color: black">ИЗПРАТИ СЪОБЩЕНИЕ ТО ПОТРЕБИТЕЛ</span>
+                            </a>
+                        </li>
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Director") || User.IsInRole("Teacher"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="SendGrade" asp-controller="Message">
+                                    <span class="d-block d-md-none"><i class="ti-trash"></i></span>
+                                    <span class="d-none d-md-block" style="color: black">ИЗПРАТИ СЪОБЩЕНИЕ ТО КЛАС</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="tab-content" id="myTabContent">

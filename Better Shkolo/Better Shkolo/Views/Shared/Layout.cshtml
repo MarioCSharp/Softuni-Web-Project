@@ -54,7 +54,7 @@
                                 <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Съобщения</a>
                             </li>
                         }
-                        @if (await service.HasRole() && !User.IsInRole("Administrator"))
+                        @if (User.IsInRole("Student") || User.IsInRole("Parent"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Standings" asp-action="View">Класация</a>
