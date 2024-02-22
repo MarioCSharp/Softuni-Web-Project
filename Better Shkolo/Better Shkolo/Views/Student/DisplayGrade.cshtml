@@ -1,0 +1,16 @@
+﻿@using Better_Shkolo.Models.Student;
+@model StudentViewModel
+<br />
+<br />
+<br />
+<br />
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<div class="list-group">
+    @foreach (var student in Model.Students)
+    {
+        <p class="list-group-item list-group-item-action">
+            @student.FirstName @student.LastName - @student.Email
+        </p>
+    }
+</div>

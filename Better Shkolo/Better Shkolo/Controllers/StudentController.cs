@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Parent;
 using Better_Shkolo.Models.Student;
 using Better_Shkolo.Services.AccountService;
@@ -183,6 +184,12 @@ namespace Better_Shkolo.Controllers
             }
 
             return BadRequest();
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> DisplayGrade(int id)
+        {
+            return View(await studentService.GetStudentsInGrade(id));
         }
     }
 }

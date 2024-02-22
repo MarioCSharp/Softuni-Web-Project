@@ -2,6 +2,7 @@
 using Better_Shkolo.Services.TestService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace Better_Shkolo.Controllers
 {
@@ -53,6 +54,19 @@ namespace Better_Shkolo.Controllers
             var model = await testService.GetTests();
 
             return View(model);
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Schedule(int gradeId)
+        {
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            Calendar cal = dfi.Calendar;
+
+            var week = cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+
+            var gradeSchedule = await testService.GetSchedule(gradeId, week);
+
+            return View(gradeSchedule);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Absence;
+using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Parent;
 using Better_Shkolo.Models.Student;
 
@@ -17,5 +18,6 @@ namespace Better_Shkolo.Services.StudentService
         Task<List<StudentDisplayModel>> GetStudentsInSubject(int id);
         Task<AbsencesAddModel> GetStudentModel(int id);
         Task<StudentProfileModel> GetStudentProfile(string userId);
+        Task<StudentViewModel> GetStudentsInGrade(int id);
     }
 }

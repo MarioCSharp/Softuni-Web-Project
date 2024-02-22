@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Teacher;
 using Better_Shkolo.Services.AccountService;
 using Microsoft.AspNetCore.Identity;
@@ -89,6 +90,31 @@ namespace Better_Shkolo.Services.TeacherService
                 }).ToListAsync();
 
             return result;
+        }
+
+        public async Task<GradeViewModel> GetGrades()
+        {
+            var uId = accountService.GetUserId();
+
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == uId);
+
+            if (teacher is null)
+            {
+                return new GradeViewModel();
+            }
+
+            var model = new GradeViewModel()
+            {
+                Grades = await context.Grades
+                .Where(x => x.TeacherId == teacher.Id)
+                .Select(x => new GradeDisplayModel
+                {
+                    Id = x.Id,
+                    GradeName = x.GradeName
+                }).ToListAsync(),
+            };
+
+            return model;
         }
 
         public async Task<Teacher> GetTeacher(int id)

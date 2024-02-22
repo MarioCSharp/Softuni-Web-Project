@@ -13,19 +13,19 @@ namespace Better_Shkolo.Data.Models
         [Required]
         public int SubjectId { get; set; }
         [ForeignKey(nameof(SubjectId))]
-        public Subject Subject { get; set; }
+        public Subject Subject { get; set; } = null!;
         [Required]
         public int TeacherId { get; set; }
         [ForeignKey(nameof(TeacherId))]
-        public Teacher Teacher { get; set; }
+        public Teacher Teacher { get; set; } = null!;
         [Required]
         public int GradeId { get; set; }
         [ForeignKey(nameof(GradeId))]
-        public Grade Grade { get; set; }
+        public Grade Grade { get; set; } = null!;
         [Required]
         public int SchoolId { get; set; }
         [ForeignKey(nameof(SchoolId))]
-        public School School { get; set; }
+        public School School { get; set; } = null!;
 
         [Required]
         public string Type { get; set; } = null!;

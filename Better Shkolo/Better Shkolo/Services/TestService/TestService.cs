@@ -78,6 +78,38 @@ namespace Better_Shkolo.Services.TestService
             return await context.Tests.ContainsAsync(test);
         }
 
+        public async Task<List<TestScheduleModel>> GetSchedule(int gradeId, int week)
+        {
+            var all = new List<TestScheduleModel>();
+
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            Calendar cal = dfi.Calendar;
+
+            var gradeTests = await context.Tests
+                .Where(x => x.GradeId == gradeId)
+                .ToListAsync();
+
+            foreach (var test in gradeTests)
+            {
+                if (cal.GetWeekOfYear(test.TestDate, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == week)
+                {
+                    var s = await context.Subjects.FindAsync(test.SubjectId);
+                    var tst = new TestScheduleModel()
+                    {
+                        Id = test.Id,
+                        SubjectId = test.SubjectId,
+                        SubjectName = s.Name,
+                        TestDate = test.TestDate,
+                        DateWeekDay = test.TestDate.DayOfWeek.ToString()
+                    };
+
+                    all.Add(tst);
+                }
+            }
+
+            return all;
+        }
+
         public async Task<List<TestDisplayModel>> GetTests()
         {
             var userId = accountService.GetUserId();

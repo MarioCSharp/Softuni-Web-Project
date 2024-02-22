@@ -1,0 +1,20 @@
+﻿@using Better_Shkolo.Models.Grade
+@model GradeViewModel
+<br />
+<br />
+<br />
+<br />
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<div class="list-group">
+    <h3>Твоите предмети</h3>
+    @foreach (var subject in Model.Grades)
+    {
+        <p class="list-group-item list-group-item-action">
+            @subject.GradeName
+            <a asp-controller="Student" asp-action="DisplayGrade" asp-route-id="@subject.Id" class="btn btn-primary">Ученици</a>
+            <a asp-controller="Test" asp-action="Add" asp-route-id="@subject.Id" class="btn btn-primary">Добави тест</a>
+            <a asp-controller="Test" asp-action="Schedule" asp-route-gradeId="@subject.Id" class="btn btn-primary">Програма тестове</a>
+        </p>
+    }
+</div>

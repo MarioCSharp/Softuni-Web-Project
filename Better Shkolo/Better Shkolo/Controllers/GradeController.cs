@@ -177,5 +177,13 @@ namespace Better_Shkolo.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        [Authorize(Roles = "Teacher")]
+        public async Task<IActionResult> MyGrades()
+        {
+            var getTeacherGrades = await teacherService.GetGrades();
+
+            return View(getTeacherGrades);
+        }
     }
 }

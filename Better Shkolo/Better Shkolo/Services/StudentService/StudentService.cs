@@ -3,6 +3,7 @@ using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Absence;
 using Better_Shkolo.Models.Absences;
+using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Models.Parent;
 using Better_Shkolo.Models.Review;
@@ -230,6 +231,23 @@ namespace Better_Shkolo.Services.StudentService
                 .ToListAsync();
 
             return model;
+        }
+
+        public async Task<StudentViewModel> GetStudentsInGrade(int id)
+        {
+            var res = new StudentViewModel();
+            res.Students = await context.Students.Where(x => x.GradeId == id)
+                .Select(x => new StudentDisplayModel()
+                {
+                    Id = x.Id,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    Email = x.User.Email,
+                    SchoolId = x.SchoolId,
+                    SchoolName = x.School.Name,
+                }).ToListAsync();
+
+            return res;
         }
 
         public async Task<List<StudentDisplayModel>> GetStudentsInSchool(int id)
