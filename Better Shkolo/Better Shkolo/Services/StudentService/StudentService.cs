@@ -226,7 +226,8 @@ namespace Better_Shkolo.Services.StudentService
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    SubjectId = x.Id
+                    SubjectId = x.Id,
+                    TeacherId = x.TeacherId
                 })
                 .ToListAsync();
 

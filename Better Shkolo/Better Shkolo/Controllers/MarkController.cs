@@ -70,5 +70,59 @@ namespace Better_Shkolo.Controllers
 
             return View(studentMarks);
         }
+        [HttpGet]
+        [Authorize(Policy = "TeacherPolicy")]
+        public async Task<IActionResult> AddTermMark(int subjectId, int studentId)
+        {
+            var model = new TermMarkAddModel()
+            {
+                StudentId = studentId,
+                SubjectId = subjectId
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [Authorize(Policy = "TeacherPolicy")]
+        public async Task<IActionResult> AddTermMark(TermMarkAddModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await markService.AddTermMark(model);
+
+            if(!result) return BadRequest();
+
+            return RedirectToAction("Display", "Student", new { id = model.SubjectId });
+        }
+        [HttpGet]
+        [Authorize(Policy = "TeacherPolicy")]
+        public async Task<IActionResult> AddYearMark(int subjectId, int studentId)
+        {
+            var model = new YearMarkAddModel()
+            {
+                StudentId = studentId,
+                SubjectId = subjectId
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [Authorize(Policy = "TeacherPolicy")]
+        public async Task<IActionResult> AddYearMark(YearMarkAddModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await markService.AddYearMark(model);
+
+            if (!result) return BadRequest();
+
+            return RedirectToAction("Display", "Student", new { id = model.SubjectId });
+        }
     }
 }

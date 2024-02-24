@@ -2,6 +2,7 @@
 using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Mark;
+using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.MarkService
@@ -10,10 +11,13 @@ namespace Better_Shkolo.Services.MarkService
     {
         private ApplicationDbContext context;
         private IMapper mapper;
-        public MarkService(ApplicationDbContext context, IMapper mapper)
+        private IAccountService accountService;
+        public MarkService(ApplicationDbContext context, IMapper mapper,
+                           IAccountService accountService)
         {
             this.context = context;
             this.mapper = mapper;
+            this.accountService = accountService;
         }
         public async Task<bool> Add(MarkAddModel model, int subjectId, string userId)
         {
@@ -39,6 +43,50 @@ namespace Better_Shkolo.Services.MarkService
             await context.SaveChangesAsync();
 
             return await context.Marks.ContainsAsync(mark);
+        }
+
+        public async Task<bool> AddTermMark(TermMarkAddModel model)
+        {
+            var student = await context.Students.FindAsync(model.StudentId);
+            var subject = await context.Subjects.FindAsync(model.SubjectId);
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
+
+            if (student is null || subject is null || teacher is null) return false;
+
+            var t = new TermMark()
+            {
+                Value = model.Value,
+                StudentId = student.Id,
+                SubjectId = subject.Id,
+                Term = model.Term,
+                TeacherId = teacher.Id,
+            };
+
+            await context.TermMarks.AddAsync(t);
+            await context.SaveChangesAsync();
+
+            return true;
+        }
+        public async Task<bool> AddYearMark(YearMarkAddModel model)
+        {
+            var student = await context.Students.FindAsync(model.StudentId);
+            var subject = await context.Subjects.FindAsync(model.SubjectId);
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
+
+            if (student is null || subject is null || teacher is null) return false;
+
+            var t = new YearMark()
+            {
+                Value = model.Value,
+                StudentId = student.Id,
+                SubjectId = subject.Id,
+                TeacherId = teacher.Id,
+            };
+
+            await context.YearMarks.AddAsync(t);
+            await context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<List<MarkDisplayModel>> GetMarks(string userId)

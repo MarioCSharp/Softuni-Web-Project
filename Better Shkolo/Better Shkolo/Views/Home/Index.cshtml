@@ -1,8 +1,11 @@
-﻿@{
+﻿@using Better_Shkolo.Models.Account
+@using Better_Shkolo.Services.GradeService
+@{
     ViewData["Title"] = "Home Page";
     Layout = "Layout";
 }
-
+@model HomeModel
+@inject IGradeService gradeService
 <br />
 <br />
 <br />
@@ -42,7 +45,7 @@
                     </div>
                 </a>
 
-                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
+                <a asp-action="Schedule" asp-controller="Test" asp-route-gradeId="@Model.GradeId" class="col-md-4 col-xl-3">
                     <div class="card bg-c-pink order-card">
                         <div class="card-block">
                             <h6 class="m-b-20">Тестове</h6>

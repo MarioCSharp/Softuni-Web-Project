@@ -41,7 +41,11 @@ namespace Better_Shkolo.Controllers
                 FirstName = registerModel.FirstName,
                 LastName = registerModel.LastName,
                 UserName = registerModel.Email,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Address = "",
+                City = "",
+                Country = "",
+                Phone = ""
             };
 
             var result = await userManager.CreateAsync(user, registerModel.Password);

@@ -105,13 +105,13 @@ namespace Better_Shkolo.Services.TeacherService
 
             var model = new GradeViewModel()
             {
-                Grades = await context.Grades
+                Grades = await context.Subjects
                 .Where(x => x.TeacherId == teacher.Id)
-                .Select(x => new GradeDisplayModel
+                .Select(x => x.Grade).Select(x => new GradeDisplayModel()
                 {
                     Id = x.Id,
                     GradeName = x.GradeName
-                }).ToListAsync(),
+                }).Distinct().ToListAsync()
             };
 
             return model;

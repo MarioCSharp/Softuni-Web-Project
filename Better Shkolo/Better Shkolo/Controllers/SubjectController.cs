@@ -77,11 +77,11 @@ namespace Better_Shkolo.Controllers
         }
         [HttpGet]
         [Authorize(Policy = "TeacherPolicy")]
-        public async Task<IActionResult> Manage()
+        public async Task<IActionResult> Manage(int gradeId)
         {
             var model = new SubjectViewModel()
             {
-                Subjects = await subjectService.GetSubjectsByUser(),
+                Subjects = await subjectService.GetSubjectsByGrade(gradeId),
             };
 
             if (model.Subjects is null)

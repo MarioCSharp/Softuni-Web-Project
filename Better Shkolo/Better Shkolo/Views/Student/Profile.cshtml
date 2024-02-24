@@ -84,7 +84,7 @@
                                             <tr>
                                                 <td>
                                                     <strong>@subject.Name:</strong>
-                                                    @foreach (var item in Model.Marks.Where(x => x.SubjectName == subject.Name))
+                                                    @foreach (var item in Model.Marks.Where(x => x.SubjectId == subject.Id))
                                                     {
                                                         @if (item.Value == 6)
                                                         {

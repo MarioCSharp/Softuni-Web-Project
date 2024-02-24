@@ -23,6 +23,18 @@
                     <option value="Контролно">Контролно</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label asp-for="Period"></label>
+                <select asp-for="Period" class="form-control">
+                    <option value="1">Първи час</option>
+                    <option value="2">Втори час</option>
+                    <option value="3">Трети час</option>
+                    <option value="4">Четвърти час</option>
+                    <option value="5">Пети час</option>
+                    <option value="6">Шести час</option>
+                    <option value="7">Седми час</option>
+                </select>
+            </div>
             <input type="hidden" asp-for="SubjectId" />
             <div class="mb-3 text-center">
                 <input class="btn btn-primary" type="submit" />

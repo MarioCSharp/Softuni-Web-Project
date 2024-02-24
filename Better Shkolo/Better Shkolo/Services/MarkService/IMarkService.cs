@@ -6,5 +6,7 @@ namespace Better_Shkolo.Services.MarkService
     {
         Task<bool> Add(MarkAddModel model, int subjectId, string userId);
         Task<List<MarkDisplayModel>> GetMarks(string userId);
+        Task<bool> AddTermMark(TermMarkAddModel model);
+        Task<bool> AddYearMark(YearMarkAddModel model);
     }
 }

@@ -13,5 +13,9 @@ namespace Better_Shkolo.Models.Test
         [Required]
         [Display(Name = "Тип")]
         public string Type { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Час")]
+        public int Period { get; set; }
     }
 }

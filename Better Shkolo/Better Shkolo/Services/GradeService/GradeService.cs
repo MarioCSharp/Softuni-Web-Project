@@ -225,5 +225,12 @@ namespace Better_Shkolo.Services.GradeService
                 })
                 .ToListAsync();
         }
+
+        public async Task<int> GetUserGradeId()
+        {
+            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
+
+            return student.GradeId;
+        }
     }
 }

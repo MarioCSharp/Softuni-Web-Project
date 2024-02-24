@@ -1,5 +1,170 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Better_Shkolo.Models.Test
+@model List<TestScheduleModel>
+<link href="/css/testSchedule.css" rel="stylesheet" />
+
+<br />
+<br />
+<br />
+<br />
+
+<div class="container">
+    <div class="timetable-img text-center">
+        <img src="img/content/timetable.png" alt="">
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr class="bg-light-gray">
+                    <th class="text-uppercase">
+                        Time
+                    </th>
+                    <th class="text-uppercase">Понеделник</th>
+                    <th class="text-uppercase">Вторник</th>
+                    <th class="text-uppercase">Сряда</th>
+                    <th class="text-uppercase">Четвъртък</th>
+                    <th class="text-uppercase last">Петък</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="align-middle">Първи час</td>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 1);
+                        if (a != null)
+                        {
+                            <td>
+                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
+                                <div class="margin-10px-top font-size14">@a.TestDate</div>
+                                <div class="font-size13 text-black">@a.TeacherName</div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="bg-light-gray"></td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <td class="align-middle">Втори час</td>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 2);
+                        if (a != null)
+                        {
+                            <td>
+                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
+                                <div class="margin-10px-top font-size14">@a.TestDate</div>
+                                <div class="font-size13 text-black">@a.TeacherName</div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="bg-light-gray"></td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td class="align-middle">Трети час</td>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 3);
+                        if (a != null)
+                        {
+                            <td>
+                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
+                                <div class="margin-10px-top font-size14">@a.TestDate</div>
+                                <div class="font-size13 text-black">@a.TeacherName</div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="bg-light-gray"></td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td class="align-middle">Четвърти час</td>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 4);
+                        if (a != null)
+                        {
+                            <td>
+                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
+                                <div class="margin-10px-top font-size14">@a.TestDate</div>
+                                <div class="font-size13 text-black">@a.TeacherName</div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="bg-light-gray"></td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td class="align-middle">Пети час</td>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 5);
+                        if (a != null)
+                        {
+                            <td>
+                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
+                                <div class="margin-10px-top font-size14">@a.TestDate</div>
+                                <div class="font-size13 text-black">@a.TeacherName</div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="bg-light-gray"></td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td class="align-middle">Шести час</td>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 6);
+                        if (a != null)
+                        {
+                            <td>
+                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
+                                <div class="margin-10px-top font-size14">@a.TestDate</div>
+                                <div class="font-size13 text-black">@a.TeacherName</div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="bg-light-gray"></td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td class="align-middle">Седми час</td>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 7);
+                        if (a != null)
+                        {
+                            <td>
+                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
+                                <div class="margin-10px-top font-size14">@a.TestDate</div>
+                                <div class="font-size13 text-black">@a.TeacherName</div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="bg-light-gray"></td>
+                        }
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

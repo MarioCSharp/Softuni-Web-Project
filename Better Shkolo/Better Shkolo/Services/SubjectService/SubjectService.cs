@@ -29,7 +29,7 @@ namespace Better_Shkolo.Services.SubjectService
                 return false;
             }
 
-            var subject = mapper.Map<Subject>(model); 
+            var subject = mapper.Map<Subject>(model);
 
             await context.Subjects.AddAsync(subject);
             await context.SaveChangesAsync();
@@ -110,6 +110,28 @@ namespace Better_Shkolo.Services.SubjectService
             return await context.Subjects.FindAsync(id);
         }
 
+        public async Task<List<SubjectDisplayModel>> GetSubjectsByGrade(int gradeId)
+        {
+            var userId = accountService.GetUserId();
+
+            var teacher = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (teacher is null)
+            {
+                return null;
+            }
+
+            var res = await context.Subjects.Where(x => x.GradeId == gradeId && x.TeacherId == teacher.Id)
+                .Select(x => new SubjectDisplayModel
+                {
+                    Id = x.Id,
+                    TeacherId = x.TeacherId,
+                    Name = x.Name,
+                }).ToListAsync();
+
+            return res;
+        }
+
         public async Task<List<SubjectDisplayModel>> GetSubjectsBySchoolId(int Id)
         {
             return await context.Subjects.Where(x => x.SchoolId == Id).Select(x => new SubjectDisplayModel
@@ -150,7 +172,7 @@ namespace Better_Shkolo.Services.SubjectService
                     Id = x.Id,
                     Name = x.Name,
                     TeacherId = teacher.Id
-                }).ToListAsync() ;
+                }).ToListAsync();
         }
     }
 }

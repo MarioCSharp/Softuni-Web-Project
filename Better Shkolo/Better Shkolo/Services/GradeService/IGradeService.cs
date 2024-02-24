@@ -17,5 +17,6 @@ namespace Better_Shkolo.Services.GradeService
         Task<List<GradeDisplayModel>> GetAllGradesAsync();
         Task<List<GradeDisplayModel>> GetSchoolGradesAsync();
         Task<List<GradeDisplayModel>> GetTeacherGradesAsync();
+        Task<int> GetUserGradeId();
     }
 }

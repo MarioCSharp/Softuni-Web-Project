@@ -35,6 +35,7 @@ namespace Better_Shkolo.Services.TestService
             test.TestDate = model.TestDate;
             test.Type = model.Type;
             test.Id = 0;
+            test.Period = model.Period; 
 
             if (test.Type == "Контролно")
             {
@@ -94,13 +95,18 @@ namespace Better_Shkolo.Services.TestService
                 if (cal.GetWeekOfYear(test.TestDate, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == week)
                 {
                     var s = await context.Subjects.FindAsync(test.SubjectId);
+                    var t = await context.Teachers.FindAsync(test.TeacherId);
+                    var tU = await context.Users.FindAsync(t.UserId);
                     var tst = new TestScheduleModel()
                     {
                         Id = test.Id,
                         SubjectId = test.SubjectId,
                         SubjectName = s.Name,
                         TestDate = test.TestDate,
-                        DateWeekDay = test.TestDate.DayOfWeek.ToString()
+                        DateWeekDay = test.TestDate.DayOfWeek.ToString(),
+                        Period = test.Period,
+                        DateWeekDayNumber = (int)test.TestDate.DayOfWeek,
+                        TeacherName = tU.FirstName + " " + tU.LastName
                     };
 
                     all.Add(tst);

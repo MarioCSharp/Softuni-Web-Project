@@ -23,5 +23,7 @@ namespace Better_Shkolo.Data
         public DbSet<Absences> Absencess { get; set; }
         public DbSet<Director> Directors { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<TermMark> TermMarks { get; set; }
+        public DbSet<YearMark> YearMarks { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Better_Shkolo.Models;
+using Better_Shkolo.Models.Account;
+using Better_Shkolo.Services.GradeService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,15 +9,17 @@ namespace Better_Shkolo.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private IGradeService gradeService;
+        public HomeController(IGradeService gradeService)
         {
+            this.gradeService = gradeService;
         }
         [Authorize]
         public IActionResult Index()
         {
             if (User.IsInRole("Teacher"))
             {
-                return RedirectToAction("Manage", "Subject");
+                return RedirectToAction("MyGrades", "Grade");
             }
             else if (User.IsInRole("Director"))
             {
@@ -24,6 +28,16 @@ namespace Better_Shkolo.Controllers
             else if (User.IsInRole("Administrator"))
             {
                 return RedirectToAction("Menu", "Admin", new { area = "Admin" });
+            }
+
+            if (User.IsInRole("Student") || User.IsInRole("Parent"))
+            {
+                var model = new HomeModel()
+                {
+                    GradeId = gradeService.GetUserGradeId().Result 
+                };
+
+                return View(model);
             }
 
             return View();

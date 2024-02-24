@@ -23,7 +23,7 @@
             </li>
         </ul>
         <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-register">
-            <form>
+            <form method="post">
                 <h3>Регисриране в ел. дневник</h3>
                 <div class="form-outline mb-4">
                     <label asp-for="FirstName" class="form-label" for="registerName"></label>
@@ -45,13 +45,13 @@
 
                 <div class="form-outline mb-4">
                     <label asp-for="Password" class="form-label" for="registerName"></label>
-                    <input asp-for="Password" type="text" id="registerName" class="form-control" />
+                    <input asp-for="Password" type="password" id="registerName" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label asp-for="PasswordRepeat" class="form-label" for="registerName"></label>
-                    <input asp-for="PasswordRepeat" type="text" id="registerName" class="form-control" />
+                    <input asp-for="PasswordRepeat" type="password" id="registerName" class="form-control" />
                     <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
                 </div>
 

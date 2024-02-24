@@ -14,6 +14,8 @@
             <a asp-controller="Absences" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави отсъствие</a>
             <a asp-controller="Mark" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави оценка</a>
             <a asp-controller="Review" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави отзив</a>
+            <a asp-controller="Mark" asp-action="AddTermMark" asp-route-studentId="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави срочна оценка</a>
+            <a asp-controller="Mark" asp-action="AddYearMark" asp-route-studentId="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави годишна оценка</a>
         </p>
     }
 </div>
