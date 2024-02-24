@@ -27,5 +27,7 @@ namespace Better_Shkolo.Data.Models
         public int SchoolId { get; set; }
         [ForeignKey(nameof(SchoolId))]
         public School School { get; set; }
+        [Required]
+        public int Term { get; set; }
     }
 }

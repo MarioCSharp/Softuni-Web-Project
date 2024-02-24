@@ -13,5 +13,7 @@ namespace Better_Shkolo.Models.Review
         public int SubjectId { get; set; }
         [Required]
         public int StudentId { get; set; }
+        [Required]
+        public int Term { get; set; }
     }
 }

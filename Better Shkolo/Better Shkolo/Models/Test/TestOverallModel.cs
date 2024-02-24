@@ -10,5 +10,6 @@ namespace Better_Shkolo.Models.Test
         public string SubjectName { get; set; } = null!;
         public string TeacherFullName { get; set; } = null!;
         public int SubjectId { get; set; }
+        public int Term { get; set; }
     }
 }

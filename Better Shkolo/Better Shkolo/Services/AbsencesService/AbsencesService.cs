@@ -32,6 +32,7 @@ namespace Better_Shkolo.Services.AbsenceService
                 TeacherId = teacherId,
                 StudentId = student.Id,
                 SchoolId = subject.SchoolId,
+                Term = 1
             };
 
             await context.Absencess.AddAsync(absence);

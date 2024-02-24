@@ -160,7 +160,7 @@ namespace Better_Shkolo.Controllers
         }
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Profile(string userId)
+        public async Task<IActionResult> Profile(string userId, int term)
         {
             if (userId is null)
             {
@@ -169,16 +169,22 @@ namespace Better_Shkolo.Controllers
 
             var currentUserId = accountService.GetUserId();
 
+            if (term != 1 && term != 2)
+            {
+                return BadRequest();
+            }
+
             if (currentUserId == userId
                 || User.IsInRole("Teacher")
                 || User.IsInRole("Director")
                 || User.IsInRole("Administrator"))
             {
-                var res = await studentService.GetStudentProfile(userId);
+                var res = await studentService.GetStudentProfile(userId, term);
 
                 if (res is null) return BadRequest();
 
                 res.UserId = userId;
+                res.Term = term;
 
                 return View(res);
             }

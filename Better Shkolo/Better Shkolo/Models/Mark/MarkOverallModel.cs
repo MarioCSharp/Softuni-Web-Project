@@ -8,5 +8,6 @@
         public int Value { get; set; }
         public DateTime AddedOn { get; set; }
         public int SubjectId { get; set; }
+        public int Term { get; set; }
     }
 }

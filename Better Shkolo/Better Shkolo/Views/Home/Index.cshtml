@@ -18,7 +18,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <div class="container">
             <div class="row">
-                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
+                <a asp-action="Profile" asp-controller="Student" asp-route-term="1" class="col-md-4 col-xl-3">
                     <div class="card bg-c-blue order-card">
                         <div class="card-block">
                             <h6 class="m-b-20 text-white">Успех</h6>
@@ -27,7 +27,7 @@
                     </div>
                 </a>
 
-                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
+                <a asp-action="Profile" asp-controller="Student" asp-route-term="1" class="col-md-4 col-xl-3">
                     <div class="card bg-c-green order-card">
                         <div class="card-block">
                             <h6 class="m-b-20">Отсъствия</h6>
@@ -36,7 +36,7 @@
                     </div>
                 </a>
 
-                <a asp-action="Profile" asp-controller="Student" class="col-md-4 col-xl-3">
+                <a asp-action="Profile" asp-controller="Student" asp-route-term="1" class="col-md-4 col-xl-3">
                     <div class="card bg-c-yellow order-card">
                         <div class="card-block">
                             <h6 class="m-b-20">Отзиви</h6>
@@ -45,7 +45,7 @@
                     </div>
                 </a>
 
-                <a asp-action="Schedule" asp-controller="Test" asp-route-gradeId="@Model.GradeId" class="col-md-4 col-xl-3">
+                <a asp-action="Schedule" asp-controller="Test" asp-route-gradeId="@Model.GradeId" asp-route-term="1" class="col-md-4 col-xl-3">
                     <div class="card bg-c-pink order-card">
                         <div class="card-block">
                             <h6 class="m-b-20">Тестове</h6>

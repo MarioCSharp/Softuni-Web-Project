@@ -35,7 +35,8 @@ namespace Better_Shkolo.Services.TestService
             test.TestDate = model.TestDate;
             test.Type = model.Type;
             test.Id = 0;
-            test.Period = model.Period; 
+            test.Period = model.Period;
+            test.Term = 1;
 
             if (test.Type == "Контролно")
             {

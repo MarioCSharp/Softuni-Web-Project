@@ -160,7 +160,7 @@ namespace Better_Shkolo.Services.StudentService
             return model;
         }
 
-        public async Task<StudentProfileModel> GetStudentProfile(string userId)
+        public async Task<StudentProfileModel> GetStudentProfile(string userId, int term)
         {
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
 
@@ -169,7 +169,7 @@ namespace Better_Shkolo.Services.StudentService
             var model = new StudentProfileModel();
 
             model.Marks = await context.Marks
-                .Where(x => x.StudentId == student.Id)
+                .Where(x => x.StudentId == student.Id && x.Term == term)
                 .Select(x => new MarkOverallModel()
                 {
                     Id = x.Id,
@@ -177,7 +177,8 @@ namespace Better_Shkolo.Services.StudentService
                     TeacherFullName = x.Teacher.User.FirstName + " " + x.Teacher.User.LastName,
                     SubjectName = x.Subject.Name,
                     AddedOn = x.AddedOn,
-                    SubjectId = x.Subject.Id
+                    SubjectId = x.Subject.Id,
+                    Term = x.Term
                 })
                 .ToListAsync();
 
@@ -230,6 +231,20 @@ namespace Better_Shkolo.Services.StudentService
                     TeacherId = x.TeacherId
                 })
                 .ToListAsync();
+
+            var termMarks = new Dictionary<int, (int, int)>();
+
+            foreach (var subject in model.AllSubjects)
+            {
+                var tM = await context.TermMarks.FirstOrDefaultAsync(x => x.StudentId == student.Id && subject.Id == x.SubjectId && x.Term == term);
+
+                if (tM != null)
+                {
+                    termMarks.Add(subject.Id, (tM.Term, tM.Value));
+                }
+            }
+
+            model.SubjectTermMark = termMarks;
 
             return model;
         }

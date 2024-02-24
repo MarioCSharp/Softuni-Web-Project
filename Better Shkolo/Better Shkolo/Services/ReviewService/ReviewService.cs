@@ -46,6 +46,7 @@ namespace Better_Shkolo.Services.ReviewService
             review.AddedOn = DateTime.Now;
             review.TeacherId = teacher.Id;
             review.SchoolId = teacher.SchoolId;
+            review.Term = model.Term;
 
             await context.Reviews.AddAsync(review);
             await context.SaveChangesAsync();

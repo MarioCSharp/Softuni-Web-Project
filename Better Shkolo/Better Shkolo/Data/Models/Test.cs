@@ -31,5 +31,7 @@ namespace Better_Shkolo.Data.Models
         public string Type { get; set; } = null!;
         [Required]
         public int Period { get; set; }
+        [Required]
+        public int Term { get; set; }
     }
 }

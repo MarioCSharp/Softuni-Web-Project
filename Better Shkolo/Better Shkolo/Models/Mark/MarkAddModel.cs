@@ -14,5 +14,8 @@ namespace Better_Shkolo.Models.Mark
         public int StudentId { get; set; }
         [Required]
         public int SubjectId { get; set; }
+        [Required]
+        [Display(Name = "Срок")]
+        public int Term { get; set; }
     }
 }

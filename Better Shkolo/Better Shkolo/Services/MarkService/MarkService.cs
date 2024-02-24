@@ -38,6 +38,7 @@ namespace Better_Shkolo.Services.MarkService
             mark.AddedOn = DateTime.Now;
             mark.TeacherId = teacherId;
             mark.SchoolId = schoolId;
+            mark.Term = model.Term;
 
             await context.Marks.AddAsync(mark);
             await context.SaveChangesAsync();

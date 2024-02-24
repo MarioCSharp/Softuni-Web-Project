@@ -14,6 +14,8 @@ namespace Better_Shkolo.Models.Student
         public List<AbsencesOverallModel> Absences { get; set; } = null!;
         public List<ReviewOverallModel> Reviews { get; set; } = null!;
         public List<TestOverallModel> Tests { get; set; } = null!;
+        public Dictionary<int, (int, int)> SubjectTermMark { get; set; } = null!;
+        public int Term { get; set; }
 
         public List<SubjectDisplayModel> AllSubjects { get; set; } = null!;
     }
