@@ -183,8 +183,8 @@
             Срок
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-term="1">Първи срок</a></li>
-            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-term="2">Втори срок</a></li>
+            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="1">Първи срок</a></li>
+            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="2">Втори срок</a></li>
         </ul>
     </div>
 </body>

@@ -261,6 +261,7 @@ namespace Better_Shkolo.Services.StudentService
                     Email = x.User.Email,
                     SchoolId = x.SchoolId,
                     SchoolName = x.School.Name,
+                    UserId = x.UserId,
                 }).ToListAsync();
 
             return res;
