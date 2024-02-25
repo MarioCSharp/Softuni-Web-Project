@@ -58,6 +58,11 @@ namespace Better_Shkolo
                         context.User.IsInRole("Administrator") || context.User.IsInRole("Director")
                         || context.User.IsInRole("Teacher")));
 
+                policy.AddPolicy("DirectorTeacherPolicy", options =>
+                    options.RequireAssertion(context =>
+                         context.User.IsInRole("Director")
+                        || context.User.IsInRole("Teacher")));
+
                 policy.AddPolicy("TeacherPolicy", options =>
                 {
                     options.RequireAuthenticatedUser();

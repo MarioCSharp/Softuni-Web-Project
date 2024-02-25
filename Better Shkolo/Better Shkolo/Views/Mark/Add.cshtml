@@ -22,6 +22,17 @@
                     <option value="2">Втори срок</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label asp-for="Type"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="Entry">Входно ниво</option>
+                    <option value="Writting">Писмено изпитване</option>
+                    <option value="Speaking">Устно изпитване</option>
+                    <option value="Test">Контролно</option>
+                    <option value="Project">Проект</option>
+                    <option value="Active">Активно участие</option>
+                </select>
+            </div>
             <input type="hidden" asp-for="StudentId" />
             <input type="hidden" asp-for="SubjectId" />
             <div class="mb-3 text-center">

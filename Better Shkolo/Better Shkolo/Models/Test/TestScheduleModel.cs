@@ -10,5 +10,6 @@
         public string DateWeekDay { get; set; } = null!;
         public int DateWeekDayNumber { get; set; }
         public string TeacherName { get; set; } = null!;
+        public int Week { get; set; }
     }
 }

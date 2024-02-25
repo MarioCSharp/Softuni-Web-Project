@@ -1,5 +1,5 @@
 ﻿@using Better_Shkolo.Models.Test
-@model List<TestScheduleModel>
+@model TestViewScheduleModel
 <link href="/css/testSchedule.css" rel="stylesheet" />
 
 <br />
@@ -9,7 +9,8 @@
 
 <div class="container">
     <div class="timetable-img text-center">
-        <img src="img/content/timetable.png" alt="">
+        <a asp-action="Schedule" asp-controller="Test" asp-route-gradeId="@Model.GradeId" asp-route-week="@Model.WeekBack">Седмица назад</a> |
+        <a asp-action="Schedule" asp-controller="Test" asp-route-gradeId="@Model.GradeId" asp-route-week="@Model.WeekForward">Седмица напред</a>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered text-center">
@@ -30,7 +31,7 @@
                     <td class="align-middle">Първи час</td>
                     @for (int i = 0; i < 5; i++)
                     {
-                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 1);
+                        var a = Model.Tests.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 1);
                         if (a != null)
                         {
                             <td>
@@ -49,7 +50,7 @@
                     <td class="align-middle">Втори час</td>
                     @for (int i = 0; i < 5; i++)
                     {
-                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 2);
+                        var a = Model.Tests.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 2);
                         if (a != null)
                         {
                             <td>
@@ -69,7 +70,7 @@
                     <td class="align-middle">Трети час</td>
                     @for (int i = 0; i < 5; i++)
                     {
-                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 3);
+                        var a = Model.Tests.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 3);
                         if (a != null)
                         {
                             <td>
@@ -89,7 +90,7 @@
                     <td class="align-middle">Четвърти час</td>
                     @for (int i = 0; i < 5; i++)
                     {
-                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 4);
+                        var a = Model.Tests.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 4);
                         if (a != null)
                         {
                             <td>
@@ -109,7 +110,7 @@
                     <td class="align-middle">Пети час</td>
                     @for (int i = 0; i < 5; i++)
                     {
-                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 5);
+                        var a = Model.Tests.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 5);
                         if (a != null)
                         {
                             <td>
@@ -129,7 +130,7 @@
                     <td class="align-middle">Шести час</td>
                     @for (int i = 0; i < 5; i++)
                     {
-                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 6);
+                        var a = Model.Tests.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 6);
                         if (a != null)
                         {
                             <td>
@@ -149,7 +150,7 @@
                     <td class="align-middle">Седми час</td>
                     @for (int i = 0; i < 5; i++)
                     {
-                        var a = Model.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 7);
+                        var a = Model.Tests.FirstOrDefault(x => x.DateWeekDayNumber == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 7);
                         if (a != null)
                         {
                             <td>

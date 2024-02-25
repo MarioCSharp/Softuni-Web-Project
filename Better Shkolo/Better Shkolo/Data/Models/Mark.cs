@@ -30,5 +30,7 @@ namespace Better_Shkolo.Data.Models
         public School School { get; set; }
         [Required]
         public int Term { get; set; }
+        [Required]
+        public string Type { get; set; } = null!;
     }
 }

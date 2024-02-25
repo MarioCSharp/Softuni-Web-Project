@@ -39,6 +39,7 @@ namespace Better_Shkolo.Services.MarkService
             mark.TeacherId = teacherId;
             mark.SchoolId = schoolId;
             mark.Term = model.Term;
+            mark.Type = model.Type;
 
             await context.Marks.AddAsync(mark);
             await context.SaveChangesAsync();

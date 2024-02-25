@@ -57,12 +57,15 @@ namespace Better_Shkolo.Controllers
         }
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Schedule(int gradeId)
+        public async Task<IActionResult> Schedule(int gradeId, int week)
         {
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
             Calendar cal = dfi.Calendar;
 
-            var week = cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+            if (week == 0)
+            {
+                week = cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+            }
 
             var gradeSchedule = await testService.GetSchedule(gradeId, week);
 

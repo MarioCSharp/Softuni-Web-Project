@@ -6,6 +6,6 @@ namespace Better_Shkolo.Services.TestService
     {
         Task<bool> Add(TestAddModel model);
         Task<List<TestDisplayModel>> GetTests();
-        Task<List<TestScheduleModel>> GetSchedule(int gradeId, int week);
+        Task<TestViewScheduleModel> GetSchedule(int gradeId, int week);
     }
 }

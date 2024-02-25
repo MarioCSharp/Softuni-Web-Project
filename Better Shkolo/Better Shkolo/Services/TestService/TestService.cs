@@ -6,6 +6,7 @@ using Better_Shkolo.Models.Test;
 using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Better_Shkolo.Services.TestService
 {
@@ -80,7 +81,7 @@ namespace Better_Shkolo.Services.TestService
             return await context.Tests.ContainsAsync(test);
         }
 
-        public async Task<List<TestScheduleModel>> GetSchedule(int gradeId, int week)
+        public async Task<TestViewScheduleModel> GetSchedule(int gradeId, int week)
         {
             var all = new List<TestScheduleModel>();
 
@@ -107,14 +108,37 @@ namespace Better_Shkolo.Services.TestService
                         DateWeekDay = test.TestDate.DayOfWeek.ToString(),
                         Period = test.Period,
                         DateWeekDayNumber = (int)test.TestDate.DayOfWeek,
-                        TeacherName = tU.FirstName + " " + tU.LastName
+                        TeacherName = tU.FirstName + " " + tU.LastName,
+                        Week = week
                     };
 
                     all.Add(tst);
                 }
             }
 
-            return all;
+            var weekForward = week + 1;
+
+            if (weekForward > 52)
+            {
+                weekForward = 1;
+            }
+
+            var weekBack = week - 1;
+
+            if (weekBack <= 0)
+            {
+                weekBack = 52;
+            }
+
+            var model = new TestViewScheduleModel()
+            {
+                Tests = all,
+                GradeId = gradeId,
+                WeekBack = weekBack,
+                WeekForward = weekForward,
+            };
+
+            return model;
         }
 
         public async Task<List<TestDisplayModel>> GetTests()

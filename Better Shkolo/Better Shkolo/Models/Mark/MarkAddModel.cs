@@ -17,5 +17,8 @@ namespace Better_Shkolo.Models.Mark
         [Required]
         [Display(Name = "Срок")]
         public int Term { get; set; }
+        [Required]
+        [Display(Name = "Тип")]
+        public string Type { get; set; }
     }
 }
