@@ -58,7 +58,11 @@ namespace Better_Shkolo.Data
                         FirstName = "Mario",
                         LastName = "Petkov",
                         UserName = adminEmail,
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
+                        Address = "",
+                        City = "",
+                        Country = "",
+                        Phone = ""
                     };
 
                     await userManager.CreateAsync(user, adminPassword);

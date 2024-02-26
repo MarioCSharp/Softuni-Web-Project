@@ -41,7 +41,7 @@ namespace Better_Shkolo.Controllers
 
             if (result)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Display", "Student", new { id = model.SubjectId });
             }
 
             ModelState.AddModelError("", "Something went wrong!");

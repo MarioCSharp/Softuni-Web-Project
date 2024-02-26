@@ -1,0 +1,11 @@
+﻿@using Better_Shkolo.Models.Consultation
+@model ConsultationAnalyzeModel
+<br />
+<br />
+<br />
+<br />
+<h3>Анализ оценки от @Model.Type @Model.GradeName</h3>
+@foreach (var entry in Model.SubjectByConsultation)
+{
+    <p>@entry.Key: @entry.Value</p>
+}

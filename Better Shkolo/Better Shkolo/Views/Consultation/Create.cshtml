@@ -1,0 +1,39 @@
+﻿@using Better_Shkolo.Models.Consultation
+@model ConsultationCreateModel
+<br />
+<br />
+<br />
+<br />
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<h3 class="text-center">@ViewData["Title"]</h3>
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Type"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="Entry">Входно ниво</option>
+                    <option value="Writting">Писмено изпитване</option>
+                    <option value="Speaking">Устно изпитване</option>
+                    <option value="Test">Контролно</option>
+                    <option value="Project">Проект</option>
+                    <option value="Active">Активно участие</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Term"></label>
+                <select asp-for="Term" class="form-control">
+                    <option value="1">Първи срок</option>
+                    <option value="2">Втори срок</option>
+                </select>
+            </div>
+            
+            <input type="hidden" asp-for="GradeId" />
+            <div class="mb-3 text-center">
+                <input class="btn btn-primary" type="submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
