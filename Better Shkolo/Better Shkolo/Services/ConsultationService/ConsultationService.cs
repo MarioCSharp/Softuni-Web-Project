@@ -39,16 +39,22 @@ namespace Better_Shkolo.Services.ConsultationService
                 res.Add(s.Name, c.Value);
             }
 
-            var r = new ConsultationAnalyzeModel() { SubjectByConsultation = res,  GradeName = gradeName};
+            var r = new ConsultationAnalyzeModel()
+            { 
+                SubjectByConsultation = res,
+                GradeName = gradeName, 
+                Average = double.Parse($"{res.Values.Average():F2}")
+            };
 
             r.Type = type switch
             {
-                "Entry" => "Входно ниво",
-                "Writting" => "Писмено изпитване",
-                "Speaking" => "Устно изпитване",
-                "Test" => "Контролно",
-                "Project" => "Проект",
-                "EntActivery" => "Активно участие",
+                "Entry" => "входно ниво",
+                "Writting" => "писмено изпитване",
+                "Speaking" => "устно изпитване",
+                "Test" => "контролно",
+                "Project" => "проект",
+                "EntActivery" => "активно участие",
+                _ => throw new Exception()
             };
 
             return r;
@@ -113,7 +119,8 @@ namespace Better_Shkolo.Services.ConsultationService
 
                     if (string.IsNullOrEmpty(gradeName))
                     {
-                        gradeName = g.Name;
+                        var grade = await context.Grades.FindAsync(g.GradeId);
+                        gradeName = grade.GradeName;
                     }
 
                     ret.Add(g.Name, mark.Value);
@@ -122,7 +129,8 @@ namespace Better_Shkolo.Services.ConsultationService
                 return new ConsultationAnalyzeModel()
                 {
                     GradeName = gradeName,
-                    Type = $"Оценки {term} срок",
+                    Type = $"{(term == 1 ? "първи" : "втори")} срок",
+                    Average = double.Parse($"{ret.Values.Average():F2}"),
                     SubjectByConsultation = ret
                 };
             }
@@ -151,7 +159,8 @@ namespace Better_Shkolo.Services.ConsultationService
                 return new ConsultationAnalyzeModel()
                 {
                     GradeName = gradeName,
-                    Type = $"Годишни оценки",
+                    Type = $"годишни оценки",
+                    Average = double.Parse($"{ret.Values.Average():F2}"),
                     SubjectByConsultation = ret
                 };
             }
