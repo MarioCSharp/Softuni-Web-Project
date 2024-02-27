@@ -23,6 +23,6 @@ namespace Better_Shkolo.Data.Models
         [ForeignKey(nameof(SubjectId))]
         public Subject Subject { get; set; } = null!;
         [Required]
-        public byte Term { get; set; } 
+        public byte Term { get; set; }
     }
 }

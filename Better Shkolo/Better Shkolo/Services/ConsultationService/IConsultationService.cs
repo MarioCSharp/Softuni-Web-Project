@@ -7,5 +7,6 @@ namespace Better_Shkolo.Services.ConsultationService
     {
         Task<bool> Create(ConsultationCreateModel model);
         Task<ConsultationAnalyzeModel> Analyze(int gradeId, string type, int term);
+        Task<ConsultationAnalyzeModel> TermAnalyze(int gradeId, string type, int term);
     }
 }

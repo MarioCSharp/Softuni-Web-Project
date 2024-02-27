@@ -5,6 +5,7 @@ namespace Better_Shkolo.Data.Models
 {
     public class Grade
     {
+        [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(Constants.Grade.GradeNameMaxLength, MinimumLength = Constants.Grade.GradeNameMinLength)]

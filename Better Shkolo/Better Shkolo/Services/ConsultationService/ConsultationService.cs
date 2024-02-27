@@ -15,6 +15,10 @@ namespace Better_Shkolo.Services.ConsultationService
 
         public async Task<ConsultationAnalyzeModel> Analyze(int gradeId, string type, int term)
         {
+            if (type == "Term" || type == "Year")
+            {
+                return await TermAnalyze(gradeId, type, term);
+            }
             var res = new Dictionary<string, double>();
 
             var all = await context.Consultations.Where(x => x.GradeId == gradeId && x.Type == type && x.Term == term).ToListAsync();
@@ -89,6 +93,68 @@ namespace Better_Shkolo.Services.ConsultationService
             }
 
             return true;
+        }
+
+        public async Task<ConsultationAnalyzeModel> TermAnalyze(int gradeId, string type, int term)
+        {
+            if (type == "Term")
+            {
+                var marks = await context.TermMarks
+                    .Where(x => x.Subject.GradeId == gradeId && x.Term == term)
+                    .ToListAsync();
+
+                var ret = new Dictionary<string, double>();
+
+                var gradeName = string.Empty;
+
+                foreach (var mark in marks)
+                {
+                    var g = await context.Subjects.FindAsync(mark.SubjectId);
+
+                    if (string.IsNullOrEmpty(gradeName))
+                    {
+                        gradeName = g.Name;
+                    }
+
+                    ret.Add(g.Name, mark.Value);
+                }
+
+                return new ConsultationAnalyzeModel()
+                {
+                    GradeName = gradeName,
+                    Type = $"Оценки {term} срок",
+                    SubjectByConsultation = ret
+                };
+            }
+            else
+            {
+                var marks = await context.YearMarks
+                    .Where(x => x.Subject.GradeId == gradeId)
+                    .ToListAsync();
+
+                var ret = new Dictionary<string, double>();
+
+                var gradeName = string.Empty;
+
+                foreach (var mark in marks)
+                {
+                    var g = await context.Subjects.FindAsync(mark.SubjectId);
+
+                    if (string.IsNullOrEmpty(gradeName))
+                    {
+                        gradeName = g.Name;
+                    }
+
+                    ret.Add(g.Name, mark.Value);
+                }
+
+                return new ConsultationAnalyzeModel()
+                {
+                    GradeName = gradeName,
+                    Type = $"Годишни оценки",
+                    SubjectByConsultation = ret
+                };
+            }
         }
     }
 }
