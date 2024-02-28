@@ -26,5 +26,7 @@ namespace Better_Shkolo.Data
         public DbSet<TermMark> TermMarks { get; set; }
         public DbSet<YearMark> YearMarks { get; set; }
         public DbSet<Consultation> Consultations { get; set; }
+        public DbSet<StudyPlan> StudyPlans { get; set; }
+        public DbSet<Table> Tables { get; set; }
     }
 }
