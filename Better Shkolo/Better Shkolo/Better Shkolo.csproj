@@ -21,7 +21,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\TableService\" />
 	  <Folder Include="Views\Table\" />
 	</ItemGroup>
 </Project>
