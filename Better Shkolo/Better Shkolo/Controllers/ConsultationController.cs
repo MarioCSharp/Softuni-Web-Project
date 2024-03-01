@@ -14,9 +14,20 @@ namespace Better_Shkolo.Controllers
         }
         [HttpGet]
         [Authorize(Policy = "DirectorTeacherPolicy")]
-        public async Task<IActionResult> Create(int gradeId)
+        public async Task<IActionResult> Create()
         {
-            var model = new ConsultationCreateModel { GradeId = gradeId };
+            var role = "";
+
+            if (User.IsInRole("Director"))
+            {
+                role = "director";
+            }
+            else if (User.IsInRole("Teacher"))
+            {
+                role = "teacher";
+            }
+
+            var model = new ConsultationCreateModel { Grades = await consultationService.GetGrades(role) };
 
             return View(model);
         }
@@ -40,9 +51,43 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "DirectorTeacherPolicy")]
         public async Task<IActionResult> Analyze(int gradeId, string type, int term)
         {
+            if (type == "Входно ниво" || type == "Писмени изпитване" || type == "Писмени изпитване"
+                || type == "Устно изпитване" || type == "Контролно" || type == "Проект"
+                || type == "Активно участие" || type == "Срочни оценки" || type == "Годишни оценки")
+            {
+                type = type switch
+                {
+                    "Входно ниво" => "Entry",
+                    "Писмени изпитване" => "Writting",
+                    "Устно изпитване" => "Speaking",
+                    "Контролно" => "Test",
+                    "Проект" => "Project",
+                    "Активно участие" => "EntActivery",
+                    "Срочни оценки" => "Term",
+                    "Годишни оценки" => "Year"
+                };
+            }
+
             var result = await consultationService.Analyze(gradeId, type, term);
 
             return View(result);
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> Mine()
+        {
+            var model = await consultationService.GetUserConsultations();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> Delete(string userId, int gradeId, string type)
+        {
+            await consultationService.Delete(userId, gradeId, type);
+
+            return RedirectToAction("Mine", "Consultation");
         }
     }
 }

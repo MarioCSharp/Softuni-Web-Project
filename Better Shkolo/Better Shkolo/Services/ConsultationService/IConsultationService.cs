@@ -1,5 +1,6 @@
 ﻿using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Consultation;
+using Better_Shkolo.Models.Grade;
 
 namespace Better_Shkolo.Services.ConsultationService
 {
@@ -8,5 +9,8 @@ namespace Better_Shkolo.Services.ConsultationService
         Task<bool> Create(ConsultationCreateModel model);
         Task<ConsultationAnalyzeModel> Analyze(int gradeId, string type, int term);
         Task<ConsultationAnalyzeModel> TermAnalyze(int gradeId, string type, int term);
+        Task<List<ConsultationMineModel>> GetUserConsultations();
+        Task<List<GradeDisplayModel>> GetGrades(string role);
+        Task<bool> Delete(string userId, int gradeId, string type);
     }
 }

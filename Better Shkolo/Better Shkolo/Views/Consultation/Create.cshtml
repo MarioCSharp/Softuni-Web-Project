@@ -11,6 +11,15 @@
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form method="post">
             <div class="mb-3">
+                <label asp-for="GradeId"></label>
+                <select asp-for="GradeId" class="form-control">
+                    @foreach (var user in Model.Grades)
+                    {
+                        <option value="@user.Id">@user.GradeName</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
                 <label asp-for="Type"></label>
                 <select asp-for="Type" class="form-control">
                     <option value="Entry">Входно ниво</option>
@@ -30,8 +39,6 @@
                     <option value="2">Втори срок</option>
                 </select>
             </div>
-            
-            <input type="hidden" asp-for="GradeId" />
             <div class="mb-3 text-center">
                 <input class="btn btn-primary" type="submit" />
             </div>

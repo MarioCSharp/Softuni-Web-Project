@@ -1,6 +1,8 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Consultation;
+using Better_Shkolo.Models.Grade;
+using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.ConsultationService
@@ -8,9 +10,12 @@ namespace Better_Shkolo.Services.ConsultationService
     public class ConsultationService : IConsultationService
     {
         private ApplicationDbContext context;
-        public ConsultationService(ApplicationDbContext context)
+        private IAccountService accountService;
+        public ConsultationService(ApplicationDbContext context
+                                   , IAccountService accountService)
         {
             this.context = context;
+            this.accountService = accountService;
         }
 
         public async Task<ConsultationAnalyzeModel> Analyze(int gradeId, string type, int term)
@@ -40,9 +45,9 @@ namespace Better_Shkolo.Services.ConsultationService
             }
 
             var r = new ConsultationAnalyzeModel()
-            { 
+            {
                 SubjectByConsultation = res,
-                GradeName = gradeName, 
+                GradeName = gradeName,
                 Average = double.Parse($"{res.Values.Average():F2}")
             };
 
@@ -69,7 +74,7 @@ namespace Better_Shkolo.Services.ConsultationService
                 context.Consultations.RemoveRange(toDelete);
                 await context.SaveChangesAsync();
             }
-            
+
             var gradeSubjects = await context.Subjects.Where(x => x.GradeId == model.GradeId).ToListAsync();
 
             foreach (var subject in gradeSubjects)
@@ -91,6 +96,7 @@ namespace Better_Shkolo.Services.ConsultationService
                     Type = model.Type,
                     SubjectId = subject.Id,
                     Value = value,
+                    UserId = accountService.GetUserId(),
                     GradeId = model.GradeId
                 };
 
@@ -99,6 +105,111 @@ namespace Better_Shkolo.Services.ConsultationService
             }
 
             return true;
+        }
+
+        public async Task<bool> Delete(string userId, int gradeId, string type)
+        {
+            type = type switch
+            {
+                "Входно ниво" => "Entry",
+                "Писмени изпитване" => "Writting",
+                "Устно изпитване" => "Speaking",
+                "Контролно" => "Test",
+                "Проект" => "Project",
+                "Активно участие" => "EntActivery",
+                _ => throw new Exception()
+            };
+
+            var toDelete = await context.Consultations
+                .Where(x => x.UserId == userId && x.GradeId == gradeId && x.Type == type)
+                .ToListAsync();
+
+            context.Consultations.RemoveRange(toDelete);
+            await context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<List<GradeDisplayModel>> GetGrades(string role)
+        {
+            var grades = new List<GradeDisplayModel>();
+
+            if (role == "director")
+            {
+                var d = await context.Directors
+                    .FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
+
+                grades = await context.Grades
+                    .Where(x => x.SchoolId == d.SchoolId)
+                    .Select(x => new GradeDisplayModel()
+                    {
+                        Id = x.Id,
+                        GradeName = x.GradeName
+                    }).ToListAsync();
+            }
+            else if (role == "teacher")
+            {
+                var t = await context.Teachers.
+                    FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
+
+                grades = await context.Grades
+                    .Where(x => x.TeacherId == t.Id)
+                    .Select(x => new GradeDisplayModel()
+                    {
+                        Id = x.Id,
+                        GradeName = x.GradeName
+                    }).ToListAsync();
+            }
+
+            return grades;
+        }
+
+        public async Task<List<ConsultationMineModel>> GetUserConsultations()
+        {
+            var cs = await context.Consultations
+                .Where(x => x.UserId == accountService.GetUserId())
+                .ToListAsync();
+
+            var res = new List<ConsultationMineModel>();
+
+            foreach (var item in cs)
+            {
+                if (!res.Any(x => x.UserId == item.UserId
+                && x.GradeId == item.GradeId && x.Type == item.Type))
+                {
+                    var grade = await context.Grades.FindAsync(item.GradeId);
+
+                    var css = new ConsultationMineModel
+                    {
+                        Id = item.Id,
+                        UserId = item.UserId,
+                        GradeId = item.GradeId,
+                        Type = item.Type,
+                        GradeName = grade.GradeName,
+                        Term = item.Term,
+                    };
+
+                    res.Add(css);
+                }
+            }
+
+            foreach (var item in res)
+            {
+                item.Type = item.Type switch
+                {
+                    "Entry" => "Входно ниво",
+                    "Writting" => "Писмено изпитване",
+                    "Speaking" => "Устно изпитване",
+                    "Test" => "Контролно",
+                    "Project" => "Проект",
+                    "EntActivery" => "Активно участие",
+                    "Term" => "Срочни оценки",
+                    "Year" => "Годишни оценки",
+                    _ => throw new Exception()
+                };
+            }
+
+            return res;
         }
 
         public async Task<ConsultationAnalyzeModel> TermAnalyze(int gradeId, string type, int term)
@@ -125,12 +236,17 @@ namespace Better_Shkolo.Services.ConsultationService
 
                     ret.Add(g.Name, mark.Value);
                 }
+                var avg = 0.0;
 
+                if (ret.Count > 0)
+                {
+                    avg = double.Parse($"{ret.Values.Average():F2}");
+                }
                 return new ConsultationAnalyzeModel()
                 {
                     GradeName = gradeName,
                     Type = $"{(term == 1 ? "първи" : "втори")} срок",
-                    Average = double.Parse($"{ret.Values.Average():F2}"),
+                    Average = avg,
                     SubjectByConsultation = ret
                 };
             }
@@ -156,11 +272,18 @@ namespace Better_Shkolo.Services.ConsultationService
                     ret.Add(g.Name, mark.Value);
                 }
 
+                var avg = 0.0;
+
+                if (ret.Count > 0)
+                {
+                    avg = double.Parse($"{ret.Values.Average():F2}");
+                }
+
                 return new ConsultationAnalyzeModel()
                 {
                     GradeName = gradeName,
                     Type = $"годишни оценки",
-                    Average = double.Parse($"{ret.Values.Average():F2}"),
+                    Average = avg,
                     SubjectByConsultation = ret
                 };
             }

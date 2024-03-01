@@ -88,6 +88,8 @@ namespace Better_Shkolo.Services.TableService
                 }
             }
 
+            await context.Tables.AddRangeAsync(schedule);
+
             return true;
         }
     }
