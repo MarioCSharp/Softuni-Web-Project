@@ -1,0 +1,19 @@
+﻿@using Better_Shkolo.Models.Consultation;
+@model List<ConsultationMineModel>
+
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<br />
+<br />
+<br />
+<br />
+<a asp-action="Create" asp-controller="Consultation">Създай справка</a>
+<div class="list-group grey-bg container-fluid">
+    @foreach (var cs in Model)
+    {
+        <p class="list-group-item list-group-item-action">
+            @cs.GradeName | @cs.Type
+            <a asp-controller="Consultation" asp-action="Analyze" asp-route-type="@cs.Type" asp-route-gradeId="@cs.GradeId" asp-route-term="@cs.Term" class="btn btn-primary">Виж</a>
+            <a asp-controller="Consultation" asp-action="Delete" asp-route-type="@cs.Type" asp-route-gradeId="@cs.GradeId" asp-route-userId="@cs.UserId" class="btn btn-primary">Изтрий</a>
+        </p>
+    }
+</div>
