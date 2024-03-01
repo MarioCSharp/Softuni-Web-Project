@@ -13,7 +13,7 @@
         <p class="list-group-item list-group-item-action">
             @cs.GradeName | @cs.Type
             <a asp-controller="Consultation" asp-action="Analyze" asp-route-type="@cs.Type" asp-route-gradeId="@cs.GradeId" asp-route-term="@cs.Term" class="btn btn-primary">Виж</a>
-            <a asp-controller="Consultation" asp-action="Delete" asp-route-type="@cs.Type" asp-route-gradeId="@cs.GradeId" asp-route-userId="@cs.UserId" class="btn btn-primary">Изтрий</a>
+            <a asp-controller="Consultation" asp-action="Delete" asp-route-type="@cs.Type" asp-route-gradeId="@cs.GradeId" asp-route-userId="@cs.UserId" class="btn btn-danger">Изтрий</a>
         </p>
     }
 </div>

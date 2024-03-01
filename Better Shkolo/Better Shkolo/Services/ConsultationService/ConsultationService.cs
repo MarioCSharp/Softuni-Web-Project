@@ -44,11 +44,18 @@ namespace Better_Shkolo.Services.ConsultationService
                 res.Add(s.Name, c.Value);
             }
 
+            var avg = 0.0;
+
+            if (res.Count > 0)
+            {
+                avg = double.Parse($"{res.Values.Where(x => x >= 2 && x <= 6).Average():F2}");
+            }
+
             var r = new ConsultationAnalyzeModel()
             {
                 SubjectByConsultation = res,
                 GradeName = gradeName,
-                Average = double.Parse($"{res.Values.Average():F2}")
+                Average = avg
             };
 
             r.Type = type switch
@@ -152,12 +159,12 @@ namespace Better_Shkolo.Services.ConsultationService
                 var t = await context.Teachers.
                     FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
 
-                grades = await context.Grades
+                grades = await context.Subjects
                     .Where(x => x.TeacherId == t.Id)
                     .Select(x => new GradeDisplayModel()
                     {
-                        Id = x.Id,
-                        GradeName = x.GradeName
+                        Id = x.Grade.Id,
+                        GradeName = x.Grade.GradeName
                     }).ToListAsync();
             }
 

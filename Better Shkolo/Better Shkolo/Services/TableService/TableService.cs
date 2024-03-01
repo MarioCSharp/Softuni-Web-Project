@@ -1,7 +1,10 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Table;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Better_Shkolo.Services.TableService
 {
@@ -30,7 +33,15 @@ namespace Better_Shkolo.Services.TableService
 
                 for (int i = 0; i < plan.Amount; i++)
                 {
-                    s.Add(subject);
+                    var a = new Subject()
+                    {
+                        Id = subject.Id,
+                        SchoolId = subject.SchoolId,
+                        GradeId = subject.GradeId,
+                        TeacherId = subject.TeacherId,
+                    };
+
+                    s.Add(a);
                 }
             }
 
@@ -38,21 +49,34 @@ namespace Better_Shkolo.Services.TableService
 
             var schedule = new List<Table>();
 
-            while (shuffle.Any())
-            {
-                for (int day = 0; day < 5; day++)
-                {
-                    for (int period = 0; period < 8; period++)
-                    {
-                        var toReEnter = new List<Subject>();
-                        var toRemove = new List<Subject>();
+            var sum = schoolStudyPlan.Sum(x => x.Amount);
+            var used = new HashSet<Subject>();
 
-                        foreach (var plan in shuffle)
+            while (schedule.Count != sum)
+            {
+                foreach (var plan in shuffle)
+                {
+                    if (used.Contains(plan))
+                    {
+                        continue;
+                    }
+
+                    var found = false;
+
+                    for (int day = 0; day < 5; day++)
+                    {
+                        for (int period = 0; period < 8; period++)
                         {
-                            if (!schedule
-                                .Any(x => x.GradeId != plan.GradeId
-                                && x.TeacherId != plan.TeacherId
-                                && x.Day != day && x.Period != period))
+                            var toReEnter = new List<Subject>();
+
+                            var asd = schedule
+                                .FirstOrDefault(x => x.GradeId == plan.GradeId
+                                && x.Day == day + 1 && x.Period == period + 1);
+
+                            var asdd = schedule.FirstOrDefault(
+                                x => x.TeacherId == plan.TeacherId && x.Day == day + 1 && period == period + 1);
+
+                            if (asd == null && asdd == null)
                             {
                                 var table = new Table()
                                 {
@@ -63,34 +87,54 @@ namespace Better_Shkolo.Services.TableService
                                     Period = period + 1
                                 };
 
+                                found = true;
                                 schedule.Add(table);
-                                toRemove.Add(plan);
+                                used.Add(plan);
                             }
-                            else
+
+                            if (found)
                             {
-                                toReEnter.Add(plan);
+                                break;
                             }
+
+                            shuffle = s.OrderBy(_ => Guid.NewGuid()).ToList();
                         }
 
-                        foreach (var rE in toReEnter)
+                        if (found)
                         {
-                            shuffle.Remove(rE);
-                            shuffle.Add(rE);
+                            break;
                         }
-
-                        foreach (var tR in toRemove)
-                        {
-                            shuffle.Remove(tR);
-                        }
-
-                        shuffle = s.OrderBy(_ => Guid.NewGuid()).ToList();
                     }
                 }
             }
 
+            ;
+
             await context.Tables.AddRangeAsync(schedule);
+            await context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<TableViewModel> GetSchedule(int gradeId)
+        {
+            var table = await context.Tables
+                .Where(x => x.GradeId == gradeId)
+                .Select(x => new TableDisplayModel
+                {
+                    Day = x.Day,
+                    Period = x.Period,
+                    SubjectId = x.SubjectId,
+                    SubjectName = x.Subject.Name,
+                    TeacherId = x.TeacherId,
+                    TeacherName = x.Teacher.User.FirstName + " " + x.Teacher.User.LastName
+                }).ToListAsync();
+
+            return new TableViewModel()
+            {
+                GradeId = gradeId,
+                Tables = table
+            };
         }
     }
 }
