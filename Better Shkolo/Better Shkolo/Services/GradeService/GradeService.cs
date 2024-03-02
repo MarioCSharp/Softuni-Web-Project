@@ -201,7 +201,8 @@ namespace Better_Shkolo.Services.GradeService
                     FirstName = x.User.FirstName,
                     LastName = x.User.LastName,
                     Email = x.User.Email,
-                    SchoolId = x.SchoolId
+                    SchoolId = x.SchoolId,
+                    UserId = x.UserId
                 }).ToListAsync();
         }
 

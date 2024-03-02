@@ -1,0 +1,20 @@
+﻿@using Better_Shkolo.Models.StudyPlan
+@model StudyPlanViewModel
+
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<br />
+<br />
+<br />
+<br />
+<a asp-action="Chose" asp-controller="StudyPlan" asp-route-id="@Model.SchoolId">Въведи учебен план</a>
+<div class="list-group grey-bg container-fluid">
+    @foreach (var cs in Model.StudyPlans)
+    {
+        <p class="list-group-item list-group-item-action">
+            @cs.GradeName
+            <a asp-controller="StudyPlan" asp-action="Details" asp-route-gradeId="@cs.GradeId" class="btn btn-primary">Виж</a>
+            <a asp-controller="StudyPlan" asp-action="Edit" asp-route-gradeId="@cs.GradeId" class="btn btn-warning">Редактирай</a>
+            <a asp-controller="StudyPlan" asp-action="Delete" asp-route-gradeId="@cs.GradeId" class="btn btn-danger">Изтрий</a>
+        </p>
+    }
+</div>

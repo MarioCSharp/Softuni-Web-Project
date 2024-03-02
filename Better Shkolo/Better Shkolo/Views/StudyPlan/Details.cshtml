@@ -1,0 +1,38 @@
+﻿@using Better_Shkolo.Models.StudyPlan
+@model List<StudyPlanCreateModel>
+
+<br />
+<br />
+<br />
+<br />
+
+<form method="post">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Предмет</th>
+                <th scope="col">Брой часове</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].SubjectName</td>
+                    <td>
+                        <input type="number" min="@Model[i].Amount" max="@Model[i].Amount" value="@Model[i].Amount" />
+                        <input type="hidden" asp-for="@Model[i].SubjectId" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<style>
+    /* Add some optional styling to make the table look better */
+    .table td, .table th {
+        padding: 0.5rem;
+    }
+</style>
+

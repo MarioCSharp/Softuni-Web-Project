@@ -44,5 +44,42 @@ namespace Better_Shkolo.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        [Authorize(Roles = "Director")]
+        public async Task<IActionResult> Plans(int id)
+        {
+            var model = await studyPlanService.GetStudyPlans(id);
+
+            return View(model);
+        }
+        [Authorize(Roles = "Director")]
+        public async Task<IActionResult> Details(int gradeId)
+        {
+            var model = await studyPlanService.GetDetails(gradeId);
+
+            return View(model);
+        }
+        [Authorize(Roles = "Director")]
+        public async Task<IActionResult> Edit(int gradeId)
+        {
+            var model = await studyPlanService.GetDetails(gradeId);
+
+            return View(model);
+        }
+        [Authorize(Roles = "Director")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(List<StudyPlanCreateModel> model)
+        {
+            await studyPlanService.Edit(model);
+
+            return RedirectToAction("Index", "Home");
+        }
+        [Authorize(Roles = "Director")]
+        [HttpGet]
+        public async Task<IActionResult> Delete(int gradeId)
+        {
+            await studyPlanService.Delete(gradeId);
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

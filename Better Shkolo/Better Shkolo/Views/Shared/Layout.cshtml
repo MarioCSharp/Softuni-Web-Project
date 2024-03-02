@@ -53,9 +53,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/Grade/MyGrades">Моите класове</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Consultation/Mine">Справки</a>
-                            </li>
                         }
                         @if (await service.HasRole())
                         {
@@ -67,6 +64,12 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Standings" asp-action="View">Класация</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Consultation/Mine">Справки</a>
                             </li>
                         }
                     </ul>

@@ -1,0 +1,39 @@
+﻿@using Better_Shkolo.Models.StudyPlan
+@model List<StudyPlanCreateModel>
+
+<br />
+<br />
+<br />
+<br />
+
+<h3>Редакция на учебен план</h3>
+
+<form method="post">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Предмет</th>
+                <th scope="col">Брой часове</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].SubjectName</td>
+                    <td>
+                        <input type="number" min="1" value="@Model[i].Amount" asp-for="@Model[i].Amount" />
+                        <input type="hidden" asp-for="@Model[i].SubjectId" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit">Въведи</button>
+</form>
+
+<style>
+    .table td, .table th {
+        padding: 0.5rem;
+    }
+</style>

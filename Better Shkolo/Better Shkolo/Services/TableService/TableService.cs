@@ -65,7 +65,7 @@ namespace Better_Shkolo.Services.TableService
 
                     for (int day = 0; day < 5; day++)
                     {
-                        for (int period = 0; period < 8; period++)
+                        for (int period = 0; period < 7; period++)
                         {
                             var toReEnter = new List<Subject>();
 
