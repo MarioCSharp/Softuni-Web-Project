@@ -166,6 +166,18 @@ namespace Better_Shkolo.Services.ConsultationService
                         Id = x.Grade.Id,
                         GradeName = x.Grade.GradeName
                     }).ToListAsync();
+
+                var res = new List<GradeDisplayModel>();
+
+                foreach (var g in grades)
+                {
+                    if (!res.Any(x => x.Id == g.Id))
+                    {
+                        res.Add(g);
+                    }
+                }
+
+                grades = res;
             }
 
             return grades;

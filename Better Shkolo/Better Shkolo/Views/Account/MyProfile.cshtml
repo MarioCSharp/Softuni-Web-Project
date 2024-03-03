@@ -20,7 +20,6 @@
                                 @if (User.IsInRole("Administrator"))
                                 {
                                     <p class="text-secondary mb-1">
-
                                         Администратор
                                     </p>
                                 }
@@ -40,6 +39,12 @@
                                 {
                                     <p class="text-secondary mb-1">
                                         Родител
+                                    </p>
+                                }
+                                else if (User.IsInRole("Teacher"))
+                                {
+                                    <p class="text-secondary mb-1">
+                                        Учител
                                     </p>
                                 }
                                 else

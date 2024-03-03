@@ -62,7 +62,7 @@ namespace Better_Shkolo.Controllers
             return View(absencesInSubject);
         }
         [HttpGet]
-        [Authorize(Policy = "TeacherPolicy")]
+        [Authorize(Policy = "AdministratorDirectorTeacherPolicy")]
         public async Task<IActionResult> Excuse(int id)
         {
             var absences = await absencesService.GetAbsences(id);

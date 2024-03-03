@@ -19,7 +19,6 @@
             <a asp-controller="Grade" asp-action="Delete" asp-route-id="@grade.Id" class="btn btn-danger">Изтрий</a>
             <a asp-controller="Grade" asp-action="Edit" asp-route-id="@grade.Id" class="btn btn-warning">Коригирай</a>
             <a asp-controller="Grade" asp-action="Students" asp-route-id="@grade.Id" class="btn btn-primary">Ученици</a>
-            <a asp-controller="Consultation" asp-action="Create" asp-route-gradeId="@grade.Id" class="btn btn-primary">Анализ оценки</a>
             <a asp-controller="Table" asp-action="Schedule" asp-route-gradeId="@grade.Id" class="btn btn-primary">Програма</a>
         </p>
     }

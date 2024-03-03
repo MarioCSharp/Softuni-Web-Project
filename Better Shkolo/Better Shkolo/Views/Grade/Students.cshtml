@@ -24,6 +24,7 @@
         <p class="list-group-item list-group-item-action">
             @student.FirstName @student.LastName - @student.Email |
             <a asp-action="Profile" asp-controller="Student" asp-route-userId="@student.UserId" asp-route-term="1"> Виж профил</a>
+            <a asp-action="ById" asp-controller="Absences" asp-route-studentId="@student.Id"> Виж отсъствия </a>
         </p>
     }
 </div>
