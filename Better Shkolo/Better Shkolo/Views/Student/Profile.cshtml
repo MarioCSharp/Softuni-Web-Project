@@ -1,191 +1,278 @@
 ﻿@using Better_Shkolo.Models.Student
 @model StudentProfileModel
+<style>
+    .deletebtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    .mark-button {
+        margin-right: 5px;
+    }
+
+    #six {
+        background-color: #26C281;
+        border-color: #26C281;
+    }
+
+    #five {
+        background-color: #3598dc;
+        border-color: #3598dc;
+    }
+
+    #four {
+        background-color: #F7CA18;
+        border-color: #F7CA18;
+    }
+
+    #three {
+        background-color: #f2784b;
+        border-color: #f2784b;
+    }
+
+    #two {
+        background-color: #e7505a;
+        border-color: #e7505a;
+    }
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-        .deletebtn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            display: flex;
-        }
-
-        .mark-button {
-            margin-right: 5px;
-        }
-
-        #six {
-            background-color: #26C281;
-            border-color: #26C281;
-        }
-
-        #five {
-            background-color: #3598dc;
-            border-color: #3598dc;
-        }
-
-        #four {
-            background-color: #F7CA18;
-            border-color: #F7CA18;
-        }
-
-        #three {
-            background-color: #f2784b;
-            border-color: #f2784b;
-        }
-
-        #two {
-            background-color: #e7505a;
-            border-color: #e7505a;
-        }
-    </style>
+    <title>Sidebar With Bootstrap</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/home.css">
 </head>
+@{
+    Layout = "";
+}
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body bg-transparent text-white mailbox-widget pb-0">
-                        <ul class="nav nav-tabs custom-tab border-bottom-0 mt-4" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="inbox-tab" data-toggle="tab" aria-controls="inbox" href="#inbox" role="tab" aria-selected="true">
-                                    <span class="d-block d-md-none"><i class="ti-email"></i></span>
-                                    <span class="d-none d-md-block" style="color: black">Оценки</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="sent-tab" data-toggle="tab" aria-controls="sent" href="#sent" role="tab" aria-selected="false">
-                                    <span class="d-block d-md-none"><i class="ti-export"></i></span>
-                                    <span class="d-none d-md-block" style="color: black">Отзиви</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="delete-tab" data-toggle="tab" aria-controls="delete" href="#delete" role="tab" aria-selected="false">
-                                    <span class="d-block d-md-none"><i class="ti-trash"></i></span>
-                                    <span class="d-none d-md-block" style="color: black">Отсъствия</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a href="#">Дневник</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a asp-action="Index" asp-controller="Home" class="sidebar-link">
+                        <i class="lni lni-agenda"></i>
+                        <span>Начало</span>
+                    </a>
+                </li>
+                @if (await service.IsGradeTeacher())
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Students" asp-controller="Grade" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Моят клас</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Mine" asp-controller="Consultation" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Справки</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("Parent") || User.IsInRole("Student"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="View" asp-controller="Standings" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Класация</span>
+                        </a>
+                    </li>
+                }
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-protection"></i>
+                        <span>Съобщения</span>
+                    </a>
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="Message" class="sidebar-link">Съобщения</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="Send" asp-controller="Message" class="sidebar-link">Изпрати съощение</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a asp-action="MyProfile" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-user"></i>
+                    <span>Профил</span>
+                </a>
+                <a asp-action="Logout" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Излизане</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main p-3">
+            <div id="elements">
+                <br />
+                <br />
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body bg-transparent text-white mailbox-widget pb-0">
+                                    <ul class="nav nav-tabs custom-tab border-bottom-0 mt-4" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="inbox-tab" data-toggle="tab" aria-controls="inbox" href="#inbox" role="tab" aria-selected="true">
+                                                <span class="d-block d-md-none"><i class="ti-email"></i></span>
+                                                <span class="d-none d-md-block" style="color: black">Оценки</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="sent-tab" data-toggle="tab" aria-controls="sent" href="#sent" role="tab" aria-selected="false">
+                                                <span class="d-block d-md-none"><i class="ti-export"></i></span>
+                                                <span class="d-none d-md-block" style="color: black">Отзиви</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="delete-tab" data-toggle="tab" aria-controls="delete" href="#delete" role="tab" aria-selected="false">
+                                                <span class="d-block d-md-none"><i class="ti-trash"></i></span>
+                                                <span class="d-none d-md-block" style="color: black">Отсъствия</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
-                            <div class="table-responsive">
-                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
-                                    <tbody>
-                                        @foreach (var subject in Model.AllSubjects)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <strong>@subject.Name:</strong>
-                                                    @foreach (var item in Model.Marks.Where(x => x.SubjectId == subject.Id))
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                                        <div class="table-responsive">
+                                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                                <tbody>
+                                                    @foreach (var subject in Model.AllSubjects)
                                                     {
-                                                        @if (item.Value == 6)
-                                                        {
-                                                            <button class="mark-button" value="@item.Id" id="six">@item.Value</button>
-                                                        }
-                                                        @if (item.Value == 5)
-                                                        {
-                                                            <button class="mark-button" value="@item.Id" id="five">@item.Value</button>
-                                                        }
-                                                        @if (item.Value == 4)
-                                                        {
-                                                            <button class="mark-button" value="@item.Id" id="four">@item.Value</button>
-                                                        }
-                                                        @if (item.Value == 3)
-                                                        {
-                                                            <button class="mark-button" value="@item.Id" id="three">@item.Value</button>
-                                                        }
-                                                        @if (item.Value == 2)
-                                                        {
-                                                            <button class="mark-button" value="@item.Id" id="two">@item.Value</button>
-                                                        }
+                                                        <tr>
+                                                            <td>
+                                                                <strong>@subject.Name:</strong>
+                                                                @foreach (var item in Model.Marks.Where(x => x.SubjectId == subject.Id))
+                                                                {
+                                                                    @if (item.Value == 6)
+                                                                    {
+                                                                        <button class="mark-button" value="@item.Id" id="six">@item.Value</button>
+                                                                    }
+                                                                    @if (item.Value == 5)
+                                                                    {
+                                                                        <button class="mark-button" value="@item.Id" id="five">@item.Value</button>
+                                                                    }
+                                                                    @if (item.Value == 4)
+                                                                    {
+                                                                        <button class="mark-button" value="@item.Id" id="four">@item.Value</button>
+                                                                    }
+                                                                    @if (item.Value == 3)
+                                                                    {
+                                                                        <button class="mark-button" value="@item.Id" id="three">@item.Value</button>
+                                                                    }
+                                                                    @if (item.Value == 2)
+                                                                    {
+                                                                        <button class="mark-button" value="@item.Id" id="two">@item.Value</button>
+                                                                    }
+                                                                }
+                                                                @if (Model.SubjectTermMark.ContainsKey(subject.Id) && Model.SubjectTermMark[subject.Id].Item1 == Model.Term)
+                                                                {
+                                                                    <p>
+                                                                        Срочна оценка:
+                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 6)
+                                                                        {
+                                                                            <button class="mark-button" id="six">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                        }
+                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 5)
+                                                                        {
+                                                                            <button class="mark-button" id="five">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                        }
+                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 4)
+                                                                        {
+                                                                            <button class="mark-button" id="four">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                        }
+                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 3)
+                                                                        {
+                                                                            <button class="mark-button" id="three">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                        }
+                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 2)
+                                                                        {
+                                                                            <button class="mark-button" id="two">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                        }
+                                                                    </p>
+                                                                }
+                                                            </td>
+                                                        </tr>
                                                     }
-                                                    @if (Model.SubjectTermMark.ContainsKey(subject.Id) && Model.SubjectTermMark[subject.Id].Item1 == Model.Term)
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="sent" aria-labelledby="sent-tab" role="tabpanel">
+                                        <div class="table-responsive">
+                                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                                <tbody>
+                                                    @foreach (var subject in Model.AllSubjects)
                                                     {
-                                                        <p>
-                                                            Срочна оценка:
-                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 6)
-                                                            {
-                                                                <button class="mark-button" id="six">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                            }
-                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 5)
-                                                            {
-                                                                <button class="mark-button" id="five">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                            }
-                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 4)
-                                                            {
-                                                                <button class="mark-button" id="four">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                            }
-                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 3)
-                                                            {
-                                                                <button class="mark-button" id="three">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                            }
-                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 2)
-                                                            {
-                                                                <button class="mark-button" id="two">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                            }
-                                                        </p>
+                                                        <tr>
+                                                            <td>
+                                                                <strong>@subject.Name: @Model.Reviews.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Show" asp-controller="Review" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
+                                                            </td>
+                                                        </tr>
                                                     }
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="delete" aria-labelledby="delete-tab" role="tabpanel">
+                                        <div class="table-responsive">
+                                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                                <tbody>
+                                                    @foreach (var subject in Model.AllSubjects)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <strong>@subject.Name: @Model.Absences.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Display" asp-controller="Absences" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="sent" aria-labelledby="sent-tab" role="tabpanel">
-                            <div class="table-responsive">
-                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
-                                    <tbody>
-                                        @foreach (var subject in Model.AllSubjects)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <strong>@subject.Name: @Model.Reviews.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Show" asp-controller="Review" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="delete" aria-labelledby="delete-tab" role="tabpanel">
-                            <div class="table-responsive">
-                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
-                                    <tbody>
-                                        @foreach (var subject in Model.AllSubjects)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <strong>@subject.Name: @Model.Absences.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Display" asp-controller="Absences" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Срок
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="1">Първи срок</a></li>
+                            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="2">Втори срок</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Срок
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="1">Първи срок</a></li>
-            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="2">Втори срок</a></li>
-        </ul>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+    <script src="/js/home.js"></script>
 </body>
 </html>

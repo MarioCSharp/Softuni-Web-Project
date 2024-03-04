@@ -27,57 +27,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarExample01">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item active">
-                            <a class="nav-link" aria-current="page" href="/Home/Index">Начало</a>
-                        </li>
-                        @if (User.IsInRole("Administrator"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Admin/Admin/Manage">Училища</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Director"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Director/Director/Manage">Управлявай</a>
-                            </li>
-                        }
-                        @if (await service.IsGradeTeacher())
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Grade/Students">Моят клас</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Teacher"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Grade/MyGrades">Моите класове</a>
-                            </li>
-                        }
-                        @if (await service.HasRole())
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Съобщения</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Student") || User.IsInRole("Parent"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Standings" asp-action="View">Класация</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Consultation/Mine">Справки</a>
-                            </li>
-                        }
                     </ul>
                 </div>
-                <a href="/Account/MyProfile" class="nav-link btn btn-link text-dark">Профил</a>
-                <form class="form-inline">
-                    <a href="/Account/Logout" class="nav-link btn btn-link text-dark">Излез</a>
-                </form>
             </div>
         </nav>
     </header>

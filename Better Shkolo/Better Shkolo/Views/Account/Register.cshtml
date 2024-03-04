@@ -1,73 +1,47 @@
 ﻿@using Better_Shkolo.Models.Account;
 @model RegisterModel
-@{
-    ViewData["Title"] = "Регистрация";
-}
-<br />
-<br />
-<br />
-<br />
-<br />
-<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-<div class="container d-flex justify-content-center align-items-center">
-    <div class="col-md-6 form-container">
-        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab-register" data-mdb-toggle="pill" role="tab"
-                   aria-controls="pills-register" aria-selected="false" asp-action="Login" asp-controller="Account">Вписване</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" role="tab"
-                   aria-controls="pills-login" aria-selected="true" asp-action="Register" asp-controller="Account">Регистрация</a>
-            </li>
-        </ul>
-        <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-register">
-            <form method="post">
-                <h3>Регисриране в ел. дневник</h3>
-                <div class="form-outline mb-4">
-                    <label asp-for="FirstName" class="form-label" for="registerName"></label>
-                    <input asp-for="FirstName" type="text" id="registerName" class="form-control" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                     class="img-fluid" alt="Phone image">
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <form method="post">
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label asp-for="FirstName" class="form-label" for="registerName"></label>
+                        <input asp-for="FirstName" type="text" id="registerName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label asp-for="LastName" class="form-label" for="registerName"></label>
+                        <input asp-for="LastName" type="text" id="registerName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label asp-for="Email" class="form-label" for="registerName"></label>
+                        <input asp-for="Email" type="email" id="registerName" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label asp-for="Password" class="form-label" for="registerName"></label>
+                        <input asp-for="Password" type="password" id="registerName" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
 
-                <div class="form-outline mb-4">
-                    <label asp-for="LastName" class="form-label" for="registerName"></label>
-                    <input asp-for="LastName" type="text" id="registerName" class="form-control" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <div class="form-outline mb-4">
+                        <label asp-for="PasswordRepeat" class="form-label" for="registerName"></label>
+                        <input asp-for="PasswordRepeat" type="password" id="registerName" class="form-control" />
+                        <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Регистация</button>
+                </form>
+                <div class="text-center">
+                    <p>Имаш регистрация? <a asp-action="Login" asp-controller="Account">Натисни тук</a></p>
                 </div>
-
-                <div class="form-outline mb-4">
-                    <label asp-for="Email" class="form-label" for="registerName"></label>
-                    <input asp-for="Email" type="email" id="registerName" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-
-                <div class="form-outline mb-4">
-                    <label asp-for="Password" class="form-label" for="registerName"></label>
-                    <input asp-for="Password" type="password" id="registerName" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-
-                <div class="form-outline mb-4">
-                    <label asp-for="PasswordRepeat" class="form-label" for="registerName"></label>
-                    <input asp-for="PasswordRepeat" type="password" id="registerName" class="form-control" />
-                    <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block mb-3">Регистриране</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
-<style>
-    .form-container {
-        background-color: #f0f0f0; /* Set the desired gray color */
-        padding: 20px; /* Add some padding for better appearance */
-        border-radius: 10px; /* Optional: Add border radius for rounded corners */
-    }
-</style>
+</section>
