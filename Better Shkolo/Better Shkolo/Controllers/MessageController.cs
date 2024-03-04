@@ -29,6 +29,16 @@ namespace Better_Shkolo.Controllers
             return View(await messageService.GetMeesagesAsync(accountService.GetUserId()));
         }
         [Authorize]
+        public async Task<IActionResult> Sent()
+        {
+            return View(await messageService.GetMeesagesAsync(accountService.GetUserId()));
+        }
+        [Authorize]
+        public async Task<IActionResult> Deleted()
+        {
+            return View(await messageService.GetMeesagesAsync(accountService.GetUserId()));
+        }
+        [Authorize]
         public async Task<IActionResult> Send()
         {
             return View(await messageService.GenerateModel(accountService.GetUserId()));

@@ -1,40 +1,122 @@
 ﻿@using Better_Shkolo.Models.Student;
 @model StudentCreateModel
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar With Bootstrap</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
 @{
-    Layout = "Layout";
+    Layout = "";
 }
-
-<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
-
-<h3 class="text-center">@ViewData["Title"]</h3>
-<br />
-<br />
-<br />
-<br />
-
-<h3 class="text-center">@ViewData["Title"]</h3>
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form asp-action="Edit" method="post">
-            <div class="mb-3">
-                <label asp-for="GradeId"></label>
-                <select asp-for="GradeId" class="form-control">
-                    @foreach (var grade in Model.Grades)
-                    {
-                        <option value="@grade.Id">@grade.GradeName</option>
-                    }
-                </select>
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a href="#">Дневник</a>
+                </div>
             </div>
-            <input type="hidden" asp-for="SchoolId" />
-            <div class="mb-3 text-center">
-                <input class="btn btn-primary" type="submit" />
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a asp-action="Index" asp-controller="Home" class="sidebar-link">
+                        <i class="lni lni-agenda"></i>
+                        <span>Начало</span>
+                    </a>
+                </li>
+                @if (await service.IsGradeTeacher())
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Students" asp-controller="Grade" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Моят клас</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Mine" asp-controller="Consultation" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Справки</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("Parent") || User.IsInRole("Student"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="View" asp-controller="Standings" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Класация</span>
+                        </a>
+                    </li>
+                }
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-protection"></i>
+                        <span>Съобщения</span>
+                    </a>
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="Message" class="sidebar-link">Съобщения</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="Send" asp-controller="Message" class="sidebar-link">Изпрати съощение</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a asp-action="MyProfile" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-user"></i>
+                    <span>Профил</span>
+                </a>
+                <a asp-action="Logout" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Излизане</span>
+                </a>
             </div>
-        </form>
+        </aside>
+        <div class="main p-3">
+            <div id="elements">
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+                        <form asp-action="Edit" method="post">
+                            <div class="mb-3">
+                                <label asp-for="GradeId"></label>
+                                <select asp-for="GradeId" class="form-control">
+                                    @foreach (var grade in Model.Grades)
+                                    {
+                                        <option value="@grade.Id">@grade.GradeName</option>
+                                    }
+                                </select>
+                            </div>
+                            <input type="hidden" asp-for="SchoolId" />
+                            <div class="mb-3 text-center">
+                                <input class="btn btn-primary" type="submit" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>

@@ -1,5 +1,9 @@
 ﻿@using Better_Shkolo.Models.Message
 @model MessageIndexModel
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +95,44 @@
             <div id="elements">
                 <br />
                 <br />
-
+                <h3>Получени съобщения</h3>
+                <div class="table-responsive">
+                    <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                        <tbody>
+                            <tr>
+                                @foreach (var absences in Model.Recieved)
+                                {
+                                <tr>
+                                    <td class="align-middle"><i class="fa fa-star text-warning"></i></td>
+                                    <td class="align-middle">
+                                        <span class="mb-0 text-muted">@absences.SentByFirstName @absences.SentByLastName</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <a asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id" class="link">
+                                            <span class="badge badge-pill text-white font-medium badge-danger mr-2">School</span>
+                                            <span class="text-dark">@absences.Title</span>
+                                        </a>
+                                    </td>
+                                    <td class="align-middle"><i class="fa fa-paperclip text-muted"></i></td>
+                                    <td class="align-middle text-muted">@absences.TimeSent</td>
+                                    <td class="align-middle buttons">
+                                        <div class="btn-group">
+                                            <a class="btn btn-circle btn-primary text-white deletebtn" asp-action="Details" asp-controller="Message" asp-route-id="@absences.Id">
+                                                Виж
+                                            </a>
+                                            <a class="btn btn-circle btn-danger text-white deletebtn" asp-action="Delete" asp-controller="Message" asp-route-id="@absences.Id">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
             </div>
         </div>
     </div>
@@ -101,3 +142,11 @@
     <script src="/js/home.js"></script>
 </body>
 </html>
+<style>
+    .deletebtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+</style>
