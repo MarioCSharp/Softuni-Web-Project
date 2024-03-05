@@ -22,5 +22,6 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
 		<PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="6.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="QuestPDF" Version="2023.12.6" />
 	</ItemGroup>
 </Project>

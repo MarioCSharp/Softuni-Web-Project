@@ -2,6 +2,7 @@
 using Better_Shkolo.Services.ConsultationService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QuestPDF.Fluent;
 
 namespace Better_Shkolo.Controllers
 {
@@ -88,6 +89,19 @@ namespace Better_Shkolo.Controllers
             await consultationService.Delete(userId, gradeId, type);
 
             return RedirectToAction("Mine", "Consultation");
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> ToPdf(string type, int gradeId, string userId, int term)
+        {
+            var file = await consultationService.GeneratePdf(type, gradeId, userId, term);
+
+            var stream = new MemoryStream();
+            file.GeneratePdf(stream);
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            return File(stream, "application/pdf", "spravka.pdf");
         }
     }
 }
