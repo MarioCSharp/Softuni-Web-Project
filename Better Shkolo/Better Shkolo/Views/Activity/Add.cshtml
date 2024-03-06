@@ -113,6 +113,21 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <input asp-for="Description" class="form-control" aria-required="true" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Time" class="form-label"></label>
+                        <input asp-for="Time" class="form-control" aria-required="true" />
+                        <span asp-validation-for="Time" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Location" class="form-label"></label>
+                        <input asp-for="Location" class="form-control" aria-required="true" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
                         <label asp-for="Date"></label>
                         <input asp-for="Date" type="date" value="@DateTime.UtcNow" class="form-control" />
                         <span asp-validation-for="Date" class="text-danger"></span>

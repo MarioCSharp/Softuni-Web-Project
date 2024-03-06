@@ -45,7 +45,8 @@ namespace Better_Shkolo.Controllers
                 Address = "",
                 City = "",
                 Country = "",
-                Phone = ""
+                Phone = "",
+                Chronic = "Здрав"
             };
 
             var result = await userManager.CreateAsync(user, registerModel.Password);
@@ -167,6 +168,24 @@ namespace Better_Shkolo.Controllers
             if (!result) return BadRequest();
 
             return RedirectToAction(nameof(MyProfile));
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> EditStatus(string userId)
+        {
+            return View(new StatusEditModel() { UserId = userId });
+        }
+        [HttpPost]
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> EditStatus(StatusEditModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var result = await accountService.EditStatus(model);
+
+            if (!result) return BadRequest();
+
+            return RedirectToAction("Students", "Grade");
         }
     }
 }

@@ -18,6 +18,12 @@ namespace Better_Shkolo.Data.Models
         [Required]
         public string Presence { get; set; } = null!;
         [Required]
+        public string Location { get; set; } = null!;
+        [Required]
+        public string TimeZone { get; set; } = null!;
+        [Required]
+        public string Description { get; set; } = null!;
+        [Required]
         public string AddedById { get; set; } = null!;
         [ForeignKey(nameof(AddedById))]
         public User AddedBy { get; set; } = null!;

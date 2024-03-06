@@ -1,6 +1,5 @@
-﻿@using Better_Shkolo.Models.Student;
-@model StudentCreateModel
-
+﻿@using Better_Shkolo.Models.Activity;
+@model ActivityViewModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +11,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/home.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
 @{
     Layout = "";
@@ -51,6 +56,15 @@
                             <span>Справки</span>
                         </a>
                     </li>
+                }
+                @if (User.IsInRole("Parent") || User.IsInRole("Student"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="View" asp-controller="Standings" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Класация</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
@@ -65,15 +79,6 @@
                                 <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">Училищен календар</a>
                             </li>
                         </ul>
-                    </li>
-                }
-                @if (User.IsInRole("Parent") || User.IsInRole("Student"))
-                {
-                    <li class="sidebar-item">
-                        <a asp-action="View" asp-controller="Standings" class="sidebar-link">
-                            <i class="lni lni-layout"></i>
-                            <span>Класация</span>
-                        </a>
                     </li>
                 }
                 <li class="sidebar-item">
@@ -107,39 +112,27 @@
             <div id="elements">
                 <br />
                 <br />
-                <div class="row">
-                    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-                        <form asp-action="Edit" method="post">
-                            <div class="mb-3">
-                                <label asp-for="GradeId"></label>
-                                <select asp-for="GradeId" class="form-control">
-                                    @foreach (var grade in Model.Grades)
-                                    {
-                                        <option value="@grade.Id">@grade.GradeName</option>
-                                    }
-                                </select>
+                <div class="container">
+                    @foreach (var a in Model.Activities)
+                    {
+                        <div class="row row-striped">
+                            <div class="col-2 text-right">
+                                <h1 class="display-4"><span class="badge badge-primary">@a.Day</span></h1>
+                                <h2>@a.Month</h2>
                             </div>
-                            <div class="mb-3">
-                                <label asp-for="DoctorName" class="form-label"></label>
-                                <input asp-for="DoctorName" value="@Model.DoctorName" class="form-control" aria-required="true" />
-                                <span asp-validation-for="DoctorName" class="text-danger"></span>
+                            <div class="col-10">
+                                <h3 class="text-uppercase"><strong>@a.ActivityName</strong></h3>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>@a.WeekDay</li>
+                                    <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>@a.Time</li>
+                                    <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i>@a.Location</li>
+                                </ul>
+                                <p>@a.Description</p>
                             </div>
-                            <div class="mb-3">
-                                <label asp-for="DoctorPhone" class="form-label"></label>
-                                <input asp-for="DoctorPhone" value="@Model.DoctorPhone" class="form-control" aria-required="true" />
-                                <span asp-validation-for="DoctorPhone" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="DoctorAddress" class="form-label"></label>
-                                <input asp-for="DoctorAddress" value="@Model.DoctorAddress" class="form-control" aria-required="true" />
-                                <span asp-validation-for="DoctorAddress" class="text-danger"></span>
-                            </div>
-                            <input type="hidden" asp-for="SchoolId" />
-                            <div class="mb-3 text-center">
-                                <input class="btn btn-primary" type="submit" />
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <br />
+                        <br />
+                    }
                 </div>
             </div>
         </div>

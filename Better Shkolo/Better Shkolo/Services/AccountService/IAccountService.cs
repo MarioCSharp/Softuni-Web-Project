@@ -1,4 +1,6 @@
-﻿using Better_Shkolo.Models.Account;
+﻿using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Account;
+using MyTested.AspNetCore.Mvc;
 
 namespace Better_Shkolo.Services.AccountService
 {
@@ -9,7 +11,9 @@ namespace Better_Shkolo.Services.AccountService
         Task<bool> IsGradeTeacher();
         Task<bool> HasRole();
         Task<UserProfileModel> GetUser();
+        Task<User> GetUser(string userId);
         Task<bool> EditUser(UserProfileModel model);
         Task<bool> EditAddress(UserAddressModel model);
+        Task<bool> EditStatus(StatusEditModel model);
     }
 }

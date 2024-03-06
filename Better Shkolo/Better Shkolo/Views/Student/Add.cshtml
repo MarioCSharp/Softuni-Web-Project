@@ -1,5 +1,4 @@
-﻿
-@using Better_Shkolo.Models.Student;
+﻿@using Better_Shkolo.Models.Student;
 @model StudentCreateModel
 
 <!DOCTYPE html>
@@ -128,6 +127,21 @@
                                         <option value="@grade.Id">@grade.GradeName</option>
                                     }
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="DoctorName" class="form-label"></label>
+                                <input asp-for="DoctorName" class="form-control" aria-required="true" />
+                                <span asp-validation-for="DoctorName" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="DoctorPhone" class="form-label"></label>
+                                <input asp-for="DoctorPhone" class="form-control" aria-required="true" />
+                                <span asp-validation-for="DoctorPhone" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="DoctorAddress" class="form-label"></label>
+                                <input asp-for="DoctorAddress" class="form-control" aria-required="true" />
+                                <span asp-validation-for="DoctorAddress" class="text-danger"></span>
                             </div>
                             <input type="hidden" asp-for="SchoolId" />
                             <div class="mb-3 text-center">

@@ -49,6 +49,13 @@ namespace Better_Shkolo.Services.StudentService
             var student = mapper.Map<Student>(model);
             student.GradeTeacherId = grade.TeacherId;
 
+            studentUser.DoctorAddress = model.DoctorAddress;
+            await context.SaveChangesAsync();
+            studentUser.DoctorName = model.DoctorName;
+            await context.SaveChangesAsync();
+            studentUser.DoctorPhone = model.DoctorPhone;
+            await context.SaveChangesAsync();
+
             await context.Students.AddAsync(student);
             await context.SaveChangesAsync();
 
@@ -128,7 +135,15 @@ namespace Better_Shkolo.Services.StudentService
             }
 
             student.GradeId = model.GradeId;
+            await context.SaveChangesAsync();
 
+            var user = await context.Users.FindAsync(student.UserId);
+
+            user.DoctorPhone = model.DoctorPhone;
+            await context.SaveChangesAsync();
+            user.DoctorName = model.DoctorName;
+            await context.SaveChangesAsync();
+            user.DoctorAddress = model.DoctorAddress;
             await context.SaveChangesAsync();
 
             return true;

@@ -90,7 +90,10 @@ namespace Better_Shkolo.Services.AccountService
                 City = user.City,
                 Address = user.Address,
                 Country = user.Country,
-                BirthDate = user.BirthDate
+                BirthDate = user.BirthDate,
+                DoctorAddress = user.DoctorAddress,
+                DoctorName = user.DoctorName,
+                DoctorPhone = user.DoctorPhone,
             };
         }
 
@@ -137,6 +140,23 @@ namespace Better_Shkolo.Services.AccountService
             await context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<bool> EditStatus(StatusEditModel model)
+        {
+            var user = await context.Users.FindAsync(model.UserId);
+
+            user.Chronic = model.Status;
+            await context.SaveChangesAsync();
+
+            return user.Chronic == model.Status;
+        }
+
+        public async Task<User> GetUser(string userId)
+        {
+            var u = await context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+            return u;
         }
     }
 }

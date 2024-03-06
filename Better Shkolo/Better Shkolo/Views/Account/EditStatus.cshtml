@@ -1,6 +1,5 @@
-﻿@using Better_Shkolo.Models.Student;
-@model StudentCreateModel
-
+﻿@using Better_Shkolo.Models.Account;
+@model StatusEditModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,40 +106,17 @@
             <div id="elements">
                 <br />
                 <br />
-                <div class="row">
-                    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-                        <form asp-action="Edit" method="post">
-                            <div class="mb-3">
-                                <label asp-for="GradeId"></label>
-                                <select asp-for="GradeId" class="form-control">
-                                    @foreach (var grade in Model.Grades)
-                                    {
-                                        <option value="@grade.Id">@grade.GradeName</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="DoctorName" class="form-label"></label>
-                                <input asp-for="DoctorName" value="@Model.DoctorName" class="form-control" aria-required="true" />
-                                <span asp-validation-for="DoctorName" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="DoctorPhone" class="form-label"></label>
-                                <input asp-for="DoctorPhone" value="@Model.DoctorPhone" class="form-control" aria-required="true" />
-                                <span asp-validation-for="DoctorPhone" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="DoctorAddress" class="form-label"></label>
-                                <input asp-for="DoctorAddress" value="@Model.DoctorAddress" class="form-control" aria-required="true" />
-                                <span asp-validation-for="DoctorAddress" class="text-danger"></span>
-                            </div>
-                            <input type="hidden" asp-for="SchoolId" />
-                            <div class="mb-3 text-center">
-                                <input class="btn btn-primary" type="submit" />
-                            </div>
-                        </form>
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Status" class="form-label"></label>
+                        <input asp-for="Status" value="@Model.Status" class="form-control" aria-required="true" />
+                        <span asp-validation-for="Status" class="text-danger"></span>
                     </div>
-                </div>
+                    <input type="hidden" asp-for="UserId"/>
+                    <div class="mb-3 text-center">
+                        <input class="btn btn-primary" type="submit" />
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -9,5 +9,6 @@
         public string Email { get; set; }
         public int SchoolId { get; set; }
         public string SchoolName { get; set; }
+        public string Status { get; set; }
     }
 }

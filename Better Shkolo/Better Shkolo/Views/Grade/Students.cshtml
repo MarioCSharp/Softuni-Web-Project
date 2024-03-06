@@ -113,8 +113,10 @@
                     {
                         <p class="list-group-item list-group-item-action">
                             @student.FirstName @student.LastName - @student.Email |
-                            <a asp-action="Profile" asp-controller="Student" asp-route-userId="@student.UserId" asp-route-term="1"> Виж профил</a>
-                            <a asp-action="ById" asp-controller="Absences" asp-route-studentId="@student.Id"> Виж отсъствия </a>
+                            <a asp-action="Profile" asp-controller="Student" asp-route-userId="@student.UserId" asp-route-term="1"> Виж профилㅤ</a>
+                            <a asp-action="ById" asp-controller="Absences" asp-route-studentId="@student.Id"> Виж отсъствия ㅤ</a>
+                            <a style="color:blue">Здравен статус:</a> <a>@student.Status ㅤ</a>
+                            <a asp-action="EditStatus" asp-controller="Account" asp-route-userId="@student.UserId"> Редактирай здравен статусㅤ </a>
                         </p>
                     }
                 </div>

@@ -1,4 +1,5 @@
 ﻿using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Activity;
 using Better_Shkolo.Models.School;
 
 namespace Better_Shkolo.Services.SchoolService

@@ -114,6 +114,12 @@ namespace Better_Shkolo.Controllers
 
             var model = mapper.Map<StudentCreateModel>(student);
 
+            var u = await accountService.GetUser(student.UserId);
+
+            model.DoctorName = u.DoctorName;
+            model.DoctorAddress = u.DoctorAddress;
+            model.DoctorPhone = u.DoctorPhone;
+
             model.Grades = await gradeService.GetGradesBySchoolId(student.SchoolId);
 
             return View(model);

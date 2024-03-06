@@ -13,6 +13,15 @@ namespace Better_Shkolo.Models.Activity
         [Required]
         [Display(Name = "Присъствие")]
         public string Presence { get; set; } = null!;
+        [Required]
+        [Display(Name = "Времови диапазон")]
+        public string Time { get; set; } = null!;
+        [Required]
+        [Display(Name = "Местоположение")]
+        public string Location { get; set; } = null!;
+        [Required]
+        [Display(Name = "Описание")]
+        public string Description { get; set; } = null!;
 
         public int SchoolId { get; set; }
     }

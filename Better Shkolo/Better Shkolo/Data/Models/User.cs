@@ -22,6 +22,14 @@ namespace Better_Shkolo.Data.Models
         [Required]
         public string Country { get; set; } = null!;
         [Required]
+        public string Chronic { get; set; } = null!;
+        [Required]
+        public string DoctorName { get; set; } = null!;
+        [Required]
+        public string DoctorPhone { get; set; } = null!;
+        [Required]
+        public string DoctorAddress { get; set; } = null!;
+        [Required]
         public DateTime BirthDate { get; set; }
     }
 }

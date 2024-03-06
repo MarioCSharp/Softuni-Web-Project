@@ -186,6 +186,7 @@ namespace Better_Shkolo.Services.GradeService
                     UserId = x.UserId,
                     FirstName = x.User.FirstName,
                     LastName = x.User.LastName,
+                    Status = x.User.Chronic,
                     Email = x.User.Email,
                     SchoolId = x.SchoolId
                 }).ToListAsync();

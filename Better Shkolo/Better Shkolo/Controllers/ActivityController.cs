@@ -31,11 +31,26 @@ namespace Better_Shkolo.Controllers
         [Authorize(Policy = "DirectorTeacherPolicy")]
         public async Task<IActionResult> Add(ActivityAddModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var res = await activityService.AddAsync(model);
 
             if (res == null) return BadRequest();
             
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> Schedule()
+        {
+            var schoolId = await schoolService.GetSchoolIdByUser();
+
+            var result = await activityService.GetActivitiesInSchool(schoolId);
+
+            return View(result);
         }
     }
 }
