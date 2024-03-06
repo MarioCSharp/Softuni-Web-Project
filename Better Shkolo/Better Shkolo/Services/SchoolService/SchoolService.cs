@@ -1,6 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.School;
+using Better_Shkolo.Services.AccountService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +10,15 @@ namespace Better_Shkolo.Services.SchoolService
     public class SchoolService : ISchoolService
     {
         private ApplicationDbContext context;
+        private IAccountService accountService;
         private UserManager<User> userManager;
         public SchoolService(ApplicationDbContext context
-                            , UserManager<User> userManager)
+                            , UserManager<User> userManager
+                            , IAccountService accountService)
         {
             this.context = context;
             this.userManager = userManager;
+            this.accountService = accountService;
         }
         public async Task<bool> AddSchool(School school)
         {
@@ -103,6 +107,29 @@ namespace Better_Shkolo.Services.SchoolService
             var school = await context.Schools.FindAsync(id);
 
             return school;
+        }
+
+        public async Task<int> GetSchoolIdByUser()
+        {
+            var user = await context.Users.FindAsync(accountService.GetUserId());
+
+            var schoolId = -1;
+
+            if (await userManager.IsInRoleAsync(user, "Teacher"))
+            {
+                var t = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == user.Id);
+                var s = await context.Subjects.FirstOrDefaultAsync(x => x.TeacherId == t.Id);
+
+                schoolId = s.SchoolId;
+            }
+            else if (await userManager.IsInRoleAsync(user, "Director"))
+            {
+                var d = await context.Directors.FirstOrDefaultAsync(x => x.UserId == user.Id);
+
+                schoolId = d.SchoolId;
+            }
+
+            return schoolId;
         }
     }
 }

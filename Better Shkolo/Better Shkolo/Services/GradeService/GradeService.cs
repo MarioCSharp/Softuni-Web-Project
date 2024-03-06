@@ -231,6 +231,11 @@ namespace Better_Shkolo.Services.GradeService
         {
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == accountService.GetUserId());
 
+            if (student == null)
+            {
+                return 0;
+            }
+
             return student.GradeId;
         }
     }

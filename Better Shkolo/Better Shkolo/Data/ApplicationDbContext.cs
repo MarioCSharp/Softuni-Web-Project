@@ -28,5 +28,6 @@ namespace Better_Shkolo.Data
         public DbSet<Consultation> Consultations { get; set; }
         public DbSet<StudyPlan> StudyPlans { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<Activity> Activities { get; set; }
     }
 }

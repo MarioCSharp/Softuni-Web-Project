@@ -6,8 +6,8 @@
         {
             public const int GradeNameMaxLength = 3;
             public const int GradeNameMinLength = 2;
-            public const int GradeSpecialtyMaxLength = 20;
-            public const int GradeSpecialtyMinLength = 5;
+            public const int GradeSpecialtyMaxLength = 100;
+            public const int GradeSpecialtyMinLength = 3;
         }
 
         public class Mark

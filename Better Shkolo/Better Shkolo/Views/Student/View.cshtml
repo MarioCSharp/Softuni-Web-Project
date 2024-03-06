@@ -53,6 +53,21 @@
                             <span>Справки</span>
                         </a>
                     </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                            <i class="lni lni-protection"></i>
+                            <span>Дейности</span>
+                        </a>
+                        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a asp-action="Add" asp-controller="Activity" class="sidebar-link">Добави активност</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">Училищен календар</a>
+                            </li>
+                        </ul>
+                    </li>
                 }
                 @if (User.IsInRole("Parent") || User.IsInRole("Student"))
                 {
