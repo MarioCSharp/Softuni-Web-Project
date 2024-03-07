@@ -64,7 +64,7 @@ body {
     }
 
 .sidebar-logo {
-    margin: auto 0;
+    margin: 5px 0 5px 5px; /* Adjust the left margin as needed */
 }
 
     .sidebar-logo a {
@@ -139,4 +139,11 @@ a.sidebar-link:hover {
 #sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
     transition: all .2s ease-out;
+}
+.sidebar-logo {
+    left: 5px; /* Adjust the margin as needed */
+}
+
+.toggle-btn {
+    margin-left: auto; /* Push the toggle button to the right to align with the right edge of the parent container */
 }
