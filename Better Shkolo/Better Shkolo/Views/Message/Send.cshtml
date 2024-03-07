@@ -24,7 +24,7 @@
                     <i class="lni lni-grid-alt"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">Дневник</a>
+                    <img src="/logof.png" style="height:35px;" />
                 </div>
             </div>
             <ul class="sidebar-nav">
@@ -40,6 +40,16 @@
                         <a asp-action="Students" asp-controller="Grade" class="sidebar-link">
                             <i class="lni lni-layout"></i>
                             <span>Моят клас</span>
+                        </a>
+                    </li>
+                }
+
+                @if (User.IsInRole("Student") || User.IsInRole("Parent"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Schedule" asp-controller="Table" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Седмична програма</span>
                         </a>
                     </li>
                 }

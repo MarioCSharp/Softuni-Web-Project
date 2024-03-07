@@ -140,10 +140,3 @@ a.sidebar-link:hover {
     transform: rotate(45deg);
     transition: all .2s ease-out;
 }
-.sidebar-logo {
-    left: 5px; /* Adjust the margin as needed */
-}
-
-.toggle-btn {
-    margin-left: auto; /* Push the toggle button to the right to align with the right edge of the parent container */
-}

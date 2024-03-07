@@ -22,6 +22,66 @@ namespace Better_Shkolo.Services.StandingsService
             this.statisticsService = statisticsService;
         }
 
+        public async Task<StandingsDisplayModel> GetPlaces(Student student)
+        {
+            var school = await GetStandings(student, "");
+
+            var m = school.SchoolStandings.FirstOrDefault(x => x.Student.Id == student.Id);
+
+            var thisYear = "";
+
+            var i = 0;
+
+            while (char.IsDigit(m.Student.Grade.GradeName[i]))
+            {
+                thisYear += m.Student.Grade.GradeName[i];
+                i++;
+            }
+
+            var placeInGrade = 1;
+            var placeInSchool = 1;
+            var placeInYear = 1;
+
+            foreach (var s in school.SchoolStandings)
+            {
+                if (s.Id == m.Id)
+                {
+                    continue;
+                }
+
+                if (s.Success > m.Success)
+                {
+                    placeInSchool++;
+                }
+
+                if (s.Student.GradeId == m.Student.GradeId && s.Success > m.Success)
+                {
+                    placeInGrade++;
+                }
+
+                var otherYear = "";
+                i = 0;
+
+                while (char.IsDigit(s.Student.Grade.GradeName[i]))
+                {
+                    otherYear += s.Student.Grade.GradeName[i];
+                    i++;
+                }
+
+                if (true)
+                {
+
+                }
+            }
+
+            return new StandingsDisplayModel
+            {
+                PlaceYear = placeInYear,
+                PlaceSchool = placeInSchool,
+                PlaceGrade = placeInGrade,
+            };
+        }
+
         public async Task<StandingsDisplayModel> GetStandings(Student student, string searchTerm)
         {
             var schoolPlaces = memoryCache.Get<List<CustomKVP>>($"SchoolPlaces{student.SchoolId}");
