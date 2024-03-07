@@ -28,13 +28,17 @@ namespace Better_Shkolo.Services.StandingsService
 
             var m = school.SchoolStandings.FirstOrDefault(x => x.Student.Id == student.Id);
 
+            if (m == null) return new StandingsDisplayModel();
+
             var thisYear = "";
 
             var i = 0;
 
-            while (char.IsDigit(m.Student.Grade.GradeName[i]))
+            var grade = await context.Grades.FindAsync(m.Student.GradeId);
+
+            while (char.IsDigit(grade.GradeName[i]))
             {
-                thisYear += m.Student.Grade.GradeName[i];
+                thisYear += grade.GradeName[i];
                 i++;
             }
 
@@ -61,16 +65,17 @@ namespace Better_Shkolo.Services.StandingsService
 
                 var otherYear = "";
                 i = 0;
+                var cG = await context.Grades.FindAsync(s.Student.GradeId);
 
-                while (char.IsDigit(s.Student.Grade.GradeName[i]))
+                while (char.IsDigit(cG.GradeName[i]))
                 {
-                    otherYear += s.Student.Grade.GradeName[i];
+                    otherYear += cG.GradeName[i];
                     i++;
                 }
 
-                if (true)
+                if (thisYear == otherYear && s.Success > m.Success)
                 {
-
+                    placeInYear++;
                 }
             }
 
