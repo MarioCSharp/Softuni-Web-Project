@@ -1,8 +1,10 @@
 ﻿using Better_Shkolo.Models;
 using Better_Shkolo.Models.Account;
+using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
 using Better_Shkolo.Services.StandingsService;
 using Better_Shkolo.Services.StudentService;
+using Better_Shkolo.Services.TableService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -15,13 +17,19 @@ namespace Better_Shkolo.Controllers
         private IGradeService gradeService;
         private IStudentService studentService;
         private IStandingsService standingsService;
+        private ITableService tableService;
+        private IAccountService accountService;
         public HomeController(IGradeService gradeService,
                               IStudentService studentService,
-                              IStandingsService standingsService)
+                              IStandingsService standingsService,
+                              ITableService tableService,
+                              IAccountService accountService)
         {
             this.gradeService = gradeService;
             this.studentService = studentService;
             this.standingsService = standingsService;
+            this.tableService = tableService;
+            this.accountService = accountService;
         }
         [Authorize]
         public async Task<IActionResult> Index()
@@ -47,12 +55,28 @@ namespace Better_Shkolo.Controllers
 
                 var model = await standingsService.GetPlaces(student);
 
+                var nxt = await tableService.GetNextPeriod(accountService.GetUserId());
+
+                if (nxt == "-")
+                {
+                    var table = await tableService.GetSchedule(student.GradeId);
+
+                    var n = table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1);
+
+                    if (n != null)
+                    {
+                        nxt = n.SubjectName;
+                    }
+                }
+
                 var res = new HomeModel()
                 {
                     GradeId = gradeService.GetUserGradeId().Result ,
                     PlaceInSchool = model.PlaceSchool,
                     PlaceInGrade = model.PlaceGrade,
-                    PlaceInYear = model.PlaceYear
+                    PlaceInYear = model.PlaceYear,
+                    CurrentPeriod = await tableService.GetCurrentPeriod(accountService.GetUserId()),
+                    NextPeriod = nxt,
                 };
 
                 return View(res);

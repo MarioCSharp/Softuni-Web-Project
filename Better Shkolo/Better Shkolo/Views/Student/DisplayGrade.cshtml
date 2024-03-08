@@ -58,7 +58,7 @@
                         </a>
                         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a asp-action="Add" asp-controller="Activity" class="sidebar-link">Добави активност</a>
+                                <a asp-action="Add" asp-controller="Activity" class="sidebar-link">Добави дейност</a>
                             </li>
                             <li class="sidebar-item">
                                 <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">Училищен календар</a>
@@ -69,9 +69,21 @@
                 @if (User.IsInRole("Parent") || User.IsInRole("Student"))
                 {
                     <li class="sidebar-item">
-                        <a asp-action="View" asp-controller="Standings" class="sidebar-link">
+                        <a asp-action="Schedule" asp-controller="Table" class="sidebar-link">
                             <i class="lni lni-layout"></i>
-                            <span>Класация</span>
+                            <span>Седмична програма</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Училищен календар</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Profile" asp-controller="Student" class="sidebar-link">
+                            <i class="lni lni-layout"></i>
+                            <span>Ученически профил</span>
                         </a>
                     </li>
                 }

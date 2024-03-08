@@ -1,10 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Table;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace Better_Shkolo.Services.TableService
 {
@@ -114,6 +111,210 @@ namespace Better_Shkolo.Services.TableService
             await context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<string> GetCurrentPeriod(string userId)
+        {
+            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            var table = await GetSchedule(student.GradeId);
+            var res = "-";
+            var period = 0;
+
+            var time = DateTime.Now.ToString("h:mm");
+            var startTime = DateTime.Parse("08:00:00");
+            var endTime = DateTime.Parse("08:45:00");
+            var currentTime = DateTime.Parse(time);
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 1;
+            }
+
+            startTime = DateTime.Parse("09:05:00");
+            endTime = DateTime.Parse("09:50:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 2;
+            }
+
+            startTime = DateTime.Parse("10:00:00");
+            endTime = DateTime.Parse("10:45:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 3;
+            }
+
+            startTime = DateTime.Parse("10:55:00");
+            endTime = DateTime.Parse("11:40:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 4;
+            }
+
+            startTime = DateTime.Parse("11:50:00");
+            endTime = DateTime.Parse("12:35:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 5;
+            }
+
+            startTime = DateTime.Parse("12:45:00");
+            endTime = DateTime.Parse("13:30:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 6;
+            }
+
+            startTime = DateTime.Parse("13:40:00");
+            endTime = DateTime.Parse("14:25:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 7;
+            }
+
+            if (period == 0)
+            {
+                return res;
+            }
+
+            var day = (int)DateTime.Now.DayOfWeek;
+
+            if (day > 5)
+            {
+                return res;
+            }
+
+            foreach (var t in table.Tables)
+            {
+                if (t.Day == day && t.Period == period)
+                {
+                    return t.SubjectName;
+                }
+            }
+
+            return res;
+        }
+
+        public async Task<string> GetNextPeriod(string userId)
+        {
+            var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            var table = await GetSchedule(student.GradeId);
+
+            var res = "-";
+
+            var day = (int)DateTime.Now.DayOfWeek;
+
+            if (day > 5)
+            {
+                return table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1).SubjectName;
+            }
+
+
+            var time = DateTime.Now.ToString("h:mm");
+            var startTime = DateTime.Parse("08:00:00");
+            var endTime = DateTime.Parse("08:45:00");
+            var currentTime = DateTime.Parse(time);
+
+            if (currentTime > DateTime.Parse("14:25:00"))
+            {
+                day++;
+
+                if (day > 5)
+                {
+                    var nx = table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1);
+                    return nx == null ? "-" : nx.SubjectName;
+                }
+
+                var next = table.Tables.FirstOrDefault(x => x.Day == day && x.Period == 1);
+
+                return next == null ? table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1).SubjectName : next.SubjectName;
+            }
+
+            var period = 0;
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 1;
+            }
+
+            startTime = DateTime.Parse("09:05:00");
+            endTime = DateTime.Parse("09:50:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 2;
+            }
+
+            startTime = DateTime.Parse("10:00:00");
+            endTime = DateTime.Parse("10:45:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 3;
+            }
+
+            startTime = DateTime.Parse("10:55:00");
+            endTime = DateTime.Parse("11:40:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 4;
+            }
+
+            startTime = DateTime.Parse("11:50:00");
+            endTime = DateTime.Parse("12:35:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 5;
+            }
+
+            startTime = DateTime.Parse("12:45:00");
+            endTime = DateTime.Parse("13:30:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 6;
+            }
+
+            startTime = DateTime.Parse("13:40:00");
+            endTime = DateTime.Parse("14:25:00");
+
+            if (startTime <= currentTime && currentTime <= endTime)
+            {
+                period = 7;
+            }
+
+            if (period == 7)
+            {
+                day++;
+
+                if (day > 5)
+                {
+                    var nx = table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1);
+                    return nx == null ? "-" : nx.SubjectName;
+                }
+
+                var next = table.Tables.FirstOrDefault(x => x.Day == day && x.Period == 1);
+
+                return next == null ? table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1).SubjectName : next.SubjectName;
+            }
+
+            period++;
+
+            var n = table.Tables.FirstOrDefault(x => x.Day == day && x.Period == period);
+
+            res = n == null ? "-" : n.SubjectName;
+
+            return res;
         }
 
         public async Task<TableViewModel> GetSchedule(int gradeId)

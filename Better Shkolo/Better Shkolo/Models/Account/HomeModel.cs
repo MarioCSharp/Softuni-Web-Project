@@ -7,5 +7,7 @@
         public int PlaceInSchool { get; set; }
         public int PlaceInGrade { get; set; }
         public int PlaceInYear { get; set; }
+        public string CurrentPeriod { get; set; } = null!;
+        public string NextPeriod { get; set; } = null!;
     }
 }

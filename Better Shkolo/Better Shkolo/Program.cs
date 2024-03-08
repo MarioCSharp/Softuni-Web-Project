@@ -82,6 +82,9 @@ namespace Better_Shkolo
                 policy.AddPolicy("StudentParentTeacherPolicy", options =>
                     options.RequireAssertion(context =>
                         context.User.IsInRole("Student") || context.User.IsInRole("Parent") || context.User.IsInRole("Teacher")));
+                policy.AddPolicy("DirectorStudentParentTeacherPolicy", options =>
+                   options.RequireAssertion(context =>
+                     context.User.IsInRole("Director") || context.User.IsInRole("Student") || context.User.IsInRole("Parent") || context.User.IsInRole("Teacher")));
 
                 policy.AddPolicy("AdministratorDirectorTeacherPolicy", options =>
                     options.RequireAssertion(context =>

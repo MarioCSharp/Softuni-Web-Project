@@ -43,7 +43,7 @@ namespace Better_Shkolo.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        [Authorize(Policy = "DirectorTeacherPolicy")]
+        [Authorize(Policy = "DirectorStudentParentTeacherPolicy")]
         public async Task<IActionResult> Schedule()
         {
             var schoolId = await schoolService.GetSchoolIdByUser();

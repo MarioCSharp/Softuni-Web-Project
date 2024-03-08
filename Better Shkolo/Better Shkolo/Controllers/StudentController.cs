@@ -177,7 +177,7 @@ namespace Better_Shkolo.Controllers
 
             if (term != 1 && term != 2)
             {
-                return BadRequest();
+                term = 1;
             }
 
             if (currentUserId == userId

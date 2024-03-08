@@ -6,5 +6,7 @@ namespace Better_Shkolo.Services.TableService
     {
         Task<bool> GenerateProgram(int schoolId);
         Task<TableViewModel> GetSchedule(int gradeId);
+        Task<string> GetCurrentPeriod(string userId);
+        Task<string> GetNextPeriod(string userId);
     }
 }
