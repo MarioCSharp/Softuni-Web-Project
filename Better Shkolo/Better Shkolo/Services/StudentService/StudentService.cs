@@ -10,6 +10,7 @@ using Better_Shkolo.Models.Review;
 using Better_Shkolo.Models.Student;
 using Better_Shkolo.Models.Subject;
 using Better_Shkolo.Models.Test;
+using Better_Shkolo.Services.AccountService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,14 +20,17 @@ namespace Better_Shkolo.Services.StudentService
     {
         private ApplicationDbContext context;
         private UserManager<User> userManager;
+        private IAccountService accountService;
         private IMapper mapper;
         public StudentService(ApplicationDbContext context,
                               UserManager<User> userManager,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IAccountService accountService)
         {
             this.context = context;
             this.userManager = userManager;
             this.mapper = mapper;
+            this.accountService = accountService;
         }
         public async Task<bool> Add(StudentCreateModel model)
         {
@@ -147,6 +151,29 @@ namespace Better_Shkolo.Services.StudentService
             await context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<(string, double)> GetBestSubject(int place)
+        {
+            var s = await GetStudent(accountService.GetUserId());
+
+            var marks = await context.Marks.Where(x => x.StudentId == s.Id).ToListAsync();
+
+            var standings = new Dictionary<int, double>();
+
+            foreach (var mark in marks)
+            {
+                if (!standings.ContainsKey(mark.SubjectId))
+                {
+                    standings[mark.SubjectId] = marks.Where(x => x.SubjectId == mark.SubjectId).Average(x => x.Value);
+                }
+            }
+
+            var oB = standings.OrderByDescending(x => x.Value).ToArray()[place - 1];
+
+            var ss = await context.Subjects.FindAsync(oB.Key);
+
+            return ($"{ss.Name}", double.Parse($"{oB.Value:F2}"));
         }
 
         public async Task<Student> GetStudent(int id)

@@ -15,14 +15,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar With Bootstrap</title>
+    <title>Начало</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/home.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Layout Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-pzjw8f+ua/C8rYT8/aaU6PKe4iOOLblAd/Su9QlgVPa3R2jGz9z9gJWtOEmdK5S" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 
@@ -63,7 +63,7 @@
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                           data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                             <i class="lni lni-protection"></i>
                             <span>Дейности</span>
                         </a>
@@ -172,28 +172,80 @@
                         </div>
                     </div>
 
-                    <h3>Текущ час: @Model.CurrentPeriod</h3>
-                    <h3>Следващ час: @Model.NextPeriod</h3>
+                    <br />
+                    <br />
+
+                    <div style="border: 2px solid #3498db; padding: 15px; border-radius: 10px; background-color: #ecf0f1;">
+                        <div style="text-align: center; font-size: 18px; color: #3498db; margin-bottom: 10px;">
+                            <i class="far fa-clock" style="margin-right: 5px;"></i> Текущ час: @Model.CurrentPeriod
+                        </div>
+                        <div style="text-align: center; font-size: 18px; color: #3498db;">
+                            <i class="far fa-clock" style="margin-right: 5px;"></i> Следващ час: @Model.NextPeriod
+                        </div>
+                    </div>
 
                     <br />
                     <br />
                     <br />
                     <br />
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="box">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h1>КЛАСАЦИЯ</h1>
-                                        <div class="d-flex flex-row gap-3">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="col-md-6 custom-margin h-100" style="max-width: 500px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <!-- Added a trophy icon for the title -->
+                                            <h1><i class="fa fa-trophy text-warning"></i> КЛАСАЦИЯ</h1>
+                                            <div class="d-flex flex-row gap-3">
+                                                <!-- Added a star icon for decoration -->
+                                                <i class="fa fa-star text-primary"></i>
+                                                <i class="fa fa-star text-primary"></i>
+                                                <i class="fa fa-star text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- Added some background color and padding for a cleaner look -->
+                                                <div class="bg-light p-3 rounded">
+                                                    <!-- Added icons and colors to the ranking information -->
+                                                    <p><i class="fa fa-list-ol text-success"></i> МЯСТО В ПАРАЛЕЛКАТА: @Model.PlaceInGrade</p>
+                                                    <p><i class="fa fa-graduation-cap text-info"></i> МЯСТО ВЪВ ВИПУСКА: @Model.PlaceInYear</p>
+                                                    <p><i class="fa fa-university text-danger"></i> МЯСТО В УЧИЛИЩЕ: @Model.PlaceInSchool</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <p>МЯСТО В ПАРАЛЕЛКАТА: @Model.PlaceInGrade</p>
-                                            <p>МЯСТО ВЪВ ВИПУСКА: @Model.PlaceInYear</p>
-                                            <p>МЯСТО В УЧИЛИЩЕ: @Model.PlaceInSchool</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 custom-margin h-100" style="max-width: 500px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <!-- Changed the crown icon to a book icon for the title -->
+                                            <h1><i class="fa fa-book text-warning"></i> ПРЕДМЕТИ С НАЙ-ВИСОК УСПЕХ</h1>
+                                            <div class="d-flex flex-row gap-3">
+                                                <!-- Changed the heart icons to star icons for decoration -->
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- Changed background color and padding for a cleaner look -->
+                                                <div class="bg-light p-3 rounded">
+                                                    <!-- Changed icons and colors for the ranking information -->
+                                                    <p><i class="fa fa-trophy text-success"></i> @Model.SubjectInFirstPlace.Item1: @Model.SubjectInFirstPlace.Item2</p>
+                                                    <p><i class="fa fa-graduation-cap text-info"></i> @Model.SubjectInSecondPlace.Item1: @Model.SubjectInSecondPlace.Item2</p>
+                                                    <p>
+                                                        <i class="fa fa-star text-danger"></i>
+                                                        @Model.SubjectInThirdPlace.Item1: @Model.SubjectInThirdPlace.Item2
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -293,5 +345,9 @@
 
     .f-right {
         float: right;
+    }
+
+    .custom-margin {
+        margin-right: 75px; /* Adjust the value to your preferred space */
     }
 </style>

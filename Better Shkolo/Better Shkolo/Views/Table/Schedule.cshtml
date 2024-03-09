@@ -14,11 +14,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar With Bootstrap</title>
+    <title>Програма</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-NJz9znjh5d9xIb6gD/1U3P3U/7nH1qPksbRL57MVRRte0rHVkuNx12e4W2Ib5fU6um6uuB96qS2J28+ea2dpzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .bg-light-gray {
+            background-color: #f7f7f7;
+        }
+
+        .bg-light-green {
+            background-color: #dff0d8;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 175px; /* Adjust the maximum width */
+        }
+
+        .fa {
+            margin-right: 5px;
+        }
+
+        /* Additional styling for icons */
+        .fa-clock {
+            color: #5bbd2a;
+        }
+
+        .fa-book {
+            color: #fff;
+            background-color: #4ca520;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .fa-user {
+            color: #00a2a7;
+        }
+
+        /* Adjust the width of the TIME column */
+        .time-column {
+            min-width: 100px;
+        }
+    </style>
 </head>
 @{
     Layout = "";
@@ -129,11 +187,11 @@
 
                 <div class="container">
                     <div class="table-responsive">
-                        <table class="table table-bordered text-center">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr class="bg-light-gray">
-                                    <th class="text-uppercase">
-                                        Time
+                                    <th class="text-uppercase text-black" style="width: 120px;">
+                                        <i class="fas fa-clock"></i> Time
                                     </th>
                                     <th class="text-uppercase">Понеделник</th>
                                     <th class="text-uppercase">Вторник</th>
@@ -143,137 +201,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="align-middle">Първи час (8:00 - 8:45)</td>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        var a = Model.Tables.FirstOrDefault(x => x.Day == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 1);
-                                        if (a != null)
+                                @for (int period = 1; period <= 7; period++)
+                                {
+                                    <tr>
+                                        <td class="align-middle">@GetPeriodTime(period)</td>
+                                        @for (int day = 1; day <= 5; day++)
                                         {
-                                            <td>
-                                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
-                                                <div class="font-size13 text-black">@a.TeacherName</div>
+                                            var a = Model.Tables.FirstOrDefault(x => x.Day == day && x.Period == period);
+                                            <td class="@(a != null ? "bg-light-green" : "bg-light-gray")">
+                                                @if (a != null)
+                                                {
+                                                    <div class="subject-badge bg-green text-white">
+                                                        <i class="fas fa-book"></i>
+                                                        <span class="subject-name">@a.SubjectName</span>
+                                                    </div>
+                                                    <div class="font-size13 text-black">
+                                                        <i class="fas fa-user"></i> @a.TeacherName
+                                                    </div>
+                                                }
                                             </td>
                                         }
-                                        else
-                                        {
-                                            <td class="bg-light-gray"></td>
-                                        }
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">Втори час (9:05 - 9:50)</td>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        var a = Model.Tables.FirstOrDefault(x => x.Day == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 2);
-                                        if (a != null)
-                                        {
-                                            <td>
-                                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
-                                                <div class="font-size13 text-black">@a.TeacherName</div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="bg-light-gray"></td>
-                                        }
-                                    }
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">Трети час (10:00 - 10:45)</td>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        var a = Model.Tables.FirstOrDefault(x => x.Day == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 3);
-                                        if (a != null)
-                                        {
-                                            <td>
-                                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
-                                                <div class="font-size13 text-black">@a.TeacherName</div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="bg-light-gray"></td>
-                                        }
-                                    }
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">Четвърти час (10:55 - 11:40)</td>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        var a = Model.Tables.FirstOrDefault(x => x.Day == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 4);
-                                        if (a != null)
-                                        {
-                                            <td>
-                                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
-                                                <div class="font-size13 text-black">@a.TeacherName</div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="bg-light-gray"></td>
-                                        }
-                                    }
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">Пети час ㅤ(11:50 - 12:35)</td>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        var a = Model.Tables.FirstOrDefault(x => x.Day == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 5);
-                                        if (a != null)
-                                        {
-                                            <td>
-                                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
-                                                <div class="font-size13 text-black">@a.TeacherName</div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="bg-light-gray"></td>
-                                        }
-                                    }
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">Шести час (12:45 - 13:30)</td>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        var a = Model.Tables.FirstOrDefault(x => x.Day == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 6);
-                                        if (a != null)
-                                        {
-                                            <td>
-                                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
-                                                <div class="font-size13 text-black">@a.TeacherName</div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="bg-light-gray"></td>
-                                        }
-                                    }
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">Седми час (13:40 - 14:25)</td>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        var a = Model.Tables.FirstOrDefault(x => x.Day == (int)((DayOfWeek)((i + 1) % 7)) && x.Period == 7);
-                                        if (a != null)
-                                        {
-                                            <td>
-                                                <span class="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">@a.SubjectName</span>
-                                                <div class="font-size13 text-black">@a.TeacherName</div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="bg-light-gray"></td>
-                                        }
-                                    }
-                                </tr>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -285,5 +234,29 @@
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
             crossorigin="anonymous"></script>
     <script src="/js/home.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    @functions {
+        string GetPeriodTime(int period)
+        {
+            switch (period)
+            {
+                case 1: return "Първи час (8:00 - 8:45)";
+                case 2: return "Втори час (9:05 - 9:50)";
+                case 3: return "Трети час (10:00 - 10:45)";
+                case 4: return "Четвърти час (10:55 - 11:40)";
+                case 5: return "Пети час ㅤ(11:50 - 12:35)";
+                case 6: return "Шести час (12:45 - 13:30)";
+                case 7: return "Седми час (13:40 - 14:25)";
+                default: return "";
+            }
+        }
+
+        string GetCellClass(TableDisplayModel lesson)
+        {
+            return lesson != null ? "bg-light-gray" : "";
+        }
+    }
 </body>
 </html>

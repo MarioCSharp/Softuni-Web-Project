@@ -123,3 +123,44 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Adjust cell padding for better spacing */
+.table td,
+.table th {
+    padding: 10px;
+}
+
+.bg-light-gray {
+    background-color: #f7f7f7;
+}
+
+.bg-light-green {
+    background-color: #d4edda;
+}
+
+.subject-badge {
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.fa {
+    margin-right: 5px;
+}
+
+/* Additional styling for icons */
+.fa-clock {
+    color: #5bbd2a;
+}
+
+.fa-book {
+    color: #4ca520;
+}
+
+.fa-user {
+    color: #00a2a7;
+}

@@ -43,7 +43,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar With Bootstrap</title>
+    <title>Ученически профил</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -162,136 +162,143 @@
                                 <div class="card-body bg-transparent text-white mailbox-widget pb-0">
                                     <ul class="nav nav-tabs custom-tab border-bottom-0 mt-4" id="myTab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="inbox-tab" data-toggle="tab" aria-controls="inbox" href="#inbox" role="tab" aria-selected="true">
-                                                <span class="d-block d-md-none"><i class="ti-email"></i></span>
+                                            <a class="nav-link active" id="marks-tab" data-toggle="tab" aria-controls="marks" href="#marks" role="tab" aria-selected="true">
+                                                <i class="ti-email d-block d-md-none"></i>
                                                 <span class="d-none d-md-block" style="color: black">Оценки</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="sent-tab" data-toggle="tab" aria-controls="sent" href="#sent" role="tab" aria-selected="false">
-                                                <span class="d-block d-md-none"><i class="ti-export"></i></span>
+                                            <a class="nav-link" id="reviews-tab" data-toggle="tab" aria-controls="reviews" href="#reviews" role="tab" aria-selected="false">
+                                                <i class="ti-export d-block d-md-none"></i>
                                                 <span class="d-none d-md-block" style="color: black">Отзиви</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="delete-tab" data-toggle="tab" aria-controls="delete" href="#delete" role="tab" aria-selected="false">
-                                                <span class="d-block d-md-none"><i class="ti-trash"></i></span>
+                                            <a class="nav-link" id="absences-tab" data-toggle="tab" aria-controls="absences" href="#absences" role="tab" aria-selected="false">
+                                                <i class="ti-trash d-block d-md-none"></i>
                                                 <span class="d-none d-md-block" style="color: black">Отсъствия</span>
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
 
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
-                                        <div class="table-responsive">
-                                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
-                                                <tbody>
-                                                    @foreach (var subject in Model.AllSubjects)
-                                                    {
-                                                        <tr>
-                                                            <td>
-                                                                <strong>@subject.Name:</strong>
-                                                                @foreach (var item in Model.Marks.Where(x => x.SubjectId == subject.Id))
-                                                                {
-                                                                    @if (item.Value == 6)
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="marks" aria-labelledby="marks-tab" role="tabpanel">
+                                            <!-- "Marks" content -->
+                                            <div class="table-responsive">
+                                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                                    <tbody>
+                                                        <!-- Your "Marks" content goes here -->
+                                                        @foreach (var subject in Model.AllSubjects)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>@subject.Name:</strong>
+                                                                    @foreach (var item in Model.Marks.Where(x => x.SubjectId == subject.Id))
                                                                     {
-                                                                        <button class="mark-button" value="@item.Id" id="six">@item.Value</button>
+                                                                        @if (item.Value == 6)
+                                                                        {
+                                                                            <button class="mark-button" value="@item.Id" id="six">@item.Value</button>
+                                                                        }
+                                                                        @if (item.Value == 5)
+                                                                        {
+                                                                            <button class="mark-button" value="@item.Id" id="five">@item.Value</button>
+                                                                        }
+                                                                        @if (item.Value == 4)
+                                                                        {
+                                                                            <button class="mark-button" value="@item.Id" id="four">@item.Value</button>
+                                                                        }
+                                                                        @if (item.Value == 3)
+                                                                        {
+                                                                            <button class="mark-button" value="@item.Id" id="three">@item.Value</button>
+                                                                        }
+                                                                        @if (item.Value == 2)
+                                                                        {
+                                                                            <button class="mark-button" value="@item.Id" id="two">@item.Value</button>
+                                                                        }
                                                                     }
-                                                                    @if (item.Value == 5)
+                                                                    @if (Model.SubjectTermMark.ContainsKey(subject.Id) && Model.SubjectTermMark[subject.Id].Item1 == Model.Term)
                                                                     {
-                                                                        <button class="mark-button" value="@item.Id" id="five">@item.Value</button>
+                                                                        <p>
+                                                                            Срочна оценка:
+                                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 6)
+                                                                            {
+                                                                                <button class="mark-button" id="six">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                            }
+                                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 5)
+                                                                            {
+                                                                                <button class="mark-button" id="five">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                            }
+                                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 4)
+                                                                            {
+                                                                                <button class="mark-button" id="four">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                            }
+                                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 3)
+                                                                            {
+                                                                                <button class="mark-button" id="three">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                            }
+                                                                            @if (@Model.SubjectTermMark[subject.Id].Item2 == 2)
+                                                                            {
+                                                                                <button class="mark-button" id="two">@Model.SubjectTermMark[subject.Id].Item2</button>
+                                                                            }
+                                                                        </p>
                                                                     }
-                                                                    @if (item.Value == 4)
-                                                                    {
-                                                                        <button class="mark-button" value="@item.Id" id="four">@item.Value</button>
-                                                                    }
-                                                                    @if (item.Value == 3)
-                                                                    {
-                                                                        <button class="mark-button" value="@item.Id" id="three">@item.Value</button>
-                                                                    }
-                                                                    @if (item.Value == 2)
-                                                                    {
-                                                                        <button class="mark-button" value="@item.Id" id="two">@item.Value</button>
-                                                                    }
-                                                                }
-                                                                @if (Model.SubjectTermMark.ContainsKey(subject.Id) && Model.SubjectTermMark[subject.Id].Item1 == Model.Term)
-                                                                {
-                                                                    <p>
-                                                                        Срочна оценка:
-                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 6)
-                                                                        {
-                                                                            <button class="mark-button" id="six">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                                        }
-                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 5)
-                                                                        {
-                                                                            <button class="mark-button" id="five">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                                        }
-                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 4)
-                                                                        {
-                                                                            <button class="mark-button" id="four">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                                        }
-                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 3)
-                                                                        {
-                                                                            <button class="mark-button" id="three">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                                        }
-                                                                        @if (@Model.SubjectTermMark[subject.Id].Item2 == 2)
-                                                                        {
-                                                                            <button class="mark-button" id="two">@Model.SubjectTermMark[subject.Id].Item2</button>
-                                                                        }
-                                                                    </p>
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="sent" aria-labelledby="sent-tab" role="tabpanel">
-                                        <div class="table-responsive">
-                                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
-                                                <tbody>
-                                                    @foreach (var subject in Model.AllSubjects)
-                                                    {
-                                                        <tr>
-                                                            <td>
-                                                                <strong>@subject.Name: @Model.Reviews.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Show" asp-controller="Review" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
+
+                                        <div class="tab-pane fade" id="reviews" aria-labelledby="reviews-tab" role="tabpanel">
+                                            <!-- "Reviews" content -->
+                                            <div class="table-responsive">
+                                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                                    <tbody>
+                                                        @foreach (var subject in Model.AllSubjects)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>@subject.Name: @Model.Reviews.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Show" asp-controller="Review" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="delete" aria-labelledby="delete-tab" role="tabpanel">
-                                        <div class="table-responsive">
-                                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
-                                                <tbody>
-                                                    @foreach (var subject in Model.AllSubjects)
-                                                    {
-                                                        <tr>
-                                                            <td>
-                                                                <strong>@subject.Name: @Model.Absences.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Display" asp-controller="Absences" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
+
+                                        <div class="tab-pane fade" id="absences" aria-labelledby="absences-tab" role="tabpanel">
+                                            <!-- "Absences" content -->
+                                            <div class="table-responsive">
+                                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                                    <tbody>
+                                                        @foreach (var subject in Model.AllSubjects)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>@subject.Name: @Model.Absences.Where(x => x.SubjectId == subject.Id).Count() <a asp-action="Display" asp-controller="Absences" asp-route-subjectId="@subject.Id" asp-route-userId="@Model.UserId">Виж</a></strong>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Срок
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="1">Първи срок</a></li>
-                            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="2">Втори срок</a></li>
-                        </ul>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="1">Първи срок</a>
+                            <a class="dropdown-item" asp-action="Profile" asp-controller="Student" asp-route-userId="@Model.UserId" asp-route-term="2">Втори срок</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -301,5 +308,8 @@
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
             crossorigin="anonymous"></script>
     <script src="/js/home.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

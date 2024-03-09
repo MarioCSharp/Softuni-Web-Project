@@ -71,12 +71,15 @@ namespace Better_Shkolo.Controllers
 
                 var res = new HomeModel()
                 {
-                    GradeId = gradeService.GetUserGradeId().Result ,
+                    GradeId = gradeService.GetUserGradeId().Result,
                     PlaceInSchool = model.PlaceSchool,
                     PlaceInGrade = model.PlaceGrade,
                     PlaceInYear = model.PlaceYear,
                     CurrentPeriod = await tableService.GetCurrentPeriod(accountService.GetUserId()),
                     NextPeriod = nxt,
+                    SubjectInFirstPlace = await studentService.GetBestSubject(1),
+                    SubjectInSecondPlace = await studentService.GetBestSubject(2),
+                    SubjectInThirdPlace = await studentService.GetBestSubject(3)
                 };
 
                 return View(res);
