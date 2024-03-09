@@ -127,7 +127,7 @@ namespace Better_Shkolo.Controllers
 
             if (!result) return BadRequest();
 
-            return Ok(result);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

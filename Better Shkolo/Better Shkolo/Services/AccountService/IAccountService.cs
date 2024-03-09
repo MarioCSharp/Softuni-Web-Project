@@ -15,5 +15,6 @@ namespace Better_Shkolo.Services.AccountService
         Task<bool> EditUser(UserProfileModel model);
         Task<bool> EditAddress(UserAddressModel model);
         Task<bool> EditStatus(StatusEditModel model);
+        Task<bool> EditDoctor(DoctorEditModel model);
     }
 }

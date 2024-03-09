@@ -187,5 +187,31 @@ namespace Better_Shkolo.Controllers
 
             return RedirectToAction("Students", "Grade");
         }
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> EditDoctor(string userId)
+        {
+            var u = await accountService.GetUser(userId);
+
+            return View(new DoctorEditModel
+            {
+                Name = u.DoctorName,
+                Phone = u.DoctorPhone,
+                Address = u.DoctorAddress,
+                UserId = userId
+            });
+        }
+        [HttpPost]
+        [Authorize(Policy = "DirectorTeacherPolicy")]
+        public async Task<IActionResult> EditDoctor(DoctorEditModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var res = await accountService.EditDoctor(model);
+
+            return RedirectToAction("Students", "Grade");
+        }
     }
 }

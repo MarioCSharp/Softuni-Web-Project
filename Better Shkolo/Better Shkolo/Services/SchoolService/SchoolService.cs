@@ -128,6 +128,12 @@ namespace Better_Shkolo.Services.SchoolService
 
                 schoolId = d.SchoolId;
             }
+            else if (await userManager.IsInRoleAsync(user, "Student"))
+            {
+                var s = await context.Students.FirstOrDefaultAsync(x => x.UserId == user.Id);
+
+                schoolId = s.SchoolId;
+            }
 
             return schoolId;
         }

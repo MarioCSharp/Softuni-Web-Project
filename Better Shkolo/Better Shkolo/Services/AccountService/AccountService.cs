@@ -158,5 +158,21 @@ namespace Better_Shkolo.Services.AccountService
 
             return u;
         }
+
+        public async Task<bool> EditDoctor(DoctorEditModel model)
+        {
+            var u = await context.Users.FindAsync(model.UserId);
+
+            if (u is null) return false;
+
+            u.DoctorAddress = model.Address;
+            await context.SaveChangesAsync();
+            u.DoctorName = model.Name;
+            await context.SaveChangesAsync();
+            u.DoctorPhone = model.Phone;
+            await context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
