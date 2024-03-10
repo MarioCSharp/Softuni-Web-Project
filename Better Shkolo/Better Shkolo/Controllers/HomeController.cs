@@ -49,13 +49,18 @@ namespace Better_Shkolo.Controllers
 
             if (User.IsInRole("Student") || User.IsInRole("Parent"))
             {
-                var stundentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                var student = await studentService.GetStudent(stundentUserId);
+                var student = await studentService.GetStudent(userId);
+
+                if (student is null)
+                {
+                    student = await studentService.GetStudentFromParent(userId);
+                }
 
                 var model = await standingsService.GetPlaces(student);
 
-                var nxt = await tableService.GetNextPeriod(accountService.GetUserId());
+                var nxt = await tableService.GetNextPeriod(student.UserId);
 
                 if (nxt == "-")
                 {

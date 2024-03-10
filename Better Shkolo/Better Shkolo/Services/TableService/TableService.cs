@@ -1,6 +1,7 @@
 ﻿using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Table;
+using Better_Shkolo.Services.StudentService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.TableService
@@ -8,9 +9,12 @@ namespace Better_Shkolo.Services.TableService
     public class TableService : ITableService
     {
         private ApplicationDbContext context;
-        public TableService(ApplicationDbContext context)
+        private IStudentService studentService;
+        public TableService(ApplicationDbContext context,
+                            IStudentService studentService)
         {
             this.context = context;
+            this.studentService = studentService;
         }
 
         public async Task<bool> GenerateProgram(int schoolId)
@@ -117,6 +121,11 @@ namespace Better_Shkolo.Services.TableService
         {
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
 
+            if (student is null)
+            {
+                student = await studentService.GetStudentFromParent(userId);
+            }
+
             var table = await GetSchedule(student.GradeId);
             var res = "-";
             var period = 0;
@@ -205,6 +214,11 @@ namespace Better_Shkolo.Services.TableService
         public async Task<string> GetNextPeriod(string userId)
         {
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (student is null)
+            {
+                student = await studentService.GetStudentFromParent(userId);
+            }
 
             var table = await GetSchedule(student.GradeId);
 

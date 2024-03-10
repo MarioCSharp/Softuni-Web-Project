@@ -2,6 +2,7 @@
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.School;
 using Better_Shkolo.Services.AccountService;
+using Better_Shkolo.Services.StudentService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +13,16 @@ namespace Better_Shkolo.Services.SchoolService
         private ApplicationDbContext context;
         private IAccountService accountService;
         private UserManager<User> userManager;
+        private IStudentService studentService;
         public SchoolService(ApplicationDbContext context
                             , UserManager<User> userManager
-                            , IAccountService accountService)
+                            , IAccountService accountService
+                            , IStudentService studentService)
         {
             this.context = context;
             this.userManager = userManager;
             this.accountService = accountService;
+            this.studentService = studentService;
         }
         public async Task<bool> AddSchool(School school)
         {
@@ -131,6 +135,12 @@ namespace Better_Shkolo.Services.SchoolService
             else if (await userManager.IsInRoleAsync(user, "Student"))
             {
                 var s = await context.Students.FirstOrDefaultAsync(x => x.UserId == user.Id);
+
+                schoolId = s.SchoolId;
+            }
+            else if (await userManager.IsInRoleAsync(user, "Parent"))
+            {
+                var s = await studentService.GetStudentFromParent(user.Id);
 
                 schoolId = s.SchoolId;
             }

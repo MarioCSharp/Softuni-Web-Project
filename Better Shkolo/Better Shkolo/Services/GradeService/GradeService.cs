@@ -4,6 +4,7 @@ using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Student;
 using Better_Shkolo.Services.AccountService;
+using Better_Shkolo.Services.StudentService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,15 +16,18 @@ namespace Better_Shkolo.Services.GradeService
         private UserManager<User> userManager;
         private IAccountService accountService;
         private IMapper mapper;
+        private IStudentService studentService;
         public GradeService(ApplicationDbContext context,
                             UserManager<User> userManager,
                             IMapper mapper,
-                            IAccountService accountService)
+                            IAccountService accountService,
+                            IStudentService studentService)
         {
             this.context = context;
             this.userManager = userManager;
             this.mapper = mapper;
             this.accountService = accountService;
+            this.studentService = studentService;
         }
         public async Task<bool> Create(GradeCreateModel model)
         {
@@ -234,7 +238,9 @@ namespace Better_Shkolo.Services.GradeService
 
             if (student == null)
             {
-                return 0;
+                student = await studentService.GetStudentFromParent(accountService.GetUserId());
+
+                return student.GradeId;
             }
 
             return student.GradeId;

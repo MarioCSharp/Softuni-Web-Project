@@ -20,5 +20,6 @@ namespace Better_Shkolo.Services.StudentService
         Task<StudentProfileModel> GetStudentProfile(string userId, int term);
         Task<StudentViewModel> GetStudentsInGrade(int id);
         Task<(string, double)> GetBestSubject(int place);
+        Task<Student> GetStudentFromParent(string userId);
     }
 }

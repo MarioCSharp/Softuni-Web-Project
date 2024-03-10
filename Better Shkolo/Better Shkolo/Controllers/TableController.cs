@@ -37,6 +37,11 @@ namespace Better_Shkolo.Controllers
 
                 var s = await studentService.GetStudent(u);
 
+                if (s is null)
+                {
+                    s = await studentService.GetStudentFromParent(u);
+                }
+
                 gradeId = s.GradeId;
             }
 

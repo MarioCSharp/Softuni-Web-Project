@@ -3,7 +3,6 @@ using Better_Shkolo.Data;
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Absence;
 using Better_Shkolo.Models.Absences;
-using Better_Shkolo.Models.Grade;
 using Better_Shkolo.Models.Mark;
 using Better_Shkolo.Models.Parent;
 using Better_Shkolo.Models.Review;
@@ -157,6 +156,11 @@ namespace Better_Shkolo.Services.StudentService
         {
             var s = await GetStudent(accountService.GetUserId());
 
+            if (s is null)
+            {
+                s = await GetStudentFromParent(accountService.GetUserId());
+            }
+
             var marks = await context.Marks.Where(x => x.StudentId == s.Id).ToListAsync();
 
             var standings = new Dictionary<int, double>();
@@ -186,6 +190,13 @@ namespace Better_Shkolo.Services.StudentService
             return await context.Students.FirstOrDefaultAsync(x => x.UserId == id);
         }
 
+        public async Task<Student> GetStudentFromParent(string userId)
+        {
+            var p = await context.Parents.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            return await context.Students.FindAsync(p.StudentId);
+        }
+
         public async Task<AbsencesAddModel> GetStudentModel(int id)
         {
             var student = await context.Students.FindAsync(id);
@@ -205,6 +216,11 @@ namespace Better_Shkolo.Services.StudentService
         public async Task<StudentProfileModel> GetStudentProfile(string userId, int term)
         {
             var student = await context.Students.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (student is null)
+            {
+                student = await GetStudentFromParent(userId);
+            }
 
             if (student == null) return null;
 

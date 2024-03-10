@@ -80,6 +80,11 @@ namespace Better_Shkolo.Controllers
         {
             var student = await studentService.GetStudent(userId);
 
+            if (student is null)
+            {
+                student = await studentService.GetStudentFromParent(userId);
+            }
+
             return RedirectToAction("Display", "Review", new {subjectId = subjectId, userId = student.UserId});
         }
     }

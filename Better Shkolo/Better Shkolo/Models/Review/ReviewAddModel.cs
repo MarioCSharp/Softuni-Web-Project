@@ -14,6 +14,7 @@ namespace Better_Shkolo.Models.Review
         [Required]
         public int StudentId { get; set; }
         [Required]
+        [Display(Name = "Срок")]
         public int Term { get; set; }
     }
 }
