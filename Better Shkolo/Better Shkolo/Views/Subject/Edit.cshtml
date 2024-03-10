@@ -147,7 +147,13 @@
                                         }
                                     </select>
                                 </div>
-
+                                <div class="mb-3">
+                                    <label asp-for="Type"></label>
+                                    <select asp-for="Type" class="form-control">
+                                        <option value="OOP">Общо образователен предмет</option>
+                                        <option value="SPC">Специален предмет</option>
+                                    </select>
+                                </div>
                                 <input type="hidden" asp-for="SchoolId" />
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Запази промените</button>

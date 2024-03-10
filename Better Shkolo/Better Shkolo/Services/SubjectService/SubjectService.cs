@@ -99,6 +99,7 @@ namespace Better_Shkolo.Services.SubjectService
             subject.SchoolId = model.SchoolId;
             subject.TeacherId = model.TeacherId;
             subject.GradeId = model.GradeId;
+            subject.Type = model.Type;
 
             await context.SaveChangesAsync();
 

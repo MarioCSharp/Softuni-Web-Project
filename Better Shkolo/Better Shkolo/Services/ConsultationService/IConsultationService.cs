@@ -10,6 +10,7 @@ namespace Better_Shkolo.Services.ConsultationService
         Task<bool> Create(ConsultationCreateModel model);
         Task<ConsultationAnalyzeModel> Analyze(int gradeId, string type, int term);
         Task<ConsultationAnalyzeModel> TermAnalyze(int gradeId, string type, int term);
+        Task<ConsultationAnalyzeModel> DeepAnalyze(int gradeId, string type, int term);
         Task<List<ConsultationMineModel>> GetUserConsultations();
         Task<List<GradeDisplayModel>> GetGrades(string role);
         Task<bool> Delete(string userId, int gradeId, string type);

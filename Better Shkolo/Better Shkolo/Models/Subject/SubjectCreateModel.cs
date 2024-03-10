@@ -19,6 +19,9 @@ namespace Better_Shkolo.Models.Subject
         [Required]
         [Display(Name = "Клас")]
         public int GradeId { get; set; }
+        [Required]
+        [Display(Name = "Тип")]
+        public string Type { get; set; } = null!;
 
         public List<TeacherDisplayModel> TeachersInSchool { get; set; }
         public List<GradeDisplayModel> GradesInSchool { get; set; }

@@ -1,5 +1,4 @@
-﻿
-@using Better_Shkolo.Models.Subject;
+﻿@using Better_Shkolo.Models.Subject;
 @model SubjectCreateModel
 
 <!DOCTYPE html>
@@ -54,7 +53,7 @@
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                           data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                             <i class="lni lni-protection"></i>
                             <span>Дейности</span>
                         </a>
@@ -144,6 +143,13 @@
                                     {
                                         <option value="@user.Id">@user.GradeName</option>
                                     }
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Type"></label>
+                                <select asp-for="Type" class="form-control">
+                                    <option value="OOP">Общо образователен предмет</option>
+                                    <option value="SPC">Специален предмет</option>
                                 </select>
                             </div>
                             <input type="hidden" asp-for="SchoolId" />

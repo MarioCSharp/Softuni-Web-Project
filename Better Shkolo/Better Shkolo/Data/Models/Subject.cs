@@ -21,5 +21,7 @@ namespace Better_Shkolo.Data.Models
         public int GradeId { get; set; }
         [ForeignKey(nameof(GradeId))]
         public Grade Grade { get; set; }
+        [Required]
+        public string Type { get; set; } = null!;
     }
 }

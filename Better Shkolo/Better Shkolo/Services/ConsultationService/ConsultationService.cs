@@ -28,6 +28,10 @@ namespace Better_Shkolo.Services.ConsultationService
             {
                 return await TermAnalyze(gradeId, type, term);
             }
+            else if (type == "OOP" || type == "SPC")
+            {
+                return await DeepAnalyze(gradeId, type, term);
+            }
 
             var res = new Dictionary<string, double>();
 
@@ -79,6 +83,8 @@ namespace Better_Shkolo.Services.ConsultationService
                 "Test" => "контролно",
                 "Project" => "проект",
                 "EntActivery" => "активно участие",
+                "OOP" => "Общо образователни предмети",
+                "SPC" => "Специални предмети",
                 _ => throw new Exception()
             };
 
@@ -129,6 +135,61 @@ namespace Better_Shkolo.Services.ConsultationService
             return true;
         }
 
+        public async Task<ConsultationAnalyzeModel> DeepAnalyze(int gradeId, string type, int term)
+        {
+            var marks = await context.Marks
+                .Where(x => x.Subject.Type == type && x.Subject.GradeId == gradeId && x.Term == term)
+                .ToListAsync();
+
+            var ret = new Dictionary<string, List<double>>();
+
+            var gradeName = string.Empty;
+
+            foreach (var mark in marks)
+            {
+                var g = await context.Subjects.FindAsync(mark.SubjectId);
+
+                if (string.IsNullOrEmpty(gradeName))
+                {
+                    var grade = await context.Grades.FindAsync(g.GradeId);
+                    gradeName = grade.GradeName;
+                }
+
+                if (!ret.ContainsKey(g.Name))
+                {
+                    ret.Add(g.Name, new List<double>());
+                }
+
+                ret[g.Name].Add(double.Parse($"{mark.Value:F2}"));
+            }
+            var avg = 0.0;
+
+            var res = new Dictionary<string, double>();
+            var av = new List<double>();
+
+            foreach (var item in ret)
+            {
+                res.Add(item.Key, double.Parse($"{item.Value.Average():F2}"));
+                av.Add(double.Parse($"{item.Value.Average():F2}"));
+            }
+
+            if (av.Count > 0)
+            {
+                avg = double.Parse($"{av.Average():F2}");
+            }
+
+            return new ConsultationAnalyzeModel()
+            {
+                GradeName = gradeName,
+                Type = $"от {(type == "OOP" ? "общо образователни предмети" : "специални предмети")} {(term == 1 ? "първи" : "втори")} срок",
+                Average = avg,
+                GradeId = gradeId,
+                Term = term,
+                UserId = accountService.GetUserId(),
+                SubjectByConsultation = res
+            };
+        }
+
         public async Task<bool> Delete(string userId, int gradeId, string type)
         {
             type = type switch
@@ -139,6 +200,8 @@ namespace Better_Shkolo.Services.ConsultationService
                 "Контролно" => "Test",
                 "Проект" => "Project",
                 "Активно участие" => "EntActivery",
+                "Общо образователни предмети" => "OOP",
+                "Специални предмети" => "SPC",
                 _ => throw new Exception()
             };
 
@@ -166,12 +229,20 @@ namespace Better_Shkolo.Services.ConsultationService
                 "контролно" => "Test",
                 "проект" => "Project",
                 "активно участие" => "EntActivery",
+                "общо образователни предмети" => "OOP",
+                "специални предмети" => "SPC",
+                "срочни оценки" => "Term",
+                "годишни оценки" => "Year",
                 "Входно ниво" => "Entry",
                 "Писмени изпитване" => "Writting",
                 "Устно изпитване" => "Speaking",
                 "Контролно" => "Test",
                 "Проект" => "Project",
                 "Активно участие" => "EntActivery",
+                "Общо образователни предмети" => "OOP",
+                "Специални предмети" => "SPC",
+                "Срочни оценки" => "Term",
+                "Годишни оценки" => "Year",
                 _ => throw new Exception()
             };
 
@@ -305,6 +376,8 @@ namespace Better_Shkolo.Services.ConsultationService
                     "EntActivery" => "Активно участие",
                     "Term" => "Срочни оценки",
                     "Year" => "Годишни оценки",
+                    "OOP" => "Общо образователни предмети",
+                    "SPC" => "Специални предмети",
                     _ => throw new Exception()
                 };
             }
