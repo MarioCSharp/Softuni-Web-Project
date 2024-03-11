@@ -14,7 +14,7 @@ namespace Better_Shkolo.Models.Activity
         [Display(Name = "Присъствие")]
         public string Presence { get; set; } = null!;
         [Required]
-        [Display(Name = "Времови диапазон")]
+        [Display(Name = "Времеви диапазон")]
         public string Time { get; set; } = null!;
         [Required]
         [Display(Name = "Местоположение")]

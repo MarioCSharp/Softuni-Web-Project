@@ -200,6 +200,8 @@ namespace Better_Shkolo.Services.ConsultationService
                 "Контролно" => "Test",
                 "Проект" => "Project",
                 "Активно участие" => "EntActivery",
+                "Срочни оценки" => "Term",
+                "Годишни оценки" => "Year",
                 "Общо образователни предмети" => "OOP",
                 "Специални предмети" => "SPC",
                 _ => throw new Exception()
