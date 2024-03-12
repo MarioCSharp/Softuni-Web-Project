@@ -2,6 +2,7 @@
 using Better_Shkolo.Models.Consultation;
 using Better_Shkolo.Models.Grade;
 using QuestPDF.Fluent;
+using Document = QuestPDF.Fluent.Document;
 
 namespace Better_Shkolo.Services.ConsultationService
 {

@@ -46,7 +46,10 @@ namespace Better_Shkolo.Controllers
                 City = "",
                 Country = "",
                 Phone = "",
-                Chronic = "Здрав"
+                Chronic = "Здрав",
+                DoctorPhone = "",
+                DoctorName = "",
+                DoctorAddress = ""
             };
 
             var result = await userManager.CreateAsync(user, registerModel.Password);

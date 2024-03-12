@@ -123,6 +123,18 @@ namespace Better_Shkolo.Services.AccountService
             {
                 user.Country = "";
             }
+            if (string.IsNullOrEmpty(user.DoctorAddress))
+            {
+                user.DoctorAddress = "";
+            }
+            if (string.IsNullOrEmpty(user.DoctorName))
+            {
+                user.DoctorName = "";
+            }
+            if (string.IsNullOrEmpty(user.DoctorPhone))
+            {
+                user.DoctorPhone = "";
+            }
             await context.SaveChangesAsync();
 
             return true;
