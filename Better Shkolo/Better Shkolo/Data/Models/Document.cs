@@ -18,5 +18,7 @@ namespace Better_Shkolo.Data.Models
 
         [Required]
         public byte[] File { get; set; } = null!;
+        [Required]
+        public DateTime AddedOn { get; set; }
     }
 }

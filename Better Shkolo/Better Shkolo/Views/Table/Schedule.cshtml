@@ -95,7 +95,7 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
                     <a asp-action="Index" asp-controller="Home" class="sidebar-link">
-                        <i class="lni lni-agenda"></i>
+                        <i class="lni lni-home"></i>
                         <span>Начало</span>
                     </a>
                 </li>
@@ -103,7 +103,7 @@
                 {
                     <li class="sidebar-item">
                         <a asp-action="Students" asp-controller="Grade" class="sidebar-link">
-                            <i class="lni lni-layout"></i>
+                            <i class="lni lni-users"></i>
                             <span>Моят клас</span>
                         </a>
                     </li>
@@ -112,22 +112,32 @@
                 {
                     <li class="sidebar-item">
                         <a asp-action="Mine" asp-controller="Consultation" class="sidebar-link">
-                            <i class="lni lni-layout"></i>
+                            <i class="lni lni-book"></i>
                             <span>Справки</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a asp-action="Index" asp-controller="Document" class="sidebar-link">
+                            <i class="lni lni-folder"></i>
+                            <span>Документи</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                            <i class="lni lni-protection"></i>
+                           data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                            <i class="lni lni-briefcase"></i>
                             <span>Дейности</span>
                         </a>
                         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a asp-action="Add" asp-controller="Activity" class="sidebar-link">Добави дейност</a>
+                                <a asp-action="Add" asp-controller="Activity" class="sidebar-link">
+                                    <i class="lni lni-plus"></i> Добави дейност
+                                </a>
                             </li>
                             <li class="sidebar-item">
-                                <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">Училищен календар</a>
+                                <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
+                                    <i class="lni lni-calendar"></i> Училищен календар
+                                </a>
                             </li>
                         </ul>
                     </li>
@@ -136,35 +146,39 @@
                 {
                     <li class="sidebar-item">
                         <a asp-action="Schedule" asp-controller="Table" class="sidebar-link">
-                            <i class="lni lni-layout"></i>
+                            <i class="lni lni-calendar"></i>
                             <span>Седмична програма</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
-                            <i class="lni lni-layout"></i>
+                            <i class="lni lni-calendar"></i>
                             <span>Училищен календар</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a asp-action="Profile" asp-controller="Student" class="sidebar-link">
-                            <i class="lni lni-layout"></i>
+                            <i class="lni lni-user"></i>
                             <span>Ученически профил</span>
                         </a>
                     </li>
                 }
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-protection"></i>
+                       data-bs-target="#messages" aria-expanded="false" aria-controls="messages">
+                        <i class="lni lni-envelope"></i>
                         <span>Съобщения</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="messages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a asp-action="Index" asp-controller="Message" class="sidebar-link">Съобщения</a>
+                            <a asp-action="Index" asp-controller="Message" class="sidebar-link">
+                                <i class="lni lni-envelope"></i> Съобщения
+                            </a>
                         </li>
                         <li class="sidebar-item">
-                            <a asp-action="Send" asp-controller="Message" class="sidebar-link">Изпрати съобщение</a>
+                            <a asp-action="Send" asp-controller="Message" class="sidebar-link">
+                                <i class="lni lni-popup"></i> Изпрати съобщение
+                            </a>
                         </li>
                     </ul>
                 </li>

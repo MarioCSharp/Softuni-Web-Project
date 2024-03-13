@@ -26,6 +26,7 @@ namespace Better_Shkolo.Services.DocumentService
             {
                 SchoolId = school,
                 Name = model.Name,
+                AddedOn = DateTime.Now,
             };
 
             foreach (var d in file)
@@ -46,6 +47,18 @@ namespace Better_Shkolo.Services.DocumentService
             return await context.Documents.ContainsAsync(doc);
         }
 
+        public async Task<bool> Delete(int documentId)
+        {
+            var d = await context.Documents.FindAsync(documentId);
+
+            if (d is null) return false;
+
+            context.Documents.Remove(d);
+            await context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<byte[]> GetFile(int documentId)
         {
             var doc = await context.Documents.FindAsync(documentId);
@@ -62,7 +75,8 @@ namespace Better_Shkolo.Services.DocumentService
                     SchoolId = schoolId,
                     Name = x.Name,
                     File = x.File,
-                    DocumentId = x.Id
+                    DocumentId = x.Id,
+                    AddedOn = x.AddedOn.Date.ToString()
                 }).ToListAsync();
         }
     }

@@ -7,5 +7,6 @@ namespace Better_Shkolo.Services.DocumentService
         Task<bool> AddAsync(List<IFormFile> file, DocumentAddModel model);
         Task<List<DocumentIndexModel>> GetFilesInSchool(int schoolId);
         Task<byte[]> GetFile(int documentId);
+        Task<bool> Delete(int documentId);
     }
 }

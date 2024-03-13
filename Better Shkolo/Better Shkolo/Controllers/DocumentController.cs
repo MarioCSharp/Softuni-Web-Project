@@ -54,7 +54,20 @@ namespace Better_Shkolo.Controllers
         {
             var file = await documentService.GetFile(documentId);
 
-            return File(file, "application/pdf", "shablon.pdf");
+            return File(file, "application/pdf", "shablon.docx");
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorPolicy")]
+        public async Task<IActionResult> Delete(int documentId)
+        {
+            var res = await documentService.Delete(documentId);
+
+            if (res is false)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
