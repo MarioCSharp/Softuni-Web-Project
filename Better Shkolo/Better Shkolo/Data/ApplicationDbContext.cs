@@ -30,5 +30,7 @@ namespace Better_Shkolo.Data
         public DbSet<Table> Tables { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Resource> Resources { get; set; }
     }
 }
