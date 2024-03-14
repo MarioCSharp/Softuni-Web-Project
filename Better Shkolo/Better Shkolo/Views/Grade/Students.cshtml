@@ -137,16 +137,30 @@
                     <h3>Ученици в класа</h3>
                     @foreach (var student in Model)
                     {
-                        <p class="list-group-item list-group-item-action">
-                            @student.FirstName @student.LastName - @student.Email |
-                            <a asp-action="Profile" asp-controller="Student" asp-route-userId="@student.UserId" asp-route-term="1"> Виж профилㅤ</a>
-                            <a asp-action="ById" asp-controller="Absences" asp-route-studentId="@student.Id"> Виж отсъствия ㅤ</a>
-                            <a style="color:blue">Здравен статус:</a> <a>@student.Status ㅤ</a>
-                            <a asp-action="EditStatus" asp-controller="Account" asp-route-userId="@student.UserId"> Редактирай здравен статусㅤ </a>
-                            <a asp-action="EditDoctor" asp-controller="Account" asp-route-userId="@student.UserId"> Редактирай личен лекарㅤ </a>
-                        </p>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="font-weight-bold">@student.FirstName @student.LastName</span>
+                                    <br>
+                                    <span>@student.Email</span>
+                                </div>
+                                <div>
+                                    <a href="@Url.Action("Profile", "Student", new { userId = student.UserId, term = 1 })" class="btn btn-primary">Виж профил <i class="fas fa-user"></i></a>
+                                    <a href="@Url.Action("ById", "Absences", new { studentId = student.Id })" class="btn btn-warning">Виж отсъствия <i class="fas fa-calendar-times"></i></a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div>
+                                <span style="color:blue">Здравен статус:</span>
+                                <span class="badge" style="color:black;">@student.Status</span>
+                                <a href="@Url.Action("EditStatus", "Account", new { userId = student.UserId })" class="btn btn-info">Редактирай здравен статус <i class="fas fa-edit"></i></a>
+                                <a href="@Url.Action("EditDoctor", "Account", new { userId = student.UserId })" class="btn btn-secondary">Редактирай личен лекар <i class="fas fa-user-md"></i></a>
+                            </div>
+                        </div>
                     }
                 </div>
+
+
             </div>
         </div>
     </div>
