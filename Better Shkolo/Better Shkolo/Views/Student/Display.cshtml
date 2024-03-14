@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 @{
     Layout = "";
@@ -135,16 +136,32 @@
                 <div class="list-group">
                     @foreach (var student in Model.Students)
                     {
-                        <p class="list-group-item list-group-item-action">
-                            @student.FirstName @student.LastName - @student.Email
-                            <a asp-controller="Absences" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави отсъствие</a>
-                            <a asp-controller="Mark" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави оценка</a>
-                            <a asp-controller="Review" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави отзив</a>
-                            <a asp-controller="Mark" asp-action="AddTermMark" asp-route-studentId="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави срочна оценка</a>
-                            <a asp-controller="Mark" asp-action="AddYearMark" asp-route-studentId="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">Добави годишна оценка</a>
-                        </p>
+                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div>
+                                <p>@student.FirstName @student.LastName</p>
+                                <p>@student.Email</p>
+                            </div>
+                            <div class="btn-group">
+                                <a asp-controller="Absences" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-info mr-2">
+                                    <i class="fas fa-calendar-times"></i> Добави отсъствие
+                                </a>
+                                <a asp-controller="Mark" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-success mr-2">
+                                    <i class="fas fa-plus"></i> Добави оценка
+                                </a>
+                                <a asp-controller="Review" asp-action="Add" asp-route-id="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-warning mr-2">
+                                    <i class="fas fa-comment"></i> Добави отзив
+                                </a>
+                                <a asp-controller="Mark" asp-action="AddTermMark" asp-route-studentId="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-danger mr-2">
+                                    <i class="fas fa-pencil-alt"></i> Добави срочна оценка
+                                </a>
+                                <a asp-controller="Mark" asp-action="AddYearMark" asp-route-studentId="@student.Id" asp-route-subjectId="@Model.SubjectId" class="btn btn-primary">
+                                    <i class="fas fa-calendar-check"></i> Добави годишна оценка
+                                </a>
+                            </div>
+                        </div>
                     }
                 </div>
+
             </div>
         </div>
     </div>
