@@ -20,5 +20,7 @@ namespace Better_Shkolo.Data.Models
         public byte[] File { get; set; } = null!;
         [Required]
         public DateTime AddedOn { get; set; }
+        [Required]
+        public string FileExtension { get; set; } = null!;
     }
 }

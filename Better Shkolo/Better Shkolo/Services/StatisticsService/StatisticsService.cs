@@ -3,19 +3,26 @@ using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Api;
 using Better_Shkolo.Models.Application;
 using Better_Shkolo.Models.Mark;
+using Better_Shkolo.Models.Teacher;
+using Better_Shkolo.Services.SchoolService;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using static Better_Shkolo.Data.Constants;
 
 namespace Better_Shkolo.Services.StatisticsService
 {
     public class StatisticsService : IStatisticsService
     {
         private ApplicationDbContext context;
+        private ISchoolService schoolService;
         private IMemoryCache memoryCache;
         public StatisticsService(ApplicationDbContext context,
-                                 IMemoryCache memoryCache)
+                                 IMemoryCache memoryCache,
+                                 ISchoolService schoolService)
         {
             this.context = context;
             this.memoryCache = memoryCache;
+            this.schoolService = schoolService;
         }
 
         public MarkInformationModel GetMarkById(int id)
@@ -213,6 +220,85 @@ namespace Better_Shkolo.Services.StatisticsService
 
             return statistics;
         }
+
+        public async Task<TeacherHomeModel> GetTeacherHomeModel()
+        {
+            var mdl = new TeacherHomeModel();
+
+            var sId = await schoolService.GetSchoolIdByUser();
+
+            var scs = await context.Marks.Where(x => x.SchoolId == sId).AverageAsync(x => x.Value);
+            scs = double.Parse($"{scs:F2}");
+
+            var abs = await context.Absencess.Where(x => x.SchoolId == sId).CountAsync();
+            var rvs = await context.Reviews.Where(x => x.SchoolId == sId).CountAsync();
+            var tst = await context.Tests.Where(x => x.SchoolId == sId).CountAsync();
+
+            var marks = await context.Marks.Where(x => x.SchoolId == sId).ToListAsync();
+
+            var standings = new Dictionary<int, double>();
+
+            foreach (var mark in marks)
+            {
+                var s = await context.Subjects.FindAsync(mark.SubjectId);
+
+                if (!standings.ContainsKey(s.GradeId))
+                {
+                    standings[s.GradeId] = marks.Where(x => context.Subjects.Find(x.SubjectId).GradeId == s.GradeId).Average(x => x.Value);
+                }
+            }
+
+            if (standings.Count < 3)
+            {
+                return null;
+            }
+
+            var fS = standings.OrderByDescending(x => x.Value).ToArray()[0];
+            var sS = standings.OrderByDescending(x => x.Value).ToArray()[1];
+            var tS = standings.OrderByDescending(x => x.Value).ToArray()[2];
+
+            var absences = await context.Absencess.Where(x => x.SchoolId == sId).ToListAsync();
+
+            var aStandings = new Dictionary<int, int>();
+
+            foreach (var a in absences)
+            {
+                var s = await context.Subjects.FindAsync(a.SubjectId);
+
+                if (!aStandings.ContainsKey(s.GradeId))
+                {
+                    aStandings[s.GradeId] = absences.Where(x => context.Subjects.Find(x.SubjectId).GradeId == s.GradeId).Count();
+                }
+            }
+
+            if (aStandings.Count < 3)
+            {
+                return null;
+            }
+
+            var fA = aStandings.OrderByDescending(x => x.Value).ToArray()[0];
+            var sA = aStandings.OrderByDescending(x => x.Value).ToArray()[1];
+            var tA = aStandings.OrderByDescending(x => x.Value).ToArray()[2];
+
+            mdl.Success = scs;
+            mdl.Absences = abs;
+            mdl.Reviews = rvs;
+            mdl.Tests = tst;
+            var g = await context.Grades.FindAsync(fS.Key);
+            mdl.FirstPlaceSuccess = (g.GradeName, double.Parse($"{fS.Value:F2}"));
+            g = await context.Grades.FindAsync(sS.Key);
+            mdl.SecondPlaceSuccess = (g.GradeName, double.Parse($"{sS.Value:F2}"));
+            g = await context.Grades.FindAsync(tS.Key);
+            mdl.ThirdPlaceSuccess = (g.GradeName, double.Parse($"{tS.Value:F2}"));
+            g = await context.Grades.FindAsync(fA.Key);
+            mdl.FirstPlaceAbsences = (g.GradeName, fA.Value);
+            g = await context.Grades.FindAsync(sA.Key);
+            mdl.SecondPlaceAbsences = (g.GradeName, sA.Value);
+            g = await context.Grades.FindAsync(tA.Key);
+            mdl.ThirdPlaceAbsences = (g.GradeName, tA.Value);
+
+            return mdl;
+        }
     }
 
     public class CustomKVP : IComparable<CustomKVP>
@@ -221,7 +307,7 @@ namespace Better_Shkolo.Services.StatisticsService
         {
 
         }
-        public CustomKVP(int key, double value, Student student, User user)
+        public CustomKVP(int key, double value, Student student, Data.Models.User user)
         {
             this.Key = key;
             this.Value = value;
@@ -231,7 +317,7 @@ namespace Better_Shkolo.Services.StatisticsService
         public int Key { get; set; }
         public double Value { get; set; }
         public Student Student { get; set; }
-        public User User { get; set; }
+        public Data.Models.User User { get; set; }
         public int Place { get; set; }
 
         public int CompareTo(CustomKVP? other)

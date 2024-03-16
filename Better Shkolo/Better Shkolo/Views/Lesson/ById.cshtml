@@ -144,38 +144,47 @@
                 <br />
                 <br />
                 <div class="container mt-5">
-                    <h1 class="mb-4">Тема: @Model.Name</h1>
+                    <h1 class="text-center mb-5">Тема: @Model.Name</h1>
 
                     @if (Model.Resources.Any())
                     {
-                        <div class="row">
-                            <h3>Ресурси:</h3>
-                            @foreach (var resource in Model.Resources)
-                            {
-                                <div class="col-md-4 mb-4">
-                                    <div class="card">
-                                        <div class="circle-card bg-primary text-light">
-                                            @if (!string.IsNullOrEmpty(resource.Link))
-                                            {
-                                                <i class="fas fa-file-download fa-4x"></i>
-                                            }
-                                            else if (resource.File != null)
-                                            {
-                                                <i class="far fa-file-pdf fa-4x"></i>
-                                            }
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    @foreach (var resource in Model.Resources)
+                                    {
+                                        <div class="col-md-6 mb-4">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">@resource.Name</h5>
+                                                    <p class="card-text text-muted">Няма описание</p>
+                                                    <div class="mt-3">
+                                                        @if (!string.IsNullOrEmpty(resource.Link))
+                                                        {
+                                                            <a href="@resource.Link" class="btn btn-primary btn-sm mr-2" target="_blank">
+                                                                <i class="fas fa-play-circle mr-1"></i> Гледай
+                                                            </a>
+                                                        }
+                                                        else if (resource.File != null)
+                                                        {
+                                                            <a asp-action="Download" asp-controller="Resource" asp-route-resourceId="@resource.Id" class="btn btn-primary btn-sm mr-2">
+                                                                <i class="fas fa-download mr-1"></i> Изтегли
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">@resource.Name</h5>
-                                            <p class="card-text">Няма описание</p>
-                                        </div>
-                                    </div>
+                                    }
                                 </div>
-                            }
+                            </div>
                         </div>
                     }
                     else
                     {
-                        <p>Няма добавени ресурси</p>
+                        <div class="text-center">
+                            <p class="lead">Няма добавени ресурси</p>
+                        </div>
                     }
                 </div>
             </div>

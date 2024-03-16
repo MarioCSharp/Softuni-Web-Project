@@ -53,8 +53,9 @@ namespace Better_Shkolo.Controllers
         public async Task<IActionResult> Download(int documentId)
         {
             var file = await documentService.GetFile(documentId);
+            var extension = await documentService.GetExtension(documentId);
 
-            return File(file, "application/pdf", "shablon.docx");
+            return File(file, "application/pdf", $"shablon{extension}");
         }
         [HttpGet]
         [Authorize(Policy = "DirectorPolicy")]

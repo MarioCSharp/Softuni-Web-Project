@@ -15,5 +15,6 @@ namespace Better_Shkolo.Data.Models
         public Lesson Lesson { get; set; } = null!;
         public byte[] File { get; set; }
         public string Link { get; set; }
+        public string FileExtension { get; set; }
     }
 }

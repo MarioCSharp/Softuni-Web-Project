@@ -3,6 +3,8 @@ using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Document;
 using Better_Shkolo.Services.SchoolService;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
+using System.Net.Http.Headers;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Better_Shkolo.Services.DocumentService
@@ -37,6 +39,8 @@ namespace Better_Shkolo.Services.DocumentService
                     {
                         await d.CopyToAsync(stream);
                         doc.File = stream.ToArray();
+                        string fileName = ContentDispositionHeaderValue.Parse(d.ContentDisposition).FileName.Trim('"');
+                        doc.FileExtension = Path.GetExtension(fileName);
                     }
                 }
             }
@@ -57,6 +61,13 @@ namespace Better_Shkolo.Services.DocumentService
             await context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<string> GetExtension(int documentId)
+        {
+            var doc = await context.Documents.FindAsync(documentId);
+
+            return doc.FileExtension;
         }
 
         public async Task<byte[]> GetFile(int documentId)

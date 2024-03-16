@@ -6,13 +6,12 @@ using Better_Shkolo.Services.AbsenceService;
 using Better_Shkolo.Services.AccountService;
 using Better_Shkolo.Services.GradeService;
 using Better_Shkolo.Services.MarkService;
+using Better_Shkolo.Services.StatisticsService;
 using Better_Shkolo.Services.StudentService;
 using Better_Shkolo.Services.SubjectService;
 using Better_Shkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System.Security.Principal;
 
 namespace Better_Shkolo.Controllers
 {
@@ -25,6 +24,7 @@ namespace Better_Shkolo.Controllers
         private IStudentService studentService;
         private IGradeService gradeService;
         private IMarkService markService;
+        private IStatisticsService statisticsService;
         private ApplicationDbContext context;
         private IMapper mapper;
         public TeacherController(IAccountService accountService,
@@ -35,7 +35,8 @@ namespace Better_Shkolo.Controllers
                                  IMapper mapper,
                                  IStudentService studentService,
                                  IAbsencesService absencesService,
-                                 IMarkService markService)
+                                 IMarkService markService,
+                                 IStatisticsService statisticsService)
         {
             this.accountService = accountService;
             this.teacherService = teacherService;
@@ -45,6 +46,7 @@ namespace Better_Shkolo.Controllers
             this.mapper = mapper;
             this.studentService = studentService;
             this.absencesService = absencesService;
+            this.statisticsService = statisticsService;
             this.markService = markService;
         }
         [HttpGet]
@@ -172,6 +174,14 @@ namespace Better_Shkolo.Controllers
             var studentMarks = await markService.GetMarks(student.UserId);
 
             return View(studentMarks);
+        }
+        [HttpGet]
+        [Authorize(Policy = "TeacherPolicy")]
+        public async Task<IActionResult> Home()
+        {
+            var mdl = await statisticsService.GetTeacherHomeModel();
+
+            return View(mdl);
         }
     }
 }
