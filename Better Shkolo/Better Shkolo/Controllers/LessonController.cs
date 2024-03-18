@@ -54,5 +54,11 @@ namespace Better_Shkolo.Controllers
 
             return View(rscs);
         }
+        [HttpGet]
+        [Authorize(Policy = "StudentParentPolicy")]
+        public async Task<IActionResult> Subjects()
+        {
+            return View(await lessonService.GetSubjects());
+        }
     }
 }

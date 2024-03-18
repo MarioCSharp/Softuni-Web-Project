@@ -2,6 +2,8 @@
 using Better_Shkolo.Data.Models;
 using Better_Shkolo.Models.Lesson;
 using Better_Shkolo.Models.Resource;
+using Better_Shkolo.Models.Subject;
+using Better_Shkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Better_Shkolo.Services.LessonService
@@ -9,9 +11,12 @@ namespace Better_Shkolo.Services.LessonService
     public class LessonService : ILessonService
     {
         private ApplicationDbContext context;
-        public LessonService(ApplicationDbContext context)
+        private IAccountService accountService;
+        public LessonService(ApplicationDbContext context,
+                             IAccountService accountService)
         {
             this.context = context;
+            this.accountService = accountService;
         }
 
         public async Task<bool> AddAsync(LessonAddModel model)
@@ -68,6 +73,25 @@ namespace Better_Shkolo.Services.LessonService
                     Name = x.Name,
                     Id = x.Id,
                 }).ToListAsync();
+        }
+
+        public async Task<LessonSubjectModel> GetSubjects()
+        {
+            var uId = accountService.GetUserId();
+
+            var s = await context.Students.FirstOrDefaultAsync(x => x.UserId == uId);
+
+            return new LessonSubjectModel
+            {
+                Subjects = await context.Subjects
+                .Where(x => x.GradeId == s.GradeId)
+                .Select(x => new SubjectModel
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync()
+            };
         }
     }
 }

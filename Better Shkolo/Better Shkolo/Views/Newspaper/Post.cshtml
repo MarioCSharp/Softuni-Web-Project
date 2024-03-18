@@ -1,0 +1,177 @@
+﻿@using Better_Shkolo.Models.Newspapper
+@model NewspapperAddModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Създаване на справки</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+@{
+    Layout = "";
+}
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a asp-action="Index" asp-controller="Home"><img src="/logof.png" style="height:35px;" /></a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a asp-action="Index" asp-controller="Home" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span>Начало</span>
+                    </a>
+                </li>
+                @if (await service.IsGradeTeacher())
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Students" asp-controller="Grade" class="sidebar-link">
+                            <i class="lni lni-users"></i>
+                            <span>Моят клас</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Mine" asp-controller="Consultation" class="sidebar-link">
+                            <i class="lni lni-book"></i>
+                            <span>Справки</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Index" asp-controller="Document" class="sidebar-link">
+                            <i class="lni lni-folder"></i>
+                            <span>Документи</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                            <i class="lni lni-briefcase"></i>
+                            <span>Дейности</span>
+                        </a>
+                        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a asp-action="Add" asp-controller="Activity" class="sidebar-link">
+                                    <i class="lni lni-plus"></i> Добави дейност
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
+                                    <i class="lni lni-calendar"></i> Училищен календар
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                @if (User.IsInRole("Parent") || User.IsInRole("Student"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Schedule" asp-controller="Table" class="sidebar-link">
+                            <i class="lni lni-calendar"></i>
+                            <span>Седмична програма</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Subjects" asp-controller="Lesson" class="sidebar-link">
+                            <i class="lni lni-book"></i>
+                            <span>Уроци</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
+                            <i class="lni lni-calendar"></i>
+                            <span>Училищен календар</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Profile" asp-controller="Student" class="sidebar-link">
+                            <i class="lni lni-user"></i>
+                            <span>Ученически профил</span>
+                        </a>
+                    </li>
+                }
+                <li class="sidebar-item">
+                    <a asp-action="Index" asp-controller="Newspaper" class="sidebar-link">
+                        <i class="lni lni-library"></i>
+                        <span>Училищен вестник</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#messages" aria-expanded="false" aria-controls="messages">
+                        <i class="lni lni-envelope"></i>
+                        <span>Съобщения</span>
+                    </a>
+                    <ul id="messages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="Message" class="sidebar-link">
+                                <i class="lni lni-envelope"></i> Съобщения
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="Send" asp-controller="Message" class="sidebar-link">
+                                <i class="lni lni-popup"></i> Изпрати съобщение
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a asp-action="MyProfile" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-user"></i>
+                    <span>Профил</span>
+                </a>
+                <a asp-action="Logout" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Излизане</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main p-3">
+            <div id="elements">
+                <br />
+                <br />
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" aria-required="true" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <input asp-for="Description" class="form-control" aria-required="true" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Image" class="form-label"></label>
+                        <input asp-for="Image" class="form-control" type="file" id="formFileMultiple" multiple />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <input class="btn btn-primary" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>
+

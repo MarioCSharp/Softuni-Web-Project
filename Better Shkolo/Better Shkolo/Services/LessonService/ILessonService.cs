@@ -7,5 +7,6 @@ namespace Better_Shkolo.Services.LessonService
         Task<bool> AddAsync(LessonAddModel model);
         Task<List<LessonViewModel>> GetLessons(int subjectId);
         Task<LessonDisplayModel> GetLesson(int lessonId);
+        Task<LessonSubjectModel> GetSubjects();
     }
 }

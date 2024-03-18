@@ -86,6 +86,12 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a asp-action="Subjects" asp-controller="Lesson" class="sidebar-link">
+                            <i class="lni lni-book"></i>
+                            <span>Уроци</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
                             <i class="lni lni-calendar"></i>
                             <span>Училищен календар</span>
@@ -104,6 +110,12 @@
                         <i class="lni lni-envelope"></i>
                         <span>Съобщения</span>
                     </a>
+                <li class="sidebar-item">
+                    <a asp-action="Index" asp-controller="Newspaper" class="sidebar-link">
+                        <i class="lni lni-library"></i>
+                        <span>Училищен вестник</span>
+                    </a>
+                </li>
                     <ul id="messages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a asp-action="Index" asp-controller="Message" class="sidebar-link">
