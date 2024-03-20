@@ -36,7 +36,7 @@ namespace Better_Shkolo.Controllers
         {
             if (User.IsInRole("Teacher"))
             {
-                return RedirectToAction("Home", "Teacher");
+                return RedirectToAction("MyGrades", "Grade");
             }
             else if (User.IsInRole("Director"))
             {
