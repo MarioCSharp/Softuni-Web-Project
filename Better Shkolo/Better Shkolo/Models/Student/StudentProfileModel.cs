@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Models.Absences;
-using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Models.Review;
-using Better_Shkolo.Models.Subject;
-using Better_Shkolo.Models.Test;
+﻿using BetterShkolo.Models.Absences;
+using BetterShkolo.Models.Mark;
+using BetterShkolo.Models.Review;
+using BetterShkolo.Models.Subject;
+using BetterShkolo.Models.Test;
 
-namespace Better_Shkolo.Models.Student
+namespace BetterShkolo.Models.Student
 {
     public class StudentProfileModel
     {

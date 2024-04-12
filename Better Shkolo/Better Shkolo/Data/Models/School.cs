@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BetterShkolo.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Better_Shkolo.Data.Models
+namespace BetterShkolo.Data.Models
 {
     public class School
     {
@@ -16,6 +17,8 @@ namespace Better_Shkolo.Data.Models
         public string DirectorId { get; set; }
         [ForeignKey(nameof(DirectorId))]
         public User Director { get; set; }
+        [Required]
+        public bool ActiveErasmus { get; set; }
         public List<Grade> Grades { get; set; }
         public List<Teacher> Teachers { get; set; }
         public List<Student> Students { get; set; }

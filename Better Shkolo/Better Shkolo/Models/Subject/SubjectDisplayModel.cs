@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Teacher;
+﻿using BetterShkolo.Models.Teacher;
 
-namespace Better_Shkolo.Models.Subject
+namespace BetterShkolo.Models.Subject
 {
     public class SubjectDisplayModel
     {

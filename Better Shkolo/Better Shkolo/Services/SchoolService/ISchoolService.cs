@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Activity;
-using Better_Shkolo.Models.School;
+﻿using BetterShkolo.Models.Activity;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.School;
 
-namespace Better_Shkolo.Services.SchoolService
+namespace BetterShkolo.Services.SchoolService
 {
     public interface ISchoolService
     {

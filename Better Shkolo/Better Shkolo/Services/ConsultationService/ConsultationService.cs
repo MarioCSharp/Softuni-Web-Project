@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Consultation;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Services.AccountService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Consultation;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -10,7 +10,7 @@ using QuestPDF.Infrastructure;
 using System.Text;
 using Document = QuestPDF.Fluent.Document;
 
-namespace Better_Shkolo.Services.ConsultationService
+namespace BetterShkolo.Services.ConsultationService
 {
     public class ConsultationService : IConsultationService
     {

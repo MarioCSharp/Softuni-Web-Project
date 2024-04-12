@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Services.MarkService;
-using Better_Shkolo.Services.StudentService;
+﻿using BetterShkolo.Models.Mark;
+using BetterShkolo.Services.MarkService;
+using BetterShkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class MarkController : Controller
     {
@@ -93,7 +93,7 @@ namespace Better_Shkolo.Controllers
 
             var result = await markService.AddTermMark(model);
 
-            if(!result) return BadRequest();
+            if (!result) return BadRequest();
 
             return RedirectToAction("Display", "Student", new { id = model.SubjectId });
         }

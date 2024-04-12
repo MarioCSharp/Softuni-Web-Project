@@ -1,13 +1,13 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Document;
-using Better_Shkolo.Services.SchoolService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Document;
+using BetterShkolo.Services.SchoolService;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging.Signing;
 using System.Net.Http.Headers;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Better_Shkolo.Services.DocumentService
+namespace BetterShkolo.Services.DocumentService
 {
     public class DocumentService : IDocumentService
     {

@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Table
+﻿namespace BetterShkolo.Models.Table
 {
     public class TableDisplayModel
     {

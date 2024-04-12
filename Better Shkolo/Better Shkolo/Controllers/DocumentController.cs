@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Models.Document;
-using Better_Shkolo.Services.DocumentService;
-using Better_Shkolo.Services.SchoolService;
+﻿using BetterShkolo.Models.Document;
+using BetterShkolo.Services.DocumentService;
+using BetterShkolo.Services.SchoolService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class DocumentController : Controller
     {

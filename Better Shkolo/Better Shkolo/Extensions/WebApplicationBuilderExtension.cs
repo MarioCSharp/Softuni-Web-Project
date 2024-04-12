@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Better_Shkolo.Extensions
+namespace BetterShkolo.Extensions
 {
     public static class WebApplicationBuilderExtension
     {

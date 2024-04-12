@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Application
+﻿namespace BetterShkolo.Models.Application
 {
     public class ApplicationStatisticsModel
     {

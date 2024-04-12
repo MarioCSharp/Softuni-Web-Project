@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Newspapper
+﻿namespace BetterShkolo.Models.Newspapper
 {
     public class NewspaperIndexModel
     {

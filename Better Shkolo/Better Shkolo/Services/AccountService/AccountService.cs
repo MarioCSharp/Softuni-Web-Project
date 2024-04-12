@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Account;
+﻿using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace Better_Shkolo.Services.AccountService
+namespace BetterShkolo.Services.AccountService
 {
     public class AccountService : IAccountService
     {
@@ -25,7 +25,9 @@ namespace Better_Shkolo.Services.AccountService
         {
             var result = new List<UserDisplayModel>();
 
-            foreach (var user in context.Users)
+            var users = await context.Users.ToListAsync();
+
+            foreach (var user in users)
             {
                 var roles = await userManager.GetRolesAsync(user);
 

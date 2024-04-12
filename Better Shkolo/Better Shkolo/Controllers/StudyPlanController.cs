@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.StudyPlan;
-using Better_Shkolo.Services.StudyPlanService;
+﻿using BetterShkolo.Models.StudyPlan;
+using BetterShkolo.Services.StudyPlanService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class StudyPlanController : Controller
     {
@@ -24,7 +24,7 @@ namespace Better_Shkolo.Controllers
         [HttpPost]
         public async Task<IActionResult> Chose(StudyPlanChoseGradeModel model)
         {
-            return RedirectToAction("Create", "StudyPlan", new {gradeId = model.GradeId});
+            return RedirectToAction("Create", "StudyPlan", new { gradeId = model.GradeId });
         }
         [Authorize(Roles = "Director")]
         [HttpGet]

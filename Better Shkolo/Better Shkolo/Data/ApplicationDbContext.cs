@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data.Models;
+﻿using BetterShkolo.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Data
+namespace BetterShkolo.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
@@ -19,7 +19,7 @@ namespace Better_Shkolo.Data
         public DbSet<Parent> Parents { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Data.Models.Test> Tests { get; set; }
+        public DbSet<Test> Tests { get; set; }
         public DbSet<Absences> Absencess { get; set; }
         public DbSet<Director> Directors { get; set; }
         public DbSet<Message> Messages { get; set; }

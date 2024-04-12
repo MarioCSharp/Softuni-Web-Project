@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Account;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Account;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.School
+namespace BetterShkolo.Models.School
 {
     public class SchoolCreateModel
     {

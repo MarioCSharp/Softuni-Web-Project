@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Message
+﻿namespace BetterShkolo.Models.Message
 {
     public class DeleteMessageModel
     {

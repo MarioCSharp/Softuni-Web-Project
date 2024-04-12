@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BetterShkolo.Data;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Data.Models
+namespace BetterShkolo.Data.Models
 {
     public class User : IdentityUser
     {

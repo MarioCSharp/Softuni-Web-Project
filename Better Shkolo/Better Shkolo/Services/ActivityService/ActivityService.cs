@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Activity;
-using Better_Shkolo.Services.AccountService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Activity;
+using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.ActivityService
+namespace BetterShkolo.Services.ActivityService
 {
     public class ActivityService : IActivityService
     {

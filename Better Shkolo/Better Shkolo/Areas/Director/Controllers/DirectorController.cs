@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.School;
-using Better_Shkolo.Services.DirectorService;
+﻿using BetterShkolo.Models.School;
+using BetterShkolo.Services.DirectorService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Areas.Director.Controllers
+namespace BetterShkolo.Areas.Director.Controllers
 {
     [Area("Director")]
     [Authorize(Policy = "DirectorPolicy")]
@@ -31,7 +31,7 @@ namespace Better_Shkolo.Areas.Director.Controllers
 
             return View(new SchoolMenuModel { SchoolId = schoolId });
         }
-        
+
         public async Task<IActionResult> Manage()
         {
             if (!User.IsInRole("Director"))

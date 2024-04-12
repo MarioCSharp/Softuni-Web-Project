@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Models.Consultation;
-using Better_Shkolo.Services.ConsultationService;
+﻿using BetterShkolo.Models.Consultation;
+using BetterShkolo.Services.ConsultationService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestPDF.Fluent;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class ConsultationController : Controller
     {

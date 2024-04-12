@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Models.Review;
-using Better_Shkolo.Services.ReviewService;
-using Better_Shkolo.Services.StudentService;
+﻿using BetterShkolo.Models.Review;
+using BetterShkolo.Services.ReviewService;
+using BetterShkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class ReviewController : Controller
     {
@@ -85,7 +85,7 @@ namespace Better_Shkolo.Controllers
                 student = await studentService.GetStudentFromParent(userId);
             }
 
-            return RedirectToAction("Display", "Review", new {subjectId = subjectId, userId = student.UserId});
+            return RedirectToAction("Display", "Review", new { subjectId, userId = student.UserId });
         }
     }
 }

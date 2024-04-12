@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Mark;
+﻿using BetterShkolo.Models.Mark;
 
-namespace Better_Shkolo.Services.MarkService
+namespace BetterShkolo.Services.MarkService
 {
     public interface IMarkService
     {

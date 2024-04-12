@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.StudyPlan
+﻿namespace BetterShkolo.Models.StudyPlan
 {
     public class StudyPlanCreateModel
     {

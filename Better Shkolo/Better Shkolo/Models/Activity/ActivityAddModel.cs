@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Activity
+namespace BetterShkolo.Models.Activity
 {
     public class ActivityAddModel
     {

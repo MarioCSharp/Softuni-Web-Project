@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Models.Student;
+﻿using BetterShkolo.Models.Student;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Standings
+namespace BetterShkolo.Models.Standings
 {
     public class StandingsDisplayModel
     {

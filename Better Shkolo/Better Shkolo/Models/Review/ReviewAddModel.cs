@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Data;
+﻿using BetterShkolo.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Review
+namespace BetterShkolo.Models.Review
 {
     public class ReviewAddModel
     {

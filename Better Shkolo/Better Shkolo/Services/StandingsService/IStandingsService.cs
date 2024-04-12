@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Account;
-using Better_Shkolo.Models.Standings;
+﻿using BetterShkolo.Models.Account;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Standings;
 
-namespace Better_Shkolo.Services.StandingsService
+namespace BetterShkolo.Services.StandingsService
 {
     public interface IStandingsService
     {

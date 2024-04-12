@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Account;
-using Better_Shkolo.Services.AccountService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Account;
+using BetterShkolo.Services.AccountService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class AccountController : Controller
     {

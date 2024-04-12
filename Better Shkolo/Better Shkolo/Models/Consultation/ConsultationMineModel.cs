@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Consultation
+﻿namespace BetterShkolo.Models.Consultation
 {
     public class ConsultationMineModel
     {

@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.Lesson;
-using Better_Shkolo.Services.LessonService;
+﻿using BetterShkolo.Models.Lesson;
+using BetterShkolo.Services.LessonService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class LessonController : Controller
     {
@@ -37,7 +37,7 @@ namespace Better_Shkolo.Controllers
             if (!res) return BadRequest();
 
             return RedirectToAction("Index", "Home");
-         }
+        }
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> View(int subjectId)

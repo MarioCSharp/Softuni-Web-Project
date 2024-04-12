@@ -1,12 +1,12 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Newspapper;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.SchoolService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Newspapper;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.SchoolService;
 using Microsoft.EntityFrameworkCore;
 using System.Buffers.Text;
 
-namespace Better_Shkolo.Services.NewspapperService
+namespace BetterShkolo.Services.NewspapperService
 {
     public class NewspapperService : INewspapperService
     {
@@ -36,6 +36,20 @@ namespace Better_Shkolo.Services.NewspapperService
                     Date = x.DateAdded.ToString("dd MMM").ToUpper(),
                     Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
                 }).ToListAsync();
+        }
+
+        public async Task<NewspaperIndexModel> GetPost(int id)
+        {
+            var post = await context.Posts.FindAsync(id);
+
+            return new NewspaperIndexModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Description = post.Content,
+                Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(post.Image)),
+                Date = post.DateAdded.ToString()
+            };
         }
 
         public async Task<bool> PostAsync(List<IFormFile> Image, NewspapperAddModel model)

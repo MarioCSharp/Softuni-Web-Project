@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Better_Shkolo.Models.Test
+namespace BetterShkolo.Models.Test
 {
     public class TestOverallModel
     {

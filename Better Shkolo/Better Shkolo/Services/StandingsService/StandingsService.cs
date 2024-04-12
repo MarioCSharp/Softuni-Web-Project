@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Standings;
-using Better_Shkolo.Models.Student;
-using Better_Shkolo.Services.StatisticsService;
+﻿using BetterShkolo.Models.Student;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Standings;
+using BetterShkolo.Services.StatisticsService;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Better_Shkolo.Services.StandingsService
+namespace BetterShkolo.Services.StandingsService
 {
     public class StandingsService : IStandingsService
     {

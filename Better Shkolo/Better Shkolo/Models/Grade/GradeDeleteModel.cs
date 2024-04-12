@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Models.Subject;
-using Better_Shkolo.Models.Teacher;
+﻿using BetterShkolo.Models.Subject;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Teacher;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Grade
+namespace BetterShkolo.Models.Grade
 {
     public class GradeDeleteModel
     {

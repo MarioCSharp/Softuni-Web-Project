@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Models.Activity;
-using Better_Shkolo.Services.ActivityService;
-using Better_Shkolo.Services.SchoolService;
+﻿using BetterShkolo.Models.Activity;
+using BetterShkolo.Services.ActivityService;
+using BetterShkolo.Services.SchoolService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class ActivityController : Controller
     {
@@ -39,7 +39,7 @@ namespace Better_Shkolo.Controllers
             var res = await activityService.AddAsync(model);
 
             if (res == null) return BadRequest();
-            
+
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]

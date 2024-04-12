@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Resource
+namespace BetterShkolo.Models.Resource
 {
     public class ResourceModel
     {

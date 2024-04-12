@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Absence;
+﻿using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Absences;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.AbsenceService
+namespace BetterShkolo.Services.AbsencesService
 {
     public class AbsencesService : IAbsencesService
     {

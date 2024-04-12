@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Models.Subject;
-using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.SubjectService;
-using Better_Shkolo.Services.TeacherService;
+using BetterShkolo.Models.Subject;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Subject;
+using BetterShkolo.Services.GradeService;
+using BetterShkolo.Services.SubjectService;
+using BetterShkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class SubjectController : Controller
     {
@@ -116,7 +117,7 @@ namespace Better_Shkolo.Controllers
             {
                 return BadRequest();
             }
-            
+
             var model = mapper.Map<SubjectCreateModel>(subject);
 
             model.TeachersInSchool = await teacherService.GetAllTeacherInSchool(subject.SchoolId);

@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Better_Shkolo.Data.Models
+namespace BetterShkolo.Data.Models
 {
     public class Document
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]    
+        [Required]
         public int SchoolId { get; set; }
         [ForeignKey(nameof(SchoolId))]
         public School School { get; set; } = null!;

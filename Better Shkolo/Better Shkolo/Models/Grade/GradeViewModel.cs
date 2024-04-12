@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Grade
+﻿namespace BetterShkolo.Models.Grade
 {
     public class GradeViewModel
     {

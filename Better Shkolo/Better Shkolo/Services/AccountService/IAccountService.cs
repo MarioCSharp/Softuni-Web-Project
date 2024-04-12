@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Account;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Account;
 using MyTested.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Services.AccountService
+namespace BetterShkolo.Services.AccountService
 {
     public interface IAccountService
     {

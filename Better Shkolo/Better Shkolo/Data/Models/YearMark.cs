@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Data.Models
+namespace BetterShkolo.Data.Models
 {
     public class YearMark
     {

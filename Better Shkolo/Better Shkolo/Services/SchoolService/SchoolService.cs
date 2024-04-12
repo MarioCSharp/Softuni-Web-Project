@@ -1,12 +1,13 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.School;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.StudentService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.School;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.StudentService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.SchoolService
+namespace BetterShkolo.Services.SchoolService
 {
     public class SchoolService : ISchoolService
     {
@@ -28,13 +29,15 @@ namespace Better_Shkolo.Services.SchoolService
         {
             var user = await context.Users.FindAsync(school.DirectorId);
 
+            school.ActiveErasmus = false;
+
             await context.Schools.AddAsync(school);
             await context.SaveChangesAsync();
 
             await userManager.AddToRoleAsync(user, "Director");
             await context.SaveChangesAsync();
 
-            await context.Directors.AddAsync(new Director() { SchoolId = school.Id, UserId = user.Id});
+            await context.Directors.AddAsync(new Director() { SchoolId = school.Id, UserId = user.Id });
             await context.SaveChangesAsync();
 
             return await context.Schools.ContainsAsync(school);
@@ -59,7 +62,7 @@ namespace Better_Shkolo.Services.SchoolService
 
             context.Directors.Remove(d);
             await context.SaveChangesAsync();
-            
+
             var parents = await context.Parents.Where(x => x.Student.SchoolId == id).ToArrayAsync();
             var students = await context.Students.Where(x => x.SchoolId == id).ToArrayAsync();
             var teachers = await context.Teachers.Where(x => x.SchoolId == id).ToArrayAsync();
@@ -98,11 +101,11 @@ namespace Better_Shkolo.Services.SchoolService
 
         public async Task<List<SchoolViewModel>> GetAllSchools()
         {
-            return await context.Schools.Select(x => new SchoolViewModel 
-            { 
+            return await context.Schools.Select(x => new SchoolViewModel
+            {
                 Id = x.Id,
                 Name = x.Name,
-                City = x.City 
+                City = x.City
             }).ToListAsync();
         }
 

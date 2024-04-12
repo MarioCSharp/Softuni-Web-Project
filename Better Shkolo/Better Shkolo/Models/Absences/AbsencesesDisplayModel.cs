@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Mark;
+﻿using BetterShkolo.Models.Mark;
 
-namespace Better_Shkolo.Models.Absence
+namespace BetterShkolo.Models.Absences
 {
     public class AbsencesesDisplayModel
     {

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Review;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.TeacherService;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Review;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.TeacherService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.ReviewService
+namespace BetterShkolo.Services.ReviewService
 {
     public class ReviewService : IReviewService
     {
@@ -39,7 +39,7 @@ namespace Better_Shkolo.Services.ReviewService
 
             if (subject is null || student is null || school is null)
             {
-                return false;   
+                return false;
             }
 
             var review = mapper.Map<Review>(model);

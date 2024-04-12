@@ -1,12 +1,13 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Teacher;
-using Better_Shkolo.Services.AccountService;
+﻿using BetterShkolo.Models.Grade;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Teacher;
+using BetterShkolo.Services.AccountService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.TeacherService
+namespace BetterShkolo.Services.TeacherService
 {
     public class TeacherService : ITeacherService
     {

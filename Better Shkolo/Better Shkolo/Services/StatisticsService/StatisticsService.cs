@@ -1,15 +1,15 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Api;
-using Better_Shkolo.Models.Application;
-using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Models.Teacher;
-using Better_Shkolo.Services.SchoolService;
+﻿using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Api;
+using BetterShkolo.Models.Application;
+using BetterShkolo.Models.Mark;
+using BetterShkolo.Models.Teacher;
+using BetterShkolo.Services.SchoolService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using static Better_Shkolo.Data.Constants;
+using static BetterShkolo.Data.Constants;
 
-namespace Better_Shkolo.Services.StatisticsService
+namespace BetterShkolo.Services.StatisticsService
 {
     public class StatisticsService : IStatisticsService
     {
@@ -309,8 +309,8 @@ namespace Better_Shkolo.Services.StatisticsService
         }
         public CustomKVP(int key, double value, Student student, Data.Models.User user)
         {
-            this.Key = key;
-            this.Value = value;
+            Key = key;
+            Value = value;
             Student = student;
             User = user;
         }
@@ -322,12 +322,12 @@ namespace Better_Shkolo.Services.StatisticsService
 
         public int CompareTo(CustomKVP? other)
         {
-            return this.Key == other.Key ? 1 : -1;
+            return Key == other.Key ? 1 : -1;
         }
 
         public override bool Equals(object? obj)
         {
-            return ((CustomKVP)obj).Key == this.Key;
+            return ((CustomKVP)obj).Key == Key;
         }
     }
 }

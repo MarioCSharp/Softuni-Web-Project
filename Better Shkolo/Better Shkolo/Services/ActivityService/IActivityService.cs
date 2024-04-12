@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Activity;
+﻿using BetterShkolo.Models.Activity;
 
-namespace Better_Shkolo.Services.ActivityService
+namespace BetterShkolo.Services.ActivityService
 {
     public interface IActivityService
     {

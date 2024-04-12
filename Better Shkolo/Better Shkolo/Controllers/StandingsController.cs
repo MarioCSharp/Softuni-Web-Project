@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Models.Standings;
-using Better_Shkolo.Services.StandingsService;
-using Better_Shkolo.Services.StudentService;
+﻿using BetterShkolo.Models.Standings;
+using BetterShkolo.Services.StandingsService;
+using BetterShkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class StandingsController : Controller
     {

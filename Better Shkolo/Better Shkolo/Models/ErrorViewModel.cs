@@ -1,4 +1,4 @@
-namespace Better_Shkolo.Models
+namespace BetterShkolo.Models
 {
     public class ErrorViewModel
     {

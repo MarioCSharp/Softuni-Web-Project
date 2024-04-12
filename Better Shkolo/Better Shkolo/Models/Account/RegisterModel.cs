@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data;
+﻿using BetterShkolo.Data;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Account
+namespace BetterShkolo.Models.Account
 {
     public class RegisterModel
     {

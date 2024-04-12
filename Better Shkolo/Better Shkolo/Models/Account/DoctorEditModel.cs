@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Account
+namespace BetterShkolo.Models.Account
 {
     public class DoctorEditModel
     {

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Subject;
-using Better_Shkolo.Services.AccountService;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Subject;
+using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.SubjectService
+namespace BetterShkolo.Services.SubjectService
 {
     public class SubjectService : ISubjectService
     {

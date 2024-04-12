@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Table;
+﻿using BetterShkolo.Models.Table;
 
-namespace Better_Shkolo.Services.TableService
+namespace BetterShkolo.Services.TableService
 {
     public interface ITableService
     {

@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Models.Account;
+﻿using BetterShkolo.Models.Account;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Teacher
+namespace BetterShkolo.Models.Teacher
 {
     public class TeacherCreateModel
     {

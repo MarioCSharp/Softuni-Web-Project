@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Better_Shkolo.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using BetterShkolo.Data.Models;
 
-namespace Better_Shkolo.Data
+namespace BetterShkolo.Data
 {
     public static class SampleData
     {
@@ -62,7 +62,11 @@ namespace Better_Shkolo.Data
                         Address = "",
                         City = "",
                         Country = "",
-                        Phone = ""
+                        Phone = "",
+                        Chronic = "",
+                        DoctorAddress = "",
+                        DoctorName = "",
+                        DoctorPhone = ""
                     };
 
                     await userManager.CreateAsync(user, adminPassword);

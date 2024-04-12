@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.Resource;
-using Better_Shkolo.Services.ResourceService;
+﻿using BetterShkolo.Models.Resource;
+using BetterShkolo.Services.ResourceService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class ResourceController : Controller
     {

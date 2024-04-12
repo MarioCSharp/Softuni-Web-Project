@@ -1,16 +1,16 @@
-﻿using Better_Shkolo.Models;
-using Better_Shkolo.Models.Account;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.StandingsService;
-using Better_Shkolo.Services.StudentService;
-using Better_Shkolo.Services.TableService;
+﻿using BetterShkolo.Models;
+using BetterShkolo.Models.Account;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.GradeService;
+using BetterShkolo.Services.StandingsService;
+using BetterShkolo.Services.StudentService;
+using BetterShkolo.Services.TableService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class HomeController : Controller
     {
@@ -36,7 +36,7 @@ namespace Better_Shkolo.Controllers
         {
             if (User.IsInRole("Teacher"))
             {
-                return RedirectToAction("Home", "Teacher");
+                return RedirectToAction("MyGrades", "Grade");
             }
             else if (User.IsInRole("Director"))
             {

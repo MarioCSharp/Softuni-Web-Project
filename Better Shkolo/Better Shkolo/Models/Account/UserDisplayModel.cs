@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Account
+﻿namespace BetterShkolo.Models.Account
 {
     public class UserDisplayModel
     {

@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Better_Shkolo": {
+    "BetterShkolo": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

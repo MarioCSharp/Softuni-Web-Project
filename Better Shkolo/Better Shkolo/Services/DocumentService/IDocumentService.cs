@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Document;
+﻿using BetterShkolo.Models.Document;
 
-namespace Better_Shkolo.Services.DocumentService
+namespace BetterShkolo.Services.DocumentService
 {
     public interface IDocumentService
     {

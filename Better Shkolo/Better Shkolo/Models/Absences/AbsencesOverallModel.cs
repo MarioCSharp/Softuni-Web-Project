@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Better_Shkolo.Models.Absences
+namespace BetterShkolo.Models.Absences
 {
     public class AbsencesOverallModel
     {

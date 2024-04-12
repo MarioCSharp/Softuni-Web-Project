@@ -1,10 +1,11 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.StudyPlan;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.StudyPlan;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.StudyPlanService
+namespace BetterShkolo.Services.StudyPlanService
 {
     public class StudyPlanService : IStudyPlanService
     {

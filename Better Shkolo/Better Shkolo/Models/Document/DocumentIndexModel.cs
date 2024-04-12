@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Document
+﻿namespace BetterShkolo.Models.Document
 {
     public class DocumentIndexModel
     {

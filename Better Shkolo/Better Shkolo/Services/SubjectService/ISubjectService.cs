@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Subject;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Subject;
 
-namespace Better_Shkolo.Services.SubjectService
+namespace BetterShkolo.Services.SubjectService
 {
     public interface ISubjectService
     {

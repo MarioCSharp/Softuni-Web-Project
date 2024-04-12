@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Better_Shkolo.Data.Migrations
+namespace BetterShkolo.Data.Migrations
 {
     public partial class messagesUpdate : Migration
     {

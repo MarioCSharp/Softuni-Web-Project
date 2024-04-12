@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Mark
+namespace BetterShkolo.Models.Mark
 {
     public class TermMarkAddModel
     {

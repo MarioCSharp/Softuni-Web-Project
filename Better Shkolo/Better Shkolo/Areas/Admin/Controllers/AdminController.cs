@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.School;
-using Better_Shkolo.Services.SchoolService;
+﻿using BetterShkolo.Models.School;
+using BetterShkolo.Services.SchoolService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Areas.Admin.Controllers
+namespace BetterShkolo.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Policy = "AdministratorPolicy")]

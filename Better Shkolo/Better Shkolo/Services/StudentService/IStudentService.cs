@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Absence;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Parent;
-using Better_Shkolo.Models.Student;
+﻿using BetterShkolo.Models.Grade;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Absences;
+using BetterShkolo.Models.Parent;
+using BetterShkolo.Models.Student;
 
-namespace Better_Shkolo.Services.StudentService
+namespace BetterShkolo.Services.StudentService
 {
     public interface IStudentService
     {

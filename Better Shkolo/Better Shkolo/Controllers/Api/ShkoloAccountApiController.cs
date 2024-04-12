@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
+﻿using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers.Api
+namespace BetterShkolo.Controllers.Api
 {
     [ApiController]
     [Route("api/account")]
@@ -49,7 +49,7 @@ namespace Better_Shkolo.Controllers.Api
         public async Task<IActionResult> Register(string firstName, string lastName, string email,
                                                   string password)
         {
-            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) 
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName)
                 || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 return Unauthorized();

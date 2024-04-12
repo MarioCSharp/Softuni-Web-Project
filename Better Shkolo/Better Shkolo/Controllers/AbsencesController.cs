@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Models.Absence;
-using Better_Shkolo.Services.AbsenceService;
-using Better_Shkolo.Services.StudentService;
+﻿using BetterShkolo.Models.Absences;
+using BetterShkolo.Services.AbsencesService;
+using BetterShkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class AbsencesController : Controller
     {
@@ -15,7 +15,7 @@ namespace Better_Shkolo.Controllers
                                  IAbsencesService absenceService)
         {
             this.studentService = studentService;
-            this.absencesService = absenceService;
+            absencesService = absenceService;
         }
         [HttpGet]
         [Authorize(Policy = "TeacherPolicy")]

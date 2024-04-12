@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Review
+﻿namespace BetterShkolo.Models.Review
 {
     public class ReviewViewModel
     {

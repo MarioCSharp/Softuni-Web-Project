@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Resource;
+﻿using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Resource;
 using Microsoft.Net.Http.Headers;
 
-namespace Better_Shkolo.Services.ResourceService
+namespace BetterShkolo.Services.ResourceService
 {
     public class ResourceService : IResourceService
     {

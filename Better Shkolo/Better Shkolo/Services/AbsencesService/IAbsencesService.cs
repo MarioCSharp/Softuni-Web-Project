@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Absence;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Absences;
 
-namespace Better_Shkolo.Services.AbsenceService
+namespace BetterShkolo.Services.AbsencesService
 {
     public interface IAbsencesService
     {

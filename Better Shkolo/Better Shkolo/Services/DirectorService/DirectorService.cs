@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Models.School;
-using Better_Shkolo.Services.AccountService;
+using BetterShkolo.Data;
+using BetterShkolo.Models.School;
+using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.DirectorService
+namespace BetterShkolo.Services.DirectorService
 {
     public class DirectorService : IDirectorService
     {

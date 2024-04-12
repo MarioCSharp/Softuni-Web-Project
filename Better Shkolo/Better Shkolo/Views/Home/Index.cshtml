@@ -1,5 +1,4 @@
-﻿@using Better_Shkolo.Models.Account
-@using Better_Shkolo.Services.GradeService
+﻿@using BetterShkolo.Services.GradeService;
 @{
     ViewData["Title"] = "Home Page";
     Layout = "Layout";
@@ -215,69 +214,49 @@
                     <br />
                     <br />
 
-                    <div class="d-flex justify-content-center align-items-center">
-                        <div class="col-md-6 custom-margin h-100" style="max-width: 500px;">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="box">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <!-- Added a trophy icon for the title -->
-                                            <h1><i class="fa fa-trophy text-warning"></i> КЛАСАЦИЯ</h1>
-                                            <div class="d-flex flex-row gap-3">
-                                                <!-- Added a star icon for decoration -->
-                                                <i class="fa fa-star text-primary"></i>
-                                                <i class="fa fa-star text-primary"></i>
-                                                <i class="fa fa-star text-primary"></i>
-                                            </div>
+                    <div class="container">
+                        <div class="row">
+                            <!-- First Box -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="box">
+                                    <h1 class="text-center"><i class="fa fa-trophy text-warning"></i> КЛАСАЦИЯ</h1>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="d-flex flex-row gap-3">
+                                            <i class="fa fa-star text-primary"></i>
+                                            <i class="fa fa-star text-primary"></i>
+                                            <i class="fa fa-star text-primary"></i>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <!-- Added some background color and padding for a cleaner look -->
-                                                <div class="bg-light p-3 rounded">
-                                                    <!-- Added icons and colors to the ranking information -->
-                                                    <p><i class="fa fa-list-ol text-success"></i> МЯСТО В ПАРАЛЕЛКАТА: @Model.PlaceInGrade</p>
-                                                    <p><i class="fa fa-graduation-cap text-info"></i> МЯСТО ВЪВ ВИПУСКА: @Model.PlaceInYear</p>
-                                                    <p><i class="fa fa-university text-danger"></i> МЯСТО В УЧИЛИЩЕ: @Model.PlaceInSchool</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div class="bg-light p-3 rounded">
+                                        <p><i class="fa fa-list-ol text-success"></i> МЯСТО В ПАРАЛЕЛКАТА: @Model.PlaceInGrade</p>
+                                        <p><i class="fa fa-graduation-cap text-info"></i> МЯСТО ВЪВ ВИПУСКА: @Model.PlaceInYear</p>
+                                        <p><i class="fa fa-university text-danger"></i> МЯСТО В УЧИЛИЩЕ: @Model.PlaceInSchool</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 custom-margin h-100" style="max-width: 500px;">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="box">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <!-- Changed the crown icon to a book icon for the title -->
-                                            <h1><i class="fa fa-book text-warning"></i> ПРЕДМЕТИ С НАЙ-ВИСОК УСПЕХ</h1>
-                                            <div class="d-flex flex-row gap-3">
-                                                <!-- Changed the heart icons to star icons for decoration -->
-                                                <i class="fa fa-star text-warning"></i>
-                                                <i class="fa fa-star text-warning"></i>
-                                                <i class="fa fa-star text-warning"></i>
-                                            </div>
+
+                            <!-- Second Box -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="box">
+                                    <h1 class="text-center"><i class="fa fa-book text-warning"></i> ПРЕДМЕТИ С НАЙ-ВИСОК УСПЕХ</h1>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="d-flex flex-row gap-3">
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <!-- Changed background color and padding for a cleaner look -->
-                                                <div class="bg-light p-3 rounded">
-                                                    <!-- Changed icons and colors for the ranking information -->
-                                                    <p><i class="fa fa-trophy text-success"></i> @Model.SubjectInFirstPlace.Item1: @Model.SubjectInFirstPlace.Item2</p>
-                                                    <p><i class="fa fa-graduation-cap text-info"></i> @Model.SubjectInSecondPlace.Item1: @Model.SubjectInSecondPlace.Item2</p>
-                                                    <p>
-                                                        <i class="fa fa-star text-danger"></i>
-                                                        @Model.SubjectInThirdPlace.Item1: @Model.SubjectInThirdPlace.Item2
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div class="bg-light p-3 rounded">
+                                        <p><i class="fa fa-trophy text-success"></i> @Model.SubjectInFirstPlace.Item1: @Model.SubjectInFirstPlace.Item2</p>
+                                        <p><i class="fa fa-graduation-cap text-info"></i> @Model.SubjectInSecondPlace.Item1: @Model.SubjectInSecondPlace.Item2</p>
+                                        <p><i class="fa fa-star text-danger"></i> @Model.SubjectInThirdPlace.Item1: @Model.SubjectInThirdPlace.Item2</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 }
                 @if (!User.IsInRole("Student") && !User.IsInRole("Parent") && !User.IsInRole("Teacher"))
                 {

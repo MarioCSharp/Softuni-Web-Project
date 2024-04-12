@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Api
+﻿namespace BetterShkolo.Models.Api
 {
     public class StatisticsDisplayModel
     {

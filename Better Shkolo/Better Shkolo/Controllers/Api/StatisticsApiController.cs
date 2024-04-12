@@ -1,11 +1,11 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Api;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.StatisticsService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Api;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.StatisticsService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers.Api
+namespace BetterShkolo.Controllers.Api
 {
     [ApiController]
     [Route("api/statistics")]

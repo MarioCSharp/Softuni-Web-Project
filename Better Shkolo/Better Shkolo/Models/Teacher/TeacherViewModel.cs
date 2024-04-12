@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Teacher
+﻿namespace BetterShkolo.Models.Teacher
 {
     public class TeacherViewModel
     {

@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Absence;
-using Better_Shkolo.Models.Absences;
-using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Models.Parent;
-using Better_Shkolo.Models.Review;
-using Better_Shkolo.Models.Student;
-using Better_Shkolo.Models.Subject;
-using Better_Shkolo.Models.Test;
-using Better_Shkolo.Services.AccountService;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Mark;
+using BetterShkolo.Models.Review;
+using BetterShkolo.Models.Subject;
+using BetterShkolo.Models.Test;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Absences;
+using BetterShkolo.Models.Parent;
+using BetterShkolo.Models.Student;
+using BetterShkolo.Services.AccountService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.StudentService
+namespace BetterShkolo.Services.StudentService
 {
     public class StudentService : IStudentService
     {
@@ -173,11 +173,16 @@ namespace Better_Shkolo.Services.StudentService
                 }
             }
 
-            var oB = standings.OrderByDescending(x => x.Value).ToArray()[place - 1];
+            if (standings.Count >= place)
+            {
+                var oB = standings.OrderByDescending(x => x.Value).ToArray()[place - 1];
 
-            var ss = await context.Subjects.FindAsync(oB.Key);
+                var ss = await context.Subjects.FindAsync(oB.Key);
 
-            return ($"{ss.Name}", double.Parse($"{oB.Value:F2}"));
+                return ($"{ss.Name}", double.Parse($"{oB.Value:F2}"));
+            }
+
+            return ("-", 0.0);
         }
 
         public async Task<Student> GetStudent(int id)

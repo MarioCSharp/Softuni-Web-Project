@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Services.AccountService;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Mark;
+using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.MarkService
+namespace BetterShkolo.Services.MarkService
 {
     public class MarkService : IMarkService
     {

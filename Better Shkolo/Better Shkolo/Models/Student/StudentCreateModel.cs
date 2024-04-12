@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Models.Account;
-using Better_Shkolo.Models.Grade;
+﻿using BetterShkolo.Models.Account;
+using BetterShkolo.Models.Grade;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Student
+namespace BetterShkolo.Models.Student
 {
     public class StudentCreateModel
     {

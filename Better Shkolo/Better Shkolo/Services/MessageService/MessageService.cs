@@ -1,12 +1,13 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Account;
-using Better_Shkolo.Models.Message;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Account;
+using BetterShkolo.Models.Message;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Better_Shkolo.Services.MessageService
+namespace BetterShkolo.Services.MessageService
 {
     public class MessageService : IMessageService
     {
@@ -95,7 +96,7 @@ namespace Better_Shkolo.Services.MessageService
             if (user is null) throw new Exception("User is not found. (GetMeesagesAsync) - MessageService");
             var model = new MessageIndexModel();
 
-            model.Recieved =  await context.Messages
+            model.Recieved = await context.Messages
                 .Where(x => x.SentToUserId == userId && !x.Deleted)
                 .Select(x => new RecievedMessageModel()
                 {

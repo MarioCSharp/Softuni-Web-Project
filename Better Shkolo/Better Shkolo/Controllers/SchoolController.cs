@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.School;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.SchoolService;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.School;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.SchoolService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class SchoolController : Controller
     {

@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Teacher;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Teacher;
 
-namespace Better_Shkolo.Services.TeacherService
+namespace BetterShkolo.Services.TeacherService
 {
     public interface ITeacherService
     {

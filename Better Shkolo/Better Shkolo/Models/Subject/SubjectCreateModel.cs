@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Teacher;
+﻿using BetterShkolo.Data;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Teacher;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Subject
+namespace BetterShkolo.Models.Subject
 {
     public class SubjectCreateModel
     {

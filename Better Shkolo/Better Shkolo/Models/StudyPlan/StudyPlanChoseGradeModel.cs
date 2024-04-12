@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Models.Grade;
+﻿using BetterShkolo.Models.Grade;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.StudyPlan
+namespace BetterShkolo.Models.StudyPlan
 {
     public class StudyPlanChoseGradeModel
     {

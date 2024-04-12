@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Resource;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Resource;
 
-namespace Better_Shkolo.Services.ResourceService
+namespace BetterShkolo.Services.ResourceService
 {
     public interface IResourceService
     {

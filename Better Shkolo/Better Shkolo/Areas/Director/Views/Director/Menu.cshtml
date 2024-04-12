@@ -1,4 +1,4 @@
-﻿@using Better_Shkolo.Models.School;
+﻿@using BetterShkolo.Models.School;
 @model SchoolMenuModel
 
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -78,6 +78,12 @@
                     <a href="/Newspaper/Index" class="sidebar-link">
                         <i class="lni lni-library"></i>
                         <span>Училищен вестник</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Erasmus/Index" class="sidebar-link">
+                        <i class="lni lni-library"></i>
+                        <span>Еразъм+</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -326,7 +332,7 @@
     <script src="/js/home.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        $.get('https://localhost:7169/api/statistics/GetSchoolStatistics?schoolId=' + @Model.SchoolId, (data) => {
+        $.get('/api/statistics/GetSchoolStatistics?schoolId=' + @Model.SchoolId, (data) => {
             $('#teachers').text(data.teachers);
             $('#students').text(data.students);
             $('#marks').text(data.marks);

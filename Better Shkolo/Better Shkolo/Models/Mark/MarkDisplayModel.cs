@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Mark
+﻿namespace BetterShkolo.Models.Mark
 {
     public class MarkDisplayModel
     {

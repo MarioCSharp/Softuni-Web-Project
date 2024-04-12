@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Table;
-using Better_Shkolo.Services.StudentService;
+﻿using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Table;
+using BetterShkolo.Services.StudentService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.TableService
+namespace BetterShkolo.Services.TableService
 {
     public class TableService : ITableService
     {
@@ -228,7 +228,12 @@ namespace Better_Shkolo.Services.TableService
 
             if (day > 5)
             {
-                return table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1).SubjectName;
+                var a = table.Tables.FirstOrDefault(x => x.Day == 1 && x.Period == 1);
+                if (a is null)
+                {
+                    return "-";
+                }
+                return a.SubjectName;
             }
 
 

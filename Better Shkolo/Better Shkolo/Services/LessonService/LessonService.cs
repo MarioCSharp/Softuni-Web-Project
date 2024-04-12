@@ -1,12 +1,12 @@
-﻿using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Lesson;
-using Better_Shkolo.Models.Resource;
-using Better_Shkolo.Models.Subject;
-using Better_Shkolo.Services.AccountService;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Resource;
+using BetterShkolo.Models.Subject;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Lesson;
+using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.LessonService
+namespace BetterShkolo.Services.LessonService
 {
     public class LessonService : ILessonService
     {

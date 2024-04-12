@@ -1,5 +1,4 @@
-﻿@using Better_Shkolo.Models.Newspapper
-@model List<NewspaperIndexModel>
+﻿@model List<NewspaperIndexModel>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -276,10 +275,10 @@
                                             </a>
                                         </div>
                                         <div class="blog-info">
-                                            <h5><a href="#">@post.Title</a></h5>
-                                            <p>@post.Description</p>
+                                            <h5><a asp-action="Details" asp-controller="Newspaper" asp-route-id="@post.Id">@post.Title</a></h5>
+                                            <p>@post.Description.Substring(0, 20)...</p>
                                             <div class="btn-bar">
-                                                <a href="#" class="px-btn-arrow">
+                                                <a asp-action="Details" asp-controller="Newspaper" asp-route-id="@post.Id" class="px-btn-arrow">
                                                     <span>Прочети повече</span>
                                                     <i class="arrow"></i>
                                                 </a>

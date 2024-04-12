@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Student;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.StudentService;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Student;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.StudentService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Better_Shkolo.Services.GradeService
+namespace BetterShkolo.Services.GradeService
 {
     public class GradeService : IGradeService
     {

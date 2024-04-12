@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Data.Migrations;
-using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Test;
-using Better_Shkolo.Services.AccountService;
+using BetterShkolo.Data.Migrations;
+using BetterShkolo.Data;
+using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Test;
+using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Better_Shkolo.Services.TestService
+namespace BetterShkolo.Services.TestService
 {
     public class TestService : ITestService
     {

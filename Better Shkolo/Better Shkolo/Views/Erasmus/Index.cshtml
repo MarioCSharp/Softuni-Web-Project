@@ -1,0 +1,289 @@
+﻿@model ErasmusIndexModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Създаване на клас</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/home.css">
+    <style>
+        /* Custom Styles */
+        .students-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Adjust as needed */
+            margin: 0 auto;
+        }
+
+        .student-list-box {
+            margin-bottom: 20px;
+        }
+
+        .student-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .student-list li {
+                margin-bottom: 5px;
+            }
+
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prev-page-button,
+        .next-page-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .prev-page-button:hover,
+            .next-page-button:hover {
+                background-color: #0056b3;
+            }
+
+        .page-number {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+@{
+    Layout = "";
+}
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a asp-action="Index" asp-controller="Home"><img src="/logof.png" style="height:35px;" /></a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a asp-action="Index" asp-controller="Home" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span>Начало</span>
+                    </a>
+                </li>
+                @if (await service.IsGradeTeacher())
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Students" asp-controller="Grade" class="sidebar-link">
+                            <i class="lni lni-users"></i>
+                            <span>Моят клас</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Mine" asp-controller="Consultation" class="sidebar-link">
+                            <i class="lni lni-book"></i>
+                            <span>Справки</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Index" asp-controller="Document" class="sidebar-link">
+                            <i class="lni lni-folder"></i>
+                            <span>Документи</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                            <i class="lni lni-briefcase"></i>
+                            <span>Дейности</span>
+                        </a>
+                        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a asp-action="Add" asp-controller="Activity" class="sidebar-link">
+                                    <i class="lni lni-plus"></i> Добави дейност
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
+                                    <i class="lni lni-calendar"></i> Училищен календар
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                @if (User.IsInRole("Parent") || User.IsInRole("Student"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Schedule" asp-controller="Table" class="sidebar-link">
+                            <i class="lni lni-calendar"></i>
+                            <span>Седмична програма</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Subjects" asp-controller="Lesson" class="sidebar-link">
+                            <i class="lni lni-book"></i>
+                            <span>Уроци</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Schedule" asp-controller="Activity" class="sidebar-link">
+                            <i class="lni lni-calendar"></i>
+                            <span>Училищен календар</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Profile" asp-controller="Student" class="sidebar-link">
+                            <i class="lni lni-user"></i>
+                            <span>Ученически профил</span>
+                        </a>
+                    </li>
+                }
+                <li class="sidebar-item">
+                    <a asp-action="Index" asp-controller="Newspaper" class="sidebar-link">
+                        <i class="lni lni-library"></i>
+                        <span>Училищен вестник</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#messages" aria-expanded="false" aria-controls="messages">
+                        <i class="lni lni-envelope"></i>
+                        <span>Съобщения</span>
+                    </a>
+                    <ul id="messages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="Message" class="sidebar-link">
+                                <i class="lni lni-envelope"></i> Съобщения
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="Send" asp-controller="Message" class="sidebar-link">
+                                <i class="lni lni-popup"></i> Изпрати съобщение
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a asp-action="MyProfile" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-user"></i>
+                    <span>Профил</span>
+                </a>
+                <a asp-action="Logout" asp-controller="Account" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Излизане</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main p-3">
+            <div id="elements">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>@Model.SchoolName</h3>
+                        <br />
+                        <h3>Какво представлява „Еразъм+“?</h3>
+                        <p>„Еразъм+“ е програмата на ЕС за подкрепа на образованието, обучението, младежта и спорта в Европа.</p>
+                        <p>Нейният прогнозен бюджет е 26,2 млрд. евро. Това е почти два пъти повече в сравнение <br /> с предходната програма (за периода 2014—2020 г.).</p>
+                        <p>
+                            В програмата за 2021—2027 г. се обръща особено внимание на социалното приобщаване,<br /> 
+                            екологичния и цифровия преход и насърчаването на участието на младите хора в демократичния <br />
+                            живот.
+                        </p>
+                        <p>
+                            Чрез нея се подкрепят приоритети и дейности, посочени в европейското пространство за<br />
+                            образование, плана за действие в областта на цифровото образование и Новата европейска <br />
+                            програма за умения. С програмата също така се:<br />
+                            <strong>·</strong> подкрепя Eвропейският стълб на социалните права,<br />
+                            <strong>·</strong> изпълнява стратегията на ЕС за младежта за периода 2019—2027 г.<br />
+                            <strong>·</strong> развива европейското измерение в спорта.
+                        </p>
+                        @if (!Model.Active && User.IsInRole("Director"))
+                        {
+                            <a asp-action="Activate" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Активирай записването</a>
+                        }
+                        else if (Model.Active && User.IsInRole("Director"))
+                        {
+                            <a asp-action="Deactivate" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Спри записването</a>
+                        }
+                        @if (Model.Active && User.IsInRole("Student"))
+                        {
+                            <a asp-action="Apply" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Кандидатсвай</a>
+                        }
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <img src="https://mu-sofia.bg/wp-content/uploads/2021/02/Erasmus-Programme-2021-2027-1024x683@2x.jpg" alt="Erasmus Image" style="width: 300px; height: 300px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                </div>
+
+                <!-- Pagination box for the list of participating students -->
+                <div class="students-container">
+                    <div class="student-list-box">
+                        <h4>Подходящи учници</h4>
+                        <ul class="student-list">
+                            @foreach (var student in Model.AligibleStudents)
+                            {
+                                <li>@student.FirstName @student.LastName | Успех: 5.48</li> 
+                            }
+                        </ul>
+                    </div>
+                    <!-- Pagination controls -->
+                    <div class="pagination-controls">
+                        <!-- Previous page button -->
+                        <button class="prev-page-button" onclick="prevPage()"><i class="fas fa-chevron-left"></i> << </button>
+
+                        <!-- Next page button -->
+                        <button class="next-page-button" onclick="nextPage()">>> <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+                crossorigin="anonymous"></script>
+        <script src="/js/home.js"></script>
+
+        <script>
+            var currentPage = @Model.CurrentPage;
+            var totalPages = @Model.TotalPages;
+
+            function prevPage() {
+                var currentPage = @Model.CurrentPage;
+                if (currentPage > 1) {
+                    updatePage(currentPage - 1);
+                }
+            }
+
+            function nextPage() {
+                var currentPage = @Model.CurrentPage;
+                var totalPages = @Model.TotalPages;
+                if (currentPage < totalPages) {
+                    updatePage(currentPage + 1);
+                }
+            }
+
+            function updatePage(page) {
+                // Redirect to the same page with the updated page number
+                window.location.href = window.location.pathname + "?currentPage=" + page;
+            }
+
+        </script>
+</body>
+</html>

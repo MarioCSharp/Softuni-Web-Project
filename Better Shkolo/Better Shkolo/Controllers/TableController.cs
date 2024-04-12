@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.StudentService;
-using Better_Shkolo.Services.TableService;
+﻿using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.StudentService;
+using BetterShkolo.Services.TableService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class TableController : Controller
     {

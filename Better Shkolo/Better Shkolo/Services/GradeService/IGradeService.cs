@@ -1,8 +1,8 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Student;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Student;
 
-namespace Better_Shkolo.Services.GradeService
+namespace BetterShkolo.Services.GradeService
 {
     public interface IGradeService
     {

@@ -1,9 +1,9 @@
-namespace Better_Shkolo
+namespace BetterShkolo
 {
-    using Better_Shkolo.Data;
-    using Better_Shkolo.Data.Models;
-    using Better_Shkolo.Extensions;
-    using Better_Shkolo.Services.AccountService;
+    using BetterShkolo.Data;
+    using BetterShkolo.Data.Models;
+    using BetterShkolo.Extensions;
+    using BetterShkolo.Services.AccountService;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Data
+﻿namespace BetterShkolo.Data
 {
     public static class Constants
     {
@@ -39,7 +39,7 @@
         public class User
         {
             public const int FirstNameMaxLength = 15;
-            public const int FirstNameMinLength = 3; 
+            public const int FirstNameMinLength = 3;
             public const int LastNameMaxLength = 15;
             public const int LastNameMinLength = 3;
         }

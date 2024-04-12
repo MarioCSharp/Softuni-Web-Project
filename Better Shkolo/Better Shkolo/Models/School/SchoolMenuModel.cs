@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.School
+﻿namespace BetterShkolo.Models.School
 {
     public class SchoolMenuModel
     {

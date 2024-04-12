@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.StudyPlan;
+﻿using BetterShkolo.Models.StudyPlan;
 
-namespace Better_Shkolo.Services.StudyPlanService
+namespace BetterShkolo.Services.StudyPlanService
 {
     public interface IStudyPlanService
     {

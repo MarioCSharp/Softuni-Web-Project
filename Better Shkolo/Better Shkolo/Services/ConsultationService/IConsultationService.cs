@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Data.Models;
-using Better_Shkolo.Models.Consultation;
-using Better_Shkolo.Models.Grade;
+﻿using BetterShkolo.Data.Models;
+using BetterShkolo.Models.Consultation;
+using BetterShkolo.Models.Grade;
 using QuestPDF.Fluent;
 using Document = QuestPDF.Fluent.Document;
 
-namespace Better_Shkolo.Services.ConsultationService
+namespace BetterShkolo.Services.ConsultationService
 {
     public interface IConsultationService
     {

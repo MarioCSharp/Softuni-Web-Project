@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Parent;
-using Better_Shkolo.Models.Student;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.StudentService;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Parent;
+using BetterShkolo.Models.Student;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.GradeService;
+using BetterShkolo.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class StudentController : Controller
     {

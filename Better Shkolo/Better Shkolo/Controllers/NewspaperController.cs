@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.Newspapper;
-using Better_Shkolo.Services.NewspapperService;
+﻿using BetterShkolo.Models.Newspapper;
+using BetterShkolo.Services.NewspapperService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class NewspaperController : Controller
     {
@@ -39,6 +39,11 @@ namespace Better_Shkolo.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await newspapperService.GetNews());
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            return View(await newspapperService.GetPost(id));
         }
     }
 }

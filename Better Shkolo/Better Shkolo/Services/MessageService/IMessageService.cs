@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Message;
+﻿using BetterShkolo.Models.Message;
 
-namespace Better_Shkolo.Services.MessageService
+namespace BetterShkolo.Services.MessageService
 {
     public interface IMessageService
     {

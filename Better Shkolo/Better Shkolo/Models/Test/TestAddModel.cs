@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Test
+namespace BetterShkolo.Models.Test
 {
     public class TestAddModel
     {

@@ -1,12 +1,12 @@
-﻿using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Message;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.MessageService;
+﻿using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Message;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.GradeService;
+using BetterShkolo.Services.MessageService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class MessageController : Controller
     {

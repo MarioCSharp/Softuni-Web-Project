@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Data.Enums
+﻿namespace BetterShkolo.Data.Enums
 {
     public enum SentTo
     {

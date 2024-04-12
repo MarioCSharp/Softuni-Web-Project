@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Lesson;
+﻿using BetterShkolo.Models.Lesson;
 
-namespace Better_Shkolo.Services.LessonService
+namespace BetterShkolo.Services.LessonService
 {
     public interface ILessonService
     {

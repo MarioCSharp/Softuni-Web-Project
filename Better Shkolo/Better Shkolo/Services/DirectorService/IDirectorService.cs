@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.School;
+﻿using BetterShkolo.Models.School;
 
-namespace Better_Shkolo.Services.DirectorService
+namespace BetterShkolo.Services.DirectorService
 {
     public interface IDirectorService
     {

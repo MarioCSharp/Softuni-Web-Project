@@ -1,4 +1,4 @@
-﻿namespace Better_Shkolo.Models.Absence
+﻿namespace BetterShkolo.Models.Absences
 {
     public class AbsencesesShowModel
     {

@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using Better_Shkolo.Data;
-using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Models.Teacher;
-using Better_Shkolo.Services.AbsenceService;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.MarkService;
-using Better_Shkolo.Services.StatisticsService;
-using Better_Shkolo.Services.StudentService;
-using Better_Shkolo.Services.SubjectService;
-using Better_Shkolo.Services.TeacherService;
+using BetterShkolo.Data;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Models.Teacher;
+using BetterShkolo.Services.AbsencesService;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.GradeService;
+using BetterShkolo.Services.MarkService;
+using BetterShkolo.Services.StatisticsService;
+using BetterShkolo.Services.StudentService;
+using BetterShkolo.Services.SubjectService;
+using BetterShkolo.Services.TeacherService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class TeacherController : Controller
     {

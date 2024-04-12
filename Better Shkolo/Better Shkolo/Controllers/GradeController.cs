@@ -1,14 +1,14 @@
-﻿using Better_Shkolo.Models.Grade;
-using Better_Shkolo.Services.GradeService;
-using Better_Shkolo.Services.TeacherService;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Better_Shkolo.Services.AccountService;
-using Better_Shkolo.Data;
 using AutoMapper;
 using System.Security.Claims;
+using BetterShkolo.Models.Grade;
+using BetterShkolo.Data;
+using BetterShkolo.Services.AccountService;
+using BetterShkolo.Services.TeacherService;
+using BetterShkolo.Services.GradeService;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class GradeController : Controller
     {

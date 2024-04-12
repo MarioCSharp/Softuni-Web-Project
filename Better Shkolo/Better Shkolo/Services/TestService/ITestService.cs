@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Test;
+﻿using BetterShkolo.Models.Test;
 
-namespace Better_Shkolo.Services.TestService
+namespace BetterShkolo.Services.TestService
 {
     public interface ITestService
     {

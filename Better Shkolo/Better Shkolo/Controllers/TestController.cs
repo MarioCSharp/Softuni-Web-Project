@@ -1,10 +1,10 @@
-﻿using Better_Shkolo.Models.Test;
-using Better_Shkolo.Services.TestService;
+﻿using BetterShkolo.Models.Test;
+using BetterShkolo.Services.TestService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace Better_Shkolo.Controllers
+namespace BetterShkolo.Controllers
 {
     public class TestController : Controller
     {

@@ -1,9 +1,9 @@
-﻿using Better_Shkolo.Models.Api;
-using Better_Shkolo.Models.Application;
-using Better_Shkolo.Models.Mark;
-using Better_Shkolo.Models.Teacher;
+﻿using BetterShkolo.Models.Api;
+using BetterShkolo.Models.Application;
+using BetterShkolo.Models.Mark;
+using BetterShkolo.Models.Teacher;
 
-namespace Better_Shkolo.Services.StatisticsService
+namespace BetterShkolo.Services.StatisticsService
 {
     public interface IStatisticsService
     {

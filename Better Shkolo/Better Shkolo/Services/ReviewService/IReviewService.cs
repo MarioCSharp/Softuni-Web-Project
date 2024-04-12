@@ -1,6 +1,6 @@
-﻿using Better_Shkolo.Models.Review;
+﻿using BetterShkolo.Models.Review;
 
-namespace Better_Shkolo.Services.ReviewService
+namespace BetterShkolo.Services.ReviewService
 {
     public interface IReviewService
     {

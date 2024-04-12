@@ -1,7 +1,7 @@
-﻿using Better_Shkolo.Models.School;
+﻿using BetterShkolo.Models.School;
 using System.ComponentModel.DataAnnotations;
 
-namespace Better_Shkolo.Models.Message
+namespace BetterShkolo.Models.Message
 {
     public class MessageSendTeachersModel
     {
