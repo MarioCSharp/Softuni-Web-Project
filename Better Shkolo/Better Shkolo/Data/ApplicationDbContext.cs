@@ -1,4 +1,5 @@
-﻿using BetterShkolo.Data.Models;
+﻿using Better_Shkolo.Data.Models;
+using BetterShkolo.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,5 +34,6 @@ namespace BetterShkolo.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<ErasmusDocument> ErasmusDocuments { get; set; }
     }
 }

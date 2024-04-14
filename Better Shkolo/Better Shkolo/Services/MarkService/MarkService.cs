@@ -92,6 +92,18 @@ namespace BetterShkolo.Services.MarkService
             return true;
         }
 
+        public async Task<double> GetAverageMarks(string userId)
+        {
+            var marks = await context.Marks.Where(x => x.Student.UserId == userId).ToListAsync();
+
+            if (marks.Count == 0)
+            {
+                return 0.0;
+            }
+
+            return marks.Average(x => x.Value);
+        }
+
         public async Task<List<MarkDisplayModel>> GetMarks(string userId)
         {
             var model = new List<MarkDisplayModel>();

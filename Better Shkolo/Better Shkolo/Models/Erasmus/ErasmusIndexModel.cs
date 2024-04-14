@@ -1,4 +1,5 @@
-﻿using BetterShkolo.Models.Student;
+﻿using Better_Shkolo.Models.Erasmus;
+using BetterShkolo.Models.Student;
 
 namespace BetterShkolo.Models.Erasmus
 {
@@ -20,5 +21,6 @@ namespace BetterShkolo.Models.Erasmus
             return AligibleStudents.GetRange(startIndex, endIndex - startIndex);
         }
         public List<StudentDisplayModel> AligibleStudents { get; set; } = null!;
+        public List<ErasmusDocumentIndexModel> Documents{ get; set; } = null!;
     }
 }

@@ -11,5 +11,6 @@ namespace BetterShkolo.Services.SchoolService
         Task<School> GetSchool(int id);
         Task<List<SchoolViewModel>> GetAllSchools();
         Task<int> GetSchoolIdByUser();
+        
     }
 }

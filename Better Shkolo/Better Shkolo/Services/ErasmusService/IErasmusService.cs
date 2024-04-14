@@ -1,4 +1,7 @@
-﻿using BetterShkolo.Models.Student;
+﻿using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.Erasmus;
+using BetterShkolo.Models.Erasmus;
+using BetterShkolo.Models.Student;
 
 namespace BetterShkolo.Services.ErasmusService
 {
@@ -7,6 +10,10 @@ namespace BetterShkolo.Services.ErasmusService
         List<StudentDisplayModel> GetAligibleStudents(int schoolId);
         Task Activate(int schoolId);
         Task Deactivate(int schoolId);
-        Task<bool> Apply();
+        Task<bool> Apply(ErasmusApplyModel model);
+        Task<bool> SchoolIsActive(int schoolId);
+        Task<bool> AddDocument(ErasmusDocumentAddModel model, IFormFile file);
+        Task<List<ErasmusDocumentIndexModel>> GetSchoolDocuments(int schoolId);
+        Task<ErasmusDocument> GetDoc(int documentId);
     }
 }

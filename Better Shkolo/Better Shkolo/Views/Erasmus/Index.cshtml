@@ -221,10 +221,15 @@
                         else if (Model.Active && User.IsInRole("Director"))
                         {
                             <a asp-action="Deactivate" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Спри записването</a>
+                            <a asp-action="AddDocument" asp-controller="Erasmus" class="button">Добави документ</a>
                         }
                         @if (Model.Active && User.IsInRole("Student"))
                         {
                             <a asp-action="Apply" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Кандидатсвай</a>
+                        }
+                        else if (!Model.Active && User.IsInRole("Student"))
+                        {
+                            <p>Кандидатстването все още не е активно!</p>
                         }
                     </div>
                     <div class="col-md-6 text-right">
@@ -240,6 +245,25 @@
                             @foreach (var student in Model.AligibleStudents)
                             {
                                 <li>@student.FirstName @student.LastName | Успех: 5.48</li> 
+                            }
+                        </ul>
+                    </div>
+                    <!-- Pagination controls -->
+                    <div class="pagination-controls">
+                        <!-- Previous page button -->
+                        <button class="prev-page-button" onclick="prevPage()"><i class="fas fa-chevron-left"></i> << </button>
+
+                        <!-- Next page button -->
+                        <button class="next-page-button" onclick="nextPage()">>> <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="students-container">
+                    <div class="student-list-box">
+                        <h4>Необходими документи за кандидатстване</h4>
+                        <ul class="student-list">
+                            @foreach (var doc in Model.Documents)
+                            {
+                                <li>@doc.Name <a asp-action="Download" asp-controller="Erasmus" asp-route-documentId="@doc.Id">Изтегли</a></li>
                             }
                         </ul>
                     </div>

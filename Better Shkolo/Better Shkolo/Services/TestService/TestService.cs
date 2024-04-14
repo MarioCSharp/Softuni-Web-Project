@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BetterShkolo.Data.Migrations;
 using BetterShkolo.Data;
 using BetterShkolo.Data.Models;
 using BetterShkolo.Models.Test;

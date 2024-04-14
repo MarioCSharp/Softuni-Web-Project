@@ -8,5 +8,6 @@ namespace BetterShkolo.Services.MarkService
         Task<List<MarkDisplayModel>> GetMarks(string userId);
         Task<bool> AddTermMark(TermMarkAddModel model);
         Task<bool> AddYearMark(YearMarkAddModel model);
+        Task<double> GetAverageMarks(string userId);
     }
 }

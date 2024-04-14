@@ -1,25 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BetterShkolo.Models.Erasmus
+namespace Better_Shkolo.Data.Models
 {
-    public class ErasmusApplyModel
+    public class ErasmusApplication
     {
-        public int SchoolId { get; set; }
+        [Key]
+        public int Id { get; set; }
         [Required]
-        [Display(Name = "Име")]
         public string FullName { get; set; } = null!;
         [Required]
-        [Display(Name = "ЕГН")]
         public string EGN { get; set; } = null!;
         [Required]
-        [Display(Name = "Телефонен номер")]
         public string PhoneNumber { get; set; } = null!;
         [Required]
-        [Display(Name = "Имейл")]
         [EmailAddress]
         public string Email { get; set; } = null!;
         [Required]
-        [Display(Name = "Адрес")]
         public string Address { get; set; } = null!;
+
+        public byte[] Declaration { get; set; } = null!;
+        public byte[] MotivationalLetter { get; set; } = null!;
+        public byte[] Presentation { get; set; } = null!;
     }
 }

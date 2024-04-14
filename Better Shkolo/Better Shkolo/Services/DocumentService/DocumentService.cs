@@ -3,9 +3,7 @@ using BetterShkolo.Data;
 using BetterShkolo.Models.Document;
 using BetterShkolo.Services.SchoolService;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging.Signing;
 using System.Net.Http.Headers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BetterShkolo.Services.DocumentService
 {
