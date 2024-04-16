@@ -94,18 +94,28 @@ namespace BetterShkolo.Controllers
                 return BadRequest();
             }
 
-            return View();
+            var u = await accountService.GetUser(uId);
+
+            var model = new ErasmusApplyModel()
+            {
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                Address = u.Country + " " + u.City + " " + u.Address,
+                SchoolId = schoolId
+            };
+
+            return View(model);
         }
         [HttpPost]
         [Authorize(Policy = "StudentPolicy")]
-        public async Task<IActionResult> Apply(ErasmusApplyModel model)
+        public async Task<IActionResult> Apply(ErasmusApplyModel model, IFormFile File)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var result = await erasmusService.Apply(model);
+            var result = await erasmusService.Apply(model, File);
 
             if (!result)
             {
@@ -145,6 +155,22 @@ namespace BetterShkolo.Controllers
             var document = await erasmusService.GetDoc(documentId);
 
             return File(document.File, "application/pdf", $"{document.Name}{document.FileExtension}");
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorPolicy")]
+        public async Task<IActionResult> Applications(int schoolId)
+        {
+            var applications = await erasmusService.GetSchoolApplications(schoolId);
+
+            return View(applications);
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorPolicy")]
+        public async Task<IActionResult> DownloadDocument(int applicationId)
+        {
+            var app = await erasmusService.GetApplication(applicationId);
+
+            return File(app.File, "application/pdf", $"Апликация{app.FileExtension}");
         }
     }
 }

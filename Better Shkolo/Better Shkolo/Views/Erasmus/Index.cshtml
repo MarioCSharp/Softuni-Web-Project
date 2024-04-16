@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Създаване на клас</title>
+    <title>Еразъм+</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -62,6 +62,10 @@
             font-size: 16px;
             font-weight: bold;
         }
+
+        .row {
+            margin: 0 -20px; /* Adjust the value for desired spacing */
+        }
     </style>
 </head>
 @{
@@ -94,6 +98,15 @@
                         </a>
                     </li>
                 }
+                @if (User.IsInRole("Teacher"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="MyGrades" asp-controller="Grade" class="sidebar-link">
+                            <i class="lni lni-clipboard"></i>
+                            <span>Дневник</span>
+                        </a>
+                    </li>
+                }
                 @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
                 {
                     <li class="sidebar-item">
@@ -110,7 +123,7 @@
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                           data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                             <i class="lni lni-briefcase"></i>
                             <span>Дейности</span>
                         </a>
@@ -180,6 +193,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="sidebar-item">
+                    <a href="/Erasmus/Index" class="sidebar-link">
+                        <i class="lni lni-world"></i>
+                        <span>Еразъм+</span>
+                    </a>
+                </li>
             </ul>
             <div class="sidebar-footer">
                 <a asp-action="MyProfile" asp-controller="Account" class="sidebar-link">
@@ -193,92 +212,90 @@
             </div>
         </aside>
         <div class="main p-3">
-            <div id="elements">
+            <div id="elements" class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3>@Model.SchoolName</h3>
-                        <br />
-                        <h3>Какво представлява „Еразъм+“?</h3>
-                        <p>„Еразъм+“ е програмата на ЕС за подкрепа на образованието, обучението, младежта и спорта в Европа.</p>
-                        <p>Нейният прогнозен бюджет е 26,2 млрд. евро. Това е почти два пъти повече в сравнение <br /> с предходната програма (за периода 2014—2020 г.).</p>
-                        <p>
-                            В програмата за 2021—2027 г. се обръща особено внимание на социалното приобщаване,<br /> 
-                            екологичния и цифровия преход и насърчаването на участието на младите хора в демократичния <br />
-                            живот.
+                        <h2 class="section-title">@Model.SchoolName</h2>
+                        <hr class="divider">
+                        <h3 class="section-subtitle">Какво представлява „Еразъм+“?</h3>
+                        <p class="section-text">„Еразъм+“ е програмата на ЕС за подкрепа на образованието, обучението, младежта и спорта в Европа.</p>
+                        <p class="section-text">Нейният прогнозен бюджет е 26,2 млрд. евро. Това е почти два пъти повече в сравнение с предходната програма (за периода 2014—2020 г.).</p>
+                        <p class="section-text">
+                            В програмата за 2021—2027 г. се обръща особено внимание на социалното приобщаване, екологичния и цифровия преход и насърчаването на участието на младите хора в демократичния живот.
                         </p>
-                        <p>
-                            Чрез нея се подкрепят приоритети и дейности, посочени в европейското пространство за<br />
-                            образование, плана за действие в областта на цифровото образование и Новата европейска <br />
-                            програма за умения. С програмата също така се:<br />
-                            <strong>·</strong> подкрепя Eвропейският стълб на социалните права,<br />
-                            <strong>·</strong> изпълнява стратегията на ЕС за младежта за периода 2019—2027 г.<br />
+                        <p class="section-text">
+                            Чрез нея се подкрепят приоритети и дейности, посочени в европейското пространство за образование, плана за действие в областта на цифровото образование и Новата европейска програма за умения. С програмата също така се:
+                            <br>
+                            <strong>·</strong> подкрепя Eвропейският стълб на социалните права,
+                            <br>
+                            <strong>·</strong> изпълнява стратегията на ЕС за младежта за периода 2019—2027 г.,
+                            <br>
                             <strong>·</strong> развива европейското измерение в спорта.
                         </p>
                         @if (!Model.Active && User.IsInRole("Director"))
                         {
-                            <a asp-action="Activate" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Активирай записването</a>
+                            <a asp-action="Activate" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="btn btn-primary">Активирай записването</a>
                         }
                         else if (Model.Active && User.IsInRole("Director"))
                         {
-                            <a asp-action="Deactivate" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Спри записването</a>
-                            <a asp-action="AddDocument" asp-controller="Erasmus" class="button">Добави документ</a>
+                            <a asp-action="Deactivate" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="btn btn-danger">Спри записването</a>
+                            <a asp-action="AddDocument" asp-controller="Erasmus" class="btn btn-secondary">Добави документ</a>
+                            <a asp-action="Applications" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="btn btn-info">Апликации</a>
                         }
                         @if (Model.Active && User.IsInRole("Student"))
                         {
-                            <a asp-action="Apply" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="button">Кандидатсвай</a>
+                            <a asp-action="Apply" asp-controller="Erasmus" asp-route-schoolId="@Model.SchoolId" class="btn btn-success">Кандидатсвай</a>
                         }
                         else if (!Model.Active && User.IsInRole("Student"))
                         {
                             <p>Кандидатстването все още не е активно!</p>
                         }
                     </div>
-                    <div class="col-md-6 text-right">
-                        <img src="https://mu-sofia.bg/wp-content/uploads/2021/02/Erasmus-Programme-2021-2027-1024x683@2x.jpg" alt="Erasmus Image" style="width: 300px; height: 300px; object-fit: cover; border-radius: 10px;">
+                    <div class="col-md-6 text-center">
+                        <img src="https://mu-sofia.bg/wp-content/uploads/2021/02/Erasmus-Programme-2021-2027-1024x683@2x.jpg" alt="Erasmus Image" class="img-fluid rounded">
                     </div>
                 </div>
 
-                <!-- Pagination box for the list of participating students -->
-                <div class="students-container">
-                    <div class="student-list-box">
-                        <h4>Подходящи учници</h4>
-                        <ul class="student-list">
-                            @foreach (var student in Model.AligibleStudents)
-                            {
-                                <li>@student.FirstName @student.LastName | Успех: 5.48</li> 
-                            }
-                        </ul>
+                @if (User.IsInRole("Director"))
+                {
+                    <div class="students-container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="student-list-box">
+                                    <h4 class="mb-3"><i class="fas fa-users"></i> Подходящи ученици</h4>
+                                    <ul class="student-list">
+                                        @foreach (var student in Model.AligibleStudents)
+                                        {
+                                            <li>@student.FirstName @student.LastName | Успех: 5.48</li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="prev-page-button btn btn-outline-primary" onclick="prevPage()"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="next-page-button btn btn-outline-primary" onclick="nextPage()"><i class="fas fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="student-list-box">
+                                    <h4 class="mb-3"><i class="fas fa-file-alt"></i> Необходими документи за кандидатстване</h4>
+                                    <ul class="student-list">
+                                        @foreach (var doc in Model.Documents)
+                                        {
+                                            <li>@doc.Name <a asp-action="Download" asp-controller="Erasmus" asp-route-documentId="@doc.Id" class="btn btn-link text-success"><i class="fas fa-download"></i></a></li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="prev-page-button btn btn-outline-primary" onclick="prevPage()"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="next-page-button btn btn-outline-primary" onclick="nextPage()"><i class="fas fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Pagination controls -->
-                    <div class="pagination-controls">
-                        <!-- Previous page button -->
-                        <button class="prev-page-button" onclick="prevPage()"><i class="fas fa-chevron-left"></i> << </button>
-
-                        <!-- Next page button -->
-                        <button class="next-page-button" onclick="nextPage()">>> <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
-                <div class="students-container">
-                    <div class="student-list-box">
-                        <h4>Необходими документи за кандидатстване</h4>
-                        <ul class="student-list">
-                            @foreach (var doc in Model.Documents)
-                            {
-                                <li>@doc.Name <a asp-action="Download" asp-controller="Erasmus" asp-route-documentId="@doc.Id">Изтегли</a></li>
-                            }
-                        </ul>
-                    </div>
-                    <!-- Pagination controls -->
-                    <div class="pagination-controls">
-                        <!-- Previous page button -->
-                        <button class="prev-page-button" onclick="prevPage()"><i class="fas fa-chevron-left"></i> << </button>
-
-                        <!-- Next page button -->
-                        <button class="next-page-button" onclick="nextPage()">>> <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
-
+                }
             </div>
         </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
                 crossorigin="anonymous"></script>

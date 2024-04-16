@@ -52,9 +52,30 @@ namespace BetterShkolo.Services.ErasmusService
             return await context.ErasmusDocuments.ContainsAsync(doc);
         }
 
-        public Task<bool> Apply(ErasmusApplyModel model)
+        public async Task<bool> Apply(ErasmusApplyModel model, IFormFile file)
         {
-            throw new NotImplementedException();
+            var application = new ErasmusApplication()
+            {
+                FullName = model.FullName,
+                EGN = model.EGN,
+                PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                Email = model.Email,
+                SchoolId = model.SchoolId
+            };
+
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                application.File = stream.ToArray();
+                string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                application.FileExtension = Path.GetExtension(fileName);
+            }
+
+            await context.ErasmusApplications.AddAsync(application);
+            await context.SaveChangesAsync();
+
+            return await context.ErasmusApplications.ContainsAsync(application);
         }
 
         public async Task Deactivate(int schoolId)
@@ -82,9 +103,30 @@ namespace BetterShkolo.Services.ErasmusService
             }).ToList();
         }
 
+        public async Task<ErasmusApplication> GetApplication(int applicationId)
+        {
+            return await context.ErasmusApplications.FindAsync(applicationId);
+        }
+
         public async Task<ErasmusDocument> GetDoc(int documentId)
         {
             return await context.ErasmusDocuments.FindAsync(documentId);
+        }
+
+        public async Task<List<ErasmusApplicationsModel>> GetSchoolApplications(int schoolId)
+        {
+            return await context.ErasmusApplications
+                .Where(x => x.SchoolId == schoolId)
+                .Select(x => new ErasmusApplicationsModel
+                {
+                    Id = x.Id,
+                    SchoolId = x.SchoolId,
+                    FullName = x.FullName,
+                    PhoneNumber = x.PhoneNumber,
+                    EGN = x.EGN,
+                    Email = x.Email,
+                    Address = x.Address
+                }).ToListAsync();
         }
 
         public async Task<List<ErasmusDocumentIndexModel>> GetSchoolDocuments(int schoolId)

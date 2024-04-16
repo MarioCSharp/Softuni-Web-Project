@@ -250,7 +250,9 @@ namespace BetterShkolo.Services.StatisticsService
 
             if (standings.Count < 3)
             {
-                return null;
+                standings.Add(0, 0.0);
+                standings.Add(-1, 0.0);
+                standings.Add(-2, 0.0);
             }
 
             var fS = standings.OrderByDescending(x => x.Value).ToArray()[0];
@@ -273,7 +275,9 @@ namespace BetterShkolo.Services.StatisticsService
 
             if (aStandings.Count < 3)
             {
-                return null;
+                aStandings.Add(0, 0);
+                aStandings.Add(-1, 0);
+                aStandings.Add(-2, 0);
             }
 
             var fA = aStandings.OrderByDescending(x => x.Value).ToArray()[0];
@@ -284,18 +288,63 @@ namespace BetterShkolo.Services.StatisticsService
             mdl.Absences = abs;
             mdl.Reviews = rvs;
             mdl.Tests = tst;
-            var g = await context.Grades.FindAsync(fS.Key);
-            mdl.FirstPlaceSuccess = (g.GradeName, double.Parse($"{fS.Value:F2}"));
-            g = await context.Grades.FindAsync(sS.Key);
-            mdl.SecondPlaceSuccess = (g.GradeName, double.Parse($"{sS.Value:F2}"));
-            g = await context.Grades.FindAsync(tS.Key);
-            mdl.ThirdPlaceSuccess = (g.GradeName, double.Parse($"{tS.Value:F2}"));
-            g = await context.Grades.FindAsync(fA.Key);
-            mdl.FirstPlaceAbsences = (g.GradeName, fA.Value);
-            g = await context.Grades.FindAsync(sA.Key);
-            mdl.SecondPlaceAbsences = (g.GradeName, sA.Value);
-            g = await context.Grades.FindAsync(tA.Key);
-            mdl.ThirdPlaceAbsences = (g.GradeName, tA.Value);
+
+            if (fS.Key <= 0)
+            {
+                mdl.FirstPlaceSuccess = ("-", 0.0);
+            }
+            else
+            {
+                var g = await context.Grades.FindAsync(fS.Key);
+
+                mdl.FirstPlaceSuccess = (g.GradeName, double.Parse($"{fS.Value:F2}"));
+            }
+            if (sS.Key <= 0)
+            {
+                mdl.SecondPlaceSuccess = ("-", 0.0);
+            }
+            else
+            {
+                var g = await context.Grades.FindAsync(sS.Key);
+                mdl.SecondPlaceSuccess = (g.GradeName, double.Parse($"{sS.Value:F2}"));
+            }
+            if (tS.Key <= 0)
+            {
+                mdl.ThirdPlaceSuccess = ("-", 0.0);
+            }
+            else
+            {
+                var g = await context.Grades.FindAsync(tS.Key);
+                mdl.ThirdPlaceSuccess = (g.GradeName, double.Parse($"{tS.Value:F2}"));
+            }
+
+            if (fA.Key <= 0)
+            {
+                mdl.FirstPlaceAbsences = ("-", 0);
+            }
+            else
+            {
+                var g = await context.Grades.FindAsync(fA.Key);
+                mdl.FirstPlaceAbsences = (g.GradeName, fA.Value);
+            }
+            if (sA.Key <= 0)
+            {
+                mdl.SecondPlaceAbsences = ("-", 0);
+            }
+            else
+            {
+                var g = await context.Grades.FindAsync(sA.Key);
+                mdl.SecondPlaceAbsences = (g.GradeName, sA.Value);
+            }
+            if (tA.Key <= 0)
+            {
+                mdl.ThirdPlaceSuccess = ("-", 0);
+            }
+            else
+            {
+                var g = await context.Grades.FindAsync(tA.Key);
+                mdl.ThirdPlaceAbsences = (g.GradeName, tA.Value);
+            }
 
             return mdl;
         }

@@ -41,6 +41,15 @@
                         </a>
                     </li>
                 }
+                @if (User.IsInRole("Teacher"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="MyGrades" asp-controller="Grade" class="sidebar-link">
+                            <i class="lni lni-clipboard"></i>
+                            <span>Дневник</span>
+                        </a>
+                    </li>
+                }
                 @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
                 {
                     <li class="sidebar-item">
@@ -126,6 +135,12 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Erasmus/Index" class="sidebar-link">
+                        <i class="lni lni-world"></i>
+                        <span>Еразъм+</span>
+                    </a>
                 </li>
             </ul>
             <div class="sidebar-footer">

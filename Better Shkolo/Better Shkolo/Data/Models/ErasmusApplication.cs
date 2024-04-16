@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BetterShkolo.Data.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Better_Shkolo.Data.Models
 {
@@ -17,9 +19,12 @@ namespace Better_Shkolo.Data.Models
         public string Email { get; set; } = null!;
         [Required]
         public string Address { get; set; } = null!;
+        [Required]
+        public int SchoolId { get; set; }
+        [ForeignKey(nameof(SchoolId))]
+        public School School { get; set; } = null!;
 
-        public byte[] Declaration { get; set; } = null!;
-        public byte[] MotivationalLetter { get; set; } = null!;
-        public byte[] Presentation { get; set; } = null!;
+        public byte[] File { get; set; } = null!;
+        public string FileExtension { get; set; } = null!;
     }
 }

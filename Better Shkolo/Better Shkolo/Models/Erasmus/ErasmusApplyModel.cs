@@ -21,5 +21,7 @@ namespace BetterShkolo.Models.Erasmus
         [Required]
         [Display(Name = "Адрес")]
         public string Address { get; set; } = null!;
+        [Display(Name = "Папка с всички необходими документи за кандидатстване (.rar или .zip)")]
+        public byte[] File { get; set; } = null!;
     }
 }

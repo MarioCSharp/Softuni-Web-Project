@@ -10,10 +10,12 @@ namespace BetterShkolo.Services.ErasmusService
         List<StudentDisplayModel> GetAligibleStudents(int schoolId);
         Task Activate(int schoolId);
         Task Deactivate(int schoolId);
-        Task<bool> Apply(ErasmusApplyModel model);
+        Task<bool> Apply(ErasmusApplyModel model, IFormFile file);
         Task<bool> SchoolIsActive(int schoolId);
         Task<bool> AddDocument(ErasmusDocumentAddModel model, IFormFile file);
         Task<List<ErasmusDocumentIndexModel>> GetSchoolDocuments(int schoolId);
         Task<ErasmusDocument> GetDoc(int documentId);
+        Task<List<ErasmusApplicationsModel>> GetSchoolApplications(int schoolId);
+        Task<ErasmusApplication> GetApplication(int applicationId);
     }
 }

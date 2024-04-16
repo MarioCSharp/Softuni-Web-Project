@@ -42,6 +42,15 @@
                         </a>
                     </li>
                 }
+                @if (User.IsInRole("Teacher"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="MyGrades" asp-controller="Grade" class="sidebar-link">
+                            <i class="lni lni-clipboard"></i>
+                            <span>Дневник</span>
+                        </a>
+                    </li>
+                }
                 @if (User.IsInRole("Teacher") || User.IsInRole("Director"))
                 {
                     <li class="sidebar-item">
@@ -104,17 +113,17 @@
                     </li>
                 }
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                       data-bs-target="#messages" aria-expanded="false" aria-controls="messages">
-                        <i class="lni lni-envelope"></i>
-                        <span>Съобщения</span>
-                    </a>
-                <li class="sidebar-item">
                     <a asp-action="Index" asp-controller="Newspaper" class="sidebar-link">
                         <i class="lni lni-library"></i>
                         <span>Училищен вестник</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#messages" aria-expanded="false" aria-controls="messages">
+                        <i class="lni lni-envelope"></i>
+                        <span>Съобщения</span>
+                    </a>
                     <ul id="messages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a asp-action="Index" asp-controller="Message" class="sidebar-link">
@@ -127,6 +136,12 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Erasmus/Index" class="sidebar-link">
+                        <i class="lni lni-world"></i>
+                        <span>Еразъм+</span>
+                    </a>
                 </li>
             </ul>
             <div class="sidebar-footer">

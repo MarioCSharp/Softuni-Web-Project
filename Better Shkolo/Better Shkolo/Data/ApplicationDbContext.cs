@@ -35,5 +35,6 @@ namespace BetterShkolo.Data
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<ErasmusDocument> ErasmusDocuments { get; set; }
+        public DbSet<ErasmusApplication> ErasmusApplications { get; set; }
     }
 }
