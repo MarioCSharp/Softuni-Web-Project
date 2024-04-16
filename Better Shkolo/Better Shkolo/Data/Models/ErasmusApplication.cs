@@ -23,6 +23,7 @@ namespace Better_Shkolo.Data.Models
         public int SchoolId { get; set; }
         [ForeignKey(nameof(SchoolId))]
         public School School { get; set; } = null!;
+        public int Points { get; set; }
 
         public byte[] File { get; set; } = null!;
         public string FileExtension { get; set; } = null!;

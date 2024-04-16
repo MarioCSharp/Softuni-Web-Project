@@ -17,5 +17,6 @@ namespace BetterShkolo.Services.ErasmusService
         Task<ErasmusDocument> GetDoc(int documentId);
         Task<List<ErasmusApplicationsModel>> GetSchoolApplications(int schoolId);
         Task<ErasmusApplication> GetApplication(int applicationId);
+        Task Evaluate(ErasmusApplicationEvaluationModel evaluationModel);
     }
 }

@@ -170,6 +170,7 @@
                             <th scope="col">Адрес</th>
                             <th scope="col">Телефонен номер</th>
                             <th scope="col">Прикачен файл</th>
+                            <th scope="col">Точки</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -183,6 +184,14 @@
                                 <td>@app.Address</td>
                                 <td>@app.PhoneNumber</td>
                                 <td><a asp-action="DownloadDocument" asp-controller="Erasmus" asp-route-applicationId="@app.Id">Изтегли</a></td>
+                                @if (app.Points == -1)
+                                {
+                                    <td><a asp-action="Evaluate" asp-controller="Erasmus" asp-route-applicationId="@app.Id">Добави точки</a></td>
+                                }
+                                else
+                                {
+                                    <td>@app.Points <a asp-action="Evaluate" asp-controller="Erasmus" asp-route-applicationId="@app.Id">Редактирай точки</a></td>
+                                }
                             </tr>
                         }
                     </tbody>

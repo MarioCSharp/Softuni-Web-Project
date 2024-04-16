@@ -160,6 +160,11 @@ namespace BetterShkolo.Controllers
         [Authorize(Policy = "DirectorPolicy")]
         public async Task<IActionResult> Applications(int schoolId)
         {
+            if (schoolId == 0)
+            {
+                schoolId = await schoolService.GetSchoolIdByUser();
+            }
+
             var applications = await erasmusService.GetSchoolApplications(schoolId);
 
             return View(applications);
@@ -171,6 +176,31 @@ namespace BetterShkolo.Controllers
             var app = await erasmusService.GetApplication(applicationId);
 
             return File(app.File, "application/pdf", $"Апликация{app.FileExtension}");
+        }
+        [HttpGet]
+        [Authorize(Policy = "DirectorPolicy")]
+        public async Task<IActionResult> Evaluate(int applicationId)
+        {
+            var model = new ErasmusApplicationEvaluationModel()
+            {
+                ApplicationId = applicationId,
+                Points = 0
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [Authorize(Policy = "DirectorPolicy")]
+        public async Task<IActionResult> Evaluate(ErasmusApplicationEvaluationModel evaluation)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(evaluation);
+            }
+
+            await erasmusService.Evaluate(evaluation);
+
+            return RedirectToAction(nameof(Applications));
         }
     }
 }

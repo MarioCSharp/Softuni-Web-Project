@@ -12,5 +12,6 @@ namespace Better_Shkolo.Models.Erasmus
         public string Email { get; set; } = null!;
         public string Address { get; set; } = null!;
         public int FileId { get; set; }
+        public int Points { get; set; }
     }
 }

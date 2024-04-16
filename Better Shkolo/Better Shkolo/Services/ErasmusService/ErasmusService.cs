@@ -61,7 +61,8 @@ namespace BetterShkolo.Services.ErasmusService
                 PhoneNumber = model.PhoneNumber,
                 Address = model.Address,
                 Email = model.Email,
-                SchoolId = model.SchoolId
+                SchoolId = model.SchoolId,
+                Points = -1
             };
 
             using (var stream = new MemoryStream())
@@ -83,6 +84,14 @@ namespace BetterShkolo.Services.ErasmusService
             var school = await context.Schools.FindAsync(schoolId);
 
             school.ActiveErasmus = false;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Evaluate(ErasmusApplicationEvaluationModel evaluation)
+        {
+            var app = await context.ErasmusApplications.FindAsync(evaluation.ApplicationId);
+
+            app.Points = evaluation.Points;
             await context.SaveChangesAsync();
         }
 
@@ -125,7 +134,8 @@ namespace BetterShkolo.Services.ErasmusService
                     PhoneNumber = x.PhoneNumber,
                     EGN = x.EGN,
                     Email = x.Email,
-                    Address = x.Address
+                    Address = x.Address,
+                    Points = x.Points
                 }).ToListAsync();
         }
 
