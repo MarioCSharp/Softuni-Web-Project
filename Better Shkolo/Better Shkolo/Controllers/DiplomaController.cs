@@ -14,9 +14,14 @@ namespace Better_Shkolo.Controllers
         }
         [HttpGet]
         [Authorize(Policy = "DirectorPolicy")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string docType)
         {
-            return View(await diplomaService.GetSchoolDiplomas());
+            if (string.IsNullOrWhiteSpace(docType))
+            {
+                return View(await diplomaService.GetSchoolDiplomas());
+            }
+
+            return View(await diplomaService.GetSchoolDiplomas(docType));
         }
 
         [HttpGet]

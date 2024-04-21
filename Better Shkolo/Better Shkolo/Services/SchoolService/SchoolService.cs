@@ -125,9 +125,8 @@ namespace BetterShkolo.Services.SchoolService
             if (await userManager.IsInRoleAsync(user, "Teacher"))
             {
                 var t = await context.Teachers.FirstOrDefaultAsync(x => x.UserId == user.Id);
-                var s = await context.Subjects.FirstOrDefaultAsync(x => x.TeacherId == t.Id);
 
-                schoolId = s.SchoolId;
+                schoolId = t.SchoolId;
             }
             else if (await userManager.IsInRoleAsync(user, "Director"))
             {

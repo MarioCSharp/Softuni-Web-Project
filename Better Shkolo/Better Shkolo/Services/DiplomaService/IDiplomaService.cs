@@ -6,5 +6,6 @@ namespace Better_Shkolo.Services.DiplomaService
     {
         Task<bool> AddDiploma(DiplomaAddModel model, IFormFile File);
         Task<List<DiplomaIndexModel>> GetSchoolDiplomas();
+        Task<List<DiplomaIndexModel>> GetSchoolDiplomas(string docType);
     }
 }

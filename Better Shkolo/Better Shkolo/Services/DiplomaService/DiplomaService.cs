@@ -72,5 +72,27 @@ namespace Better_Shkolo.Services.DiplomaService
                     YearRegistrationNumber = x.YearRegistrationNumber
                 }).ToListAsync();
         }
+
+        public async Task<List<DiplomaIndexModel>> GetSchoolDiplomas(string docType)
+        {
+            var schoolId = await schoolService.GetSchoolIdByUser();
+
+            return await context.Diplomas
+                .Where(x => x.SchoolId == schoolId && docType == x.Type)
+                .Select(x => new DiplomaIndexModel()
+                {
+                    EducationForm = x.EducationForm,
+                    FabricNumber = x.FabricNumber,
+                    FullName = x.FullName,
+                    Id = x.Id,
+                    Identification = x.Identification,
+                    IssuedDate = x.IssuedDate,
+                    RegistrationNumber = x.RegistrationNumber,
+                    SchoolYear = x.SchoolYear,
+                    Series = x.Series,
+                    Type = x.Type,
+                    YearRegistrationNumber = x.YearRegistrationNumber
+                }).ToListAsync();
+        }
     }
 }

@@ -68,7 +68,7 @@
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                           data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                             <i class="lni lni-briefcase"></i>
                             <span>Дейности</span>
                         </a>
@@ -160,7 +160,20 @@
             <div id="elements">
                 <br />
                 <br />
-                <h3>Апликации за "Еразъм+"</h3>
+                <h3>Регистрационна книга</h3>
+                <a asp-action="Add" asp-controller="Diploma" class="btn btn-outline-primary">Добави документ</a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Вид документ
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Diploma" asp-route-docType="Удостоверение за завършен първи гимназиален етап">Удостоверение за завършен първи гимназиален етап</a></li>
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Diploma" asp-route-docType="Диплома за среднo образование" aria-current="true">Диплома за среднo образование</a></li>
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Diploma" asp-route-docType="Свидетелство за професионална квалификация">Свидетелство за професионална квалификация</a></li>
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Diploma" asp-route-docType="Свидетелство за завършено основно образование">Свидетелство за завършено основно образование</a></li>
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="Diploma" asp-route-docType="Удостоверение за завършен начален етап">Удостоверение за завършен начален етап</a></li>
+                    </ul>
+                </div>
                 <table class="table">
                     <thead class="table-light">
                         <tr>
@@ -207,5 +220,10 @@
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
             crossorigin="anonymous"></script>
     <script src="/js/home.js"></script>
+    <script>
+        import { Dropdown, Ripple, initMDB } from "mdb-ui-kit";
+
+        initMDB({ Dropdown, Ripple });
+    </script>
 </body>
 </html>

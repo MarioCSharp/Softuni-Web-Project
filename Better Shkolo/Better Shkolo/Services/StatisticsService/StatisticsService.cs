@@ -227,7 +227,13 @@ namespace BetterShkolo.Services.StatisticsService
 
             var sId = await schoolService.GetSchoolIdByUser();
 
-            var scs = await context.Marks.Where(x => x.SchoolId == sId).AverageAsync(x => x.Value);
+            var scss = await context.Marks.Where(x => x.SchoolId == sId).ToListAsync();
+            var scs = 0.0;
+            if (scss.Count > 0)
+            {
+                scs = scss.Average(x => x.Value);
+            }
+
             scs = double.Parse($"{scs:F2}");
 
             var abs = await context.Absencess.Where(x => x.SchoolId == sId).CountAsync();
