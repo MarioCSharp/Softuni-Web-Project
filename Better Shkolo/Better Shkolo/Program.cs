@@ -1,5 +1,6 @@
 namespace BetterShkolo
 {
+    using Better_Shkolo.Hubs;
     using BetterShkolo.Data;
     using BetterShkolo.Data.Models;
     using BetterShkolo.Extensions;
@@ -99,6 +100,7 @@ namespace BetterShkolo
             builder.Services.AddApplicationServices(typeof(IAccountService));
             builder.Services.AddMemoryCache();
             builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddSignalR();
 
             var app = builder.Build();
 
@@ -134,6 +136,7 @@ namespace BetterShkolo
             });
 
             app.MapRazorPages();
+            app.MapHub<DefaultHub>("/Team/meeting");
 
             app.Run();
         }
