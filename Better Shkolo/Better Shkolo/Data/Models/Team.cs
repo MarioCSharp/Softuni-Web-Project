@@ -18,5 +18,7 @@ namespace Better_Shkolo.Data.Models
         public int TeacherId { get; set; }
         [ForeignKey(nameof(GradeId))]
         public Teacher Teacher { get; set; } = null!;
+        [Required]
+        public string RoomId { get; set; } = null!;
     }
 }

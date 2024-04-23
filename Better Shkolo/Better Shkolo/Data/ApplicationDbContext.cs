@@ -37,5 +37,6 @@ namespace BetterShkolo.Data
         public DbSet<ErasmusDocument> ErasmusDocuments { get; set; }
         public DbSet<ErasmusApplication> ErasmusApplications { get; set; }
         public DbSet<Diploma> Diplomas { get; set; }
+        public DbSet<Team> Teams { get; set; }
     }
 }
