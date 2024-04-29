@@ -28,6 +28,8 @@
     const myPeer = new Peer();
 
     myPeer.on('open', id => {
+        userId = id;
+
         const startSignalR = async () => {
             await connection.start();
             await connection.invoke("JoinRoom", ROOM_ID, userId)
