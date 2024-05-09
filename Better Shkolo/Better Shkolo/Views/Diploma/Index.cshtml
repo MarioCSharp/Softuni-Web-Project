@@ -1,5 +1,5 @@
 ﻿@using Better_Shkolo.Models.Diploma
-@model List<DiplomaIndexModel>
+@model DiplomaDisplayModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,6 +162,14 @@
                 <br />
                 <h3>Регистрационна книга</h3>
                 <a asp-action="Add" asp-controller="Diploma" class="btn btn-outline-primary">Добави документ</a>
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" value="@Model.Name" class="form-control" aria-required="true" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="DocType"/>
+                </form>
                 <div class="dropdown">
                     <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Вид документ
@@ -193,7 +201,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var app in Model)
+                        @foreach (var app in Model.Diplomas)
                         {
                             <tr>
                                 <th scope="row">@app.Id</th>

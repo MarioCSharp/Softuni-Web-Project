@@ -10,7 +10,7 @@ namespace Better_Shkolo.Controllers
         private IDiplomaService diplomaService;
         public DiplomaController(IDiplomaService diplomaService)
         {
-            this.diplomaService = diplomaService;   
+            this.diplomaService = diplomaService;
         }
         [HttpGet]
         [Authorize(Policy = "DirectorPolicy")]
@@ -18,10 +18,21 @@ namespace Better_Shkolo.Controllers
         {
             if (string.IsNullOrWhiteSpace(docType))
             {
-                return View(await diplomaService.GetSchoolDiplomas());
+                var ddiplomas = await diplomaService.GetSchoolDiplomas();
+
+                return View(ddiplomas);
             }
 
-            return View(await diplomaService.GetSchoolDiplomas(docType));
+            var diplomas = await diplomaService.GetSchoolDiplomas(docType);
+            diplomas.DocType = docType;
+
+            return View(diplomas);
+        }
+        [HttpPost]
+        [Authorize(Policy = "DirectorPolicy")]
+        public async Task<IActionResult> Index(DiplomaDisplayModel model)
+        {
+            return View(await diplomaService.GetSchoolDiplomas(model));
         }
 
         [HttpGet]

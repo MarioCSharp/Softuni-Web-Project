@@ -51,11 +51,13 @@ namespace Better_Shkolo.Services.DiplomaService
             return await context.Diplomas.ContainsAsync(diploma);
         }
 
-        public async Task<List<DiplomaIndexModel>> GetSchoolDiplomas()
+        public async Task<DiplomaDisplayModel> GetSchoolDiplomas()
         {
             var schoolId = await schoolService.GetSchoolIdByUser();
 
-            return await context.Diplomas
+            return new DiplomaDisplayModel
+            {
+                Diplomas = await context.Diplomas
                 .Where(x => x.SchoolId == schoolId)
                 .Select(x => new DiplomaIndexModel()
                 {
@@ -70,14 +72,17 @@ namespace Better_Shkolo.Services.DiplomaService
                     Series = x.Series,
                     Type = x.Type,
                     YearRegistrationNumber = x.YearRegistrationNumber
-                }).ToListAsync();
+                }).ToListAsync()
+            };
         }
 
-        public async Task<List<DiplomaIndexModel>> GetSchoolDiplomas(string docType)
+        public async Task<DiplomaDisplayModel> GetSchoolDiplomas(string docType)
         {
             var schoolId = await schoolService.GetSchoolIdByUser();
 
-            return await context.Diplomas
+            return new DiplomaDisplayModel
+            {
+                Diplomas = await context.Diplomas
                 .Where(x => x.SchoolId == schoolId && docType == x.Type)
                 .Select(x => new DiplomaIndexModel()
                 {
@@ -92,7 +97,44 @@ namespace Better_Shkolo.Services.DiplomaService
                     Series = x.Series,
                     Type = x.Type,
                     YearRegistrationNumber = x.YearRegistrationNumber
-                }).ToListAsync();
+                }).ToListAsync()
+            };
+        }
+
+        public async Task<DiplomaDisplayModel> GetSchoolDiplomas(DiplomaDisplayModel model)
+        {
+            var schoolId = await schoolService.GetSchoolIdByUser();
+            var diplomas = await context.Diplomas
+                .Where(x => x.SchoolId == schoolId).ToListAsync();
+
+            if (!string.IsNullOrWhiteSpace(model.DocType))
+            {
+                diplomas = diplomas.Where(x => x.Type == model.DocType).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(model.Name))
+            {
+                diplomas = diplomas.Where(x => x.FullName.ToLower().Contains(model.Name.ToLower())).ToList();
+            }
+
+            return new DiplomaDisplayModel
+            {
+                DocType = model.DocType,
+                Name = model.Name,
+                Diplomas = diplomas.Select(x => new DiplomaIndexModel()
+                {
+                    EducationForm = x.EducationForm,
+                    FabricNumber = x.FabricNumber,
+                    FullName = x.FullName,
+                    Id = x.Id,
+                    Identification = x.Identification,
+                    IssuedDate = x.IssuedDate,
+                    RegistrationNumber = x.RegistrationNumber,
+                    SchoolYear = x.SchoolYear,
+                    Series = x.Series,
+                    Type = x.Type,
+                    YearRegistrationNumber = x.YearRegistrationNumber
+                }).ToList()
+            };
         }
     }
 }
