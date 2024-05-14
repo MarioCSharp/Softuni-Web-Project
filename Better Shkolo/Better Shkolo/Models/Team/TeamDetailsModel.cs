@@ -1,4 +1,6 @@
-﻿namespace Better_Shkolo.Models.Team
+﻿using Better_Shkolo.Models.ChatMessage;
+
+namespace Better_Shkolo.Models.Team
 {
     public class TeamDetailsModel
     {
@@ -7,5 +9,7 @@
         public string Name { get; set; } = null!;
         public string TeacherName { get; set; } = null!;
         public string GradeName { get; set; } = null!;
+        public List<ChatMessageDisplayModel> Messages { get; set; } = null!;
+        public string CurrentUserName { get; set; } = null!;
     }
 }

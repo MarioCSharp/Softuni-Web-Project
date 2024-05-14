@@ -140,6 +140,8 @@ namespace BetterShkolo
             });
 
             app.MapRazorPages();
+
+            app.MapHub<ChatHub>("/Team/chatHub");
             app.MapHub<DefaultHub>("/Team/meeting");
 
             app.Run();

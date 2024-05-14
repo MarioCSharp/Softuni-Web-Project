@@ -11,5 +11,6 @@ namespace Better_Shkolo.Services.TeamService
         Task<List<TeamDisplayModel>> GetStudentIndexModel();
         Task<List<TeamDisplayModel>> GetTeacherIndexModel();
         Task<TeamDetailsModel> GetTeamDetails(int teamId);
+        Task SaveMessageAsync(string user, string message, int teamId);
     }
 }

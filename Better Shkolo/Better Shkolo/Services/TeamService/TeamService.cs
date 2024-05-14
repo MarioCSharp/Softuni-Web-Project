@@ -1,4 +1,5 @@
 ﻿using Better_Shkolo.Data.Models;
+using Better_Shkolo.Models.ChatMessage;
 using Better_Shkolo.Models.Team;
 using BetterShkolo.Data;
 using BetterShkolo.Services.AccountService;
@@ -143,8 +144,27 @@ namespace Better_Shkolo.Services.TeamService
                 Name = team.Name,
                 GradeName= grade.GradeName,
                 TeacherName = userT.FirstName + " " + userT.LastName,
-                RoomId = team.RoomId
+                RoomId = team.RoomId,
+                Messages = await context.ChatMessages.Where(x => x.TeamId == teamId).Select(x => new ChatMessageDisplayModel
+                {
+                    Message = x.Message,
+                    Name = x.UserId
+                }).ToListAsync(),
+                CurrentUserName = accountService.GetUserId()
             };
+        }
+
+        public async Task SaveMessageAsync(string user, string message, int teamId)
+        {
+            var chatMessage = new ChatMessage()
+            {
+                UserId = user,
+                Message = message,
+                TeamId = teamId
+            };
+
+            await context.ChatMessages.AddAsync(chatMessage);
+            await context.SaveChangesAsync();
         }
     }
 }
