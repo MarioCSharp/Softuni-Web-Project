@@ -5,6 +5,7 @@ using BetterShkolo.Services.GradeService;
 using BetterShkolo.Services.StandingsService;
 using BetterShkolo.Services.StudentService;
 using BetterShkolo.Services.TableService;
+using BetterShkolo.Services.TestService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -19,21 +20,25 @@ namespace BetterShkolo.Controllers
         private IStandingsService standingsService;
         private ITableService tableService;
         private IAccountService accountService;
+        private ITestService testService;
         public HomeController(IGradeService gradeService,
                               IStudentService studentService,
                               IStandingsService standingsService,
                               ITableService tableService,
-                              IAccountService accountService)
+                              IAccountService accountService,
+                              ITestService testService)
         {
             this.gradeService = gradeService;
             this.studentService = studentService;
             this.standingsService = standingsService;
             this.tableService = tableService;
             this.accountService = accountService;
+            this.testService = testService;
         }
         [Authorize]
         public async Task<IActionResult> Index()
         {
+            await testService.SendNotifications();
             if (User.IsInRole("Teacher"))
             {
                 return RedirectToAction("Home", "Teacher");

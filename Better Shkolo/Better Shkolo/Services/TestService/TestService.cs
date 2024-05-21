@@ -5,6 +5,9 @@ using BetterShkolo.Models.Test;
 using BetterShkolo.Services.AccountService;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Net;
+using System.Net.Mail;
+using static BetterShkolo.Data.Constants;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace BetterShkolo.Services.TestService
@@ -204,6 +207,51 @@ namespace BetterShkolo.Services.TestService
             }
 
             return model;
+        }
+
+        public async Task SendNotifications()
+        {
+            var tests = await context.Tests
+                .Where(x => !x.NotificationSend)
+                .ToListAsync();
+
+            var mail = "mariopetkov007@gmail.com";
+            var pw = "gdjytwhtutwpdifs";
+            var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(mail, pw),
+                EnableSsl = true
+            };
+
+            var loop = new List<Test>();
+
+            foreach (var test in tests)
+            {
+                var cal = System.Globalization.DateTimeFormatInfo.CurrentInfo.Calendar;
+                var d1 = DateTime.Now.Date.AddDays(-1 * (int)cal.GetDayOfWeek(DateTime.Now));
+                var d2 = test.TestDate.Date.AddDays(-1 * (int)cal.GetDayOfWeek(test.TestDate));
+
+                if (d1 == d2)
+                {
+                    loop.Add(test);
+                }
+            }
+
+            foreach (var test in loop)
+            {
+                test.NotificationSend = true;
+
+                var students = await context.Students.Where(x => x.GradeId == test.GradeId).ToListAsync();
+
+                foreach (var user in students)
+                {
+                    string subject = test.Type == "Класно" ? "Предстояща класна работа" : "Предстояща контролна работа";
+
+                    var u = await context.Users.FindAsync(user.UserId);
+
+                    client.Send(mail, u.Email, subject, $"Здравей {u.FirstName} {u.LastName}! Напомняме ти, че на {test.TestDate.ToString("dd-MM-yyyy")} имаш {test.Type}.");
+                }
+            }
         }
     }
 }

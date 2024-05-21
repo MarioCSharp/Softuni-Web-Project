@@ -33,5 +33,6 @@ namespace BetterShkolo.Data.Models
         public int Period { get; set; }
         [Required]
         public int Term { get; set; }
+        public bool NotificationSend { get; set; }
     }
 }
