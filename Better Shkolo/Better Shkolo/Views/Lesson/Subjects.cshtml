@@ -149,6 +149,12 @@
                         <span>Виртуална класна стая</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a href="/lib/ФункИТ.docx" class="sidebar-link" download>
+                        <i class="lni lni-support"></i>
+                        <span>Ръководство 📥</span>
+                    </a>
+                </li>
             </ul>
             <div class="sidebar-footer">
                 <a asp-action="MyProfile" asp-controller="Account" class="sidebar-link">
@@ -167,6 +173,7 @@
                 <br />
                 <div class="container">
                     <div class="row">
+                        <h5>Подготви се по-бързо и лесно с <a href="https://ucha.se/">Уча.се</a></h5>
                         @foreach (var subject in Model.Subjects)
                         {
                             <div class="col-md-4">
