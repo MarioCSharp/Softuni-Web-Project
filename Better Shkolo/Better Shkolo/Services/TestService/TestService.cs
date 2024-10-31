@@ -215,8 +215,8 @@ namespace BetterShkolo.Services.TestService
                 .Where(x => !x.NotificationSend)
                 .ToListAsync();
 
-            var mail = "mariopetkov007@gmail.com";
-            var pw = "gdjytwhtutwpdifs";
+            var mail = "youremail";
+            var pw = "yourpass";
             var client = new SmtpClient("smtp.gmail.com", 587)
             {
                 Credentials = new NetworkCredential(mail, pw),
